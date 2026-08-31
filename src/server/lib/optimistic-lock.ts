@@ -55,21 +55,13 @@ export class OptimisticLockError extends TRPCError {
  * @param patch - The fields to update (version is auto-incremented)
  */
 export async function withOptimisticLock<
-  TModel extends {
-    updateMany: (args: {
-      where: { id: string; version: number; tenantId: string };
-      data: Record<string, unknown>;
-    }) => Promise<{ count: number }>;
-    findUnique: (args: {
-      where: { id: string; tenantId: string };
-    }) => Promise<{ id: string; version: number } | null>;
-  },
+  TModel extends Record<string, any>,
 >(params: {
   model: TModel;
   id: string;
   expectedVersion: number;
   patch: Record<string, unknown>;
-}): Promise<{ id: string; version: number } | null> {
+}): Promise<{ id: string; version: number; [key: string]: unknown } | null> {
   const { model, id, expectedVersion, patch } = params;
 
   // Get the current tenantId from context (set by the Prisma extension)

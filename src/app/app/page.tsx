@@ -5,7 +5,7 @@
  * and recent activity. Uses the tRPC stats procedure.
  */
 
-import { getServerTRPC } from '@/lib/trpc/server';
+import { serverTRPC } from '@/lib/trpc/server';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, CalendarClock, ClipboardList, TrendingUp } from 'lucide-react';
 
@@ -13,8 +13,7 @@ export default async function DashboardPage() {
   let stats: { patients: number; appointments: number; claims: number; tenantId: string } | null = null;
 
   try {
-    const caller = await getServerTRPC();
-    stats = await caller.stats.overview();
+    stats = await serverTRPC((caller) => caller.stats.overview());
   } catch (error) {
     console.error('Dashboard stats error:', error);
   }

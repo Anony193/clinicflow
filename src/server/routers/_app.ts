@@ -7,10 +7,12 @@
 import { router } from '@/server/trpc';
 import { healthRouter } from '@/server/routers/health';
 import { statsRouter } from '@/server/routers/stats';
+import { patientsRouter } from '@/server/routers/patients';
 
 export const appRouter = router({
   health: healthRouter,
   stats: statsRouter,
+  patients: patientsRouter,
 });
 
 /** The AppRouter type — imported by the frontend for type inference */

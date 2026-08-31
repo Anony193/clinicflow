@@ -144,8 +144,15 @@ export const idempotentProcedure = protectedProcedure.use(
     // Process the mutation
     const result = await next();
 
-    // Cache the result for future duplicate requests
-    await storeIdempotentResult(lock.keyHash, result, 200);
+    // Cache the result for future duplicate requests.
+    // Use superjson to handle Date/BigInt serialization (same transformer as the API).
+    try {
+      await storeIdempotentResult(lock.keyHash, result, 200);
+    } catch (err) {
+      // If serialization fails (e.g., circular reference in tRPC internals),
+      // log but don't fail the mutation — the result is already computed.
+      console.warn('IDEMPOTENCY_CACHE_FAILED:', err);
+    }
 
     return result;
   },

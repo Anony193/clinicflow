@@ -6,14 +6,14 @@
  * Wraps the app with:
  *   - QueryClientProvider (TanStack Query v5)
  *   - trpc.Provider (type-safe API client, zero codegen)
- *
- * The tRPC client uses httpBatchLink to batch requests to /api/trpc,
- * with superjson transformer for Date/BigInt serialization.
  */
 
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { trpc, createTRPCClient } from '@/lib/trpc/client';
+import { httpBatchLink, loggerLink } from '@trpc/client';
+import superjson from 'superjson';
+import { trpc } from '@/lib/trpc/react';
+import type { AppRouter } from '@/server/routers/_app';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -21,7 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1 minute
+            staleTime: 60 * 1000,
             refetchOnWindowFocus: false,
             retry: 1,
           },
@@ -32,13 +32,28 @@ export function Providers({ children }: { children: React.ReactNode }) {
       }),
   );
 
-  const [trpcClient] = useState(() => createTRPCClient());
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      links: [
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+        }),
+        httpBatchLink({
+          url: '/api/trpc',
+          transformer: superjson,
+          headers() {
+            return {};
+          },
+        }),
+      ],
+    }),
+  );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
-        {children}
-      </trpc.Provider>
-    </QueryClientProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </trpc.Provider>
   );
 }
