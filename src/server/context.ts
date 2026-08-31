@@ -5,12 +5,11 @@
  *   - db: the Prisma client with tenant extension (tenantId injected via AsyncLocalStorage)
  *   - user: the authenticated user (or null for public routes)
  *   - tenantId: the current tenant (or null for public routes)
+ *   - idempotencyKey: the Idempotency-Key header (for write endpoints, Constraint #3)
  *
  * The AsyncLocalStorage tenant context is set by the API route handler
  * (src/app/api/trpc/[trpc]/route.ts) BEFORE this context creator runs,
  * wrapping the entire fetchRequestHandler in runInTenantContext().
- * This ensures the Prisma extension can read tenantId from AsyncLocalStorage
- * during procedure execution.
  */
 
 import type { Session } from '@/lib/auth-session';
@@ -18,12 +17,14 @@ import { db } from '@/lib/db';
 
 export interface CreateInnerContextOptions {
   session: Session | null;
+  idempotencyKey?: string;
 }
 
 export interface Context extends CreateInnerContextOptions {
   db: typeof db;
   user: Session | null;
   tenantId: string | null;
+  idempotencyKey?: string;
 }
 
 /**
@@ -36,6 +37,7 @@ export function createContextInner(opts: CreateInnerContextOptions): Context {
     user: opts.session,
     tenantId: opts.session?.tenantId ?? null,
     session: opts.session,
+    idempotencyKey: opts.idempotencyKey,
   };
 }
 

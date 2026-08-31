@@ -11,7 +11,7 @@
  * Constraint #2: cross-tenant access tests must return zero rows
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { tenantExtension } from '@/lib/db/tenant-extension';
 
 const globalForPrisma = globalThis as unknown as {
@@ -26,5 +26,18 @@ const baseClient =
 
 /** The extended Prisma client with automatic tenant isolation. */
 export const db = baseClient.$extends(tenantExtension);
+
+/**
+ * The BASE Prisma client (without tenant extension).
+ * Use for auth operations that need cross-tenant access (login, signup,
+ * session lookup). NOT for application queries — those should use `db`.
+ */
+export const baseDb = baseClient;
+
+/** Transaction client type (for writeOutbox and other transactional operations). */
+export type PrismaTransaction = Omit<
+  Prisma.TransactionClient,
+  '$extend' | '$on' | '$transaction' | '$use' | '$disconnect'
+>;
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = baseClient;

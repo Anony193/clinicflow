@@ -25,7 +25,8 @@ import { runInTenantContext } from '@/lib/context/tenant-context';
 
 const createContextWithSession = async (opts: { req: Request; resHeaders?: Headers }) => {
   const session = await resolveSession(opts.req);
-  return createContext({ session });
+  const idempotencyKey = opts.req.headers.get('idempotency-key') ?? undefined;
+  return createContext({ session, idempotencyKey });
 };
 
 async function handler(req: Request) {

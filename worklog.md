@@ -230,3 +230,57 @@ Stage Summary:
   * SQLite lock adapter handles expired-lock cleanup (delete + re-acquire) which Redis does automatically via TTL.
   * Circuit breaker tracks failure count (not rate) as primary trigger — DOC6 §6.6 mentions 50% rate but tracking total calls adds complexity; failureThreshold is sufficient for the sandbox.
 - Next: TASK-012 (outbox + job-runner mini-service), TASK-013 (NextAuth), TASK-014 (audit logging), TASK-017 (app shell), then domain features (TASK-019+).
+
+---
+Task ID: TASK-012 / 013 / 014 / 017
+Agent: senior-fullstack-engineer (primary)
+Task: Complete the remaining foundation: outbox pattern + job-runner, real authentication with opaque session tokens, audit logging with PHI flag, and the authenticated app shell with sidebar navigation.
+
+Work Log:
+- TASK-012 (Outbox + job-runner mini-service — DOC5 §7.3, Constraint #14):
+  * Created src/lib/outbox.ts — writeOutbox() writes events in the same DB transaction as business data (atomic). registerHandler() + dispatchEvent() for the handler registry.
+  * Created mini-services/job-runner/ (port 3003, ADR-0003 gateway-compliant). Polls Outbox table every 2s, dispatches to handlers, marks done/failed, retries with backoff (max 5 attempts). Uses base Prisma client (cross-tenant, no extension). Pre-registered 4 placeholder handlers: appointment.booked, appointment.cancelled, claim.submitted, subscription.activated.
+  * Started job-runner in background, verified health endpoint: {"ok":true,"service":"clinicflow-job-runner","port":3003}.
+
+- TASK-013 (Authentication — opaque session tokens, argon2, DOC1 §7.6):
+  * Created src/app/api/auth/login/route.ts — POST endpoint: looks up user via baseDb (cross-tenant), verifies password with argon2, handles account lockout (5 failed attempts → 15-min lock, Constraint #7), creates Session record with opaque nanoid(48) token, sets httpOnly cookie (24h TTL).
+  * Created src/app/api/auth/logout/route.ts — POST: revokes session (sets revokedAt), clears cookie.
+  * Updated src/lib/auth-session.ts — resolveSession() reads httpOnly cookie → baseDb.session.findFirst (validates not-expired, not-revoked) → returns Session with userId/tenantId/role.
+  * Exported baseDb from src/lib/db.ts (base Prisma client without tenant extension) for auth operations that need cross-tenant access.
+  * Created src/app/(auth)/login/page.tsx — client component with email/password form, error handling, loading state, demo credentials hint. Major Third type scale, motion, elevation per Doc 2 §8.
+  * Updated src/proxy.ts — redirects /app/* to /login if no session cookie; redirects /login to /app if already authenticated.
+
+- TASK-014 (Audit logging — DOC1 §7.5 AuditEvent, Constraint #12):
+  * Created src/server/lib/audit.ts — logAudit() appends to AuditEvent (append-only, never update/delete). Auto-sets phi=true for PHI entities (Patient, SoapNote, Claim, Encounter, OutcomeMeasure, etc.). logPhiAccess() shortcut for PHI reads.
+  * Added loggedProcedure to src/server/trpc.ts — protected + auto-audit on mutations. Extracts entity from path, logs action/actor/phi.
+  * Added idempotentProcedure to src/server/trpc.ts — protected + idempotency key on mutations (Constraint #3). Reads Idempotency-Key header from context, replays cached response or processes new.
+  * Updated src/server/context.ts — added idempotencyKey field to Context.
+  * Updated src/app/api/trpc/[trpc]/route.ts — passes idempotency-key header into context.
+
+- TASK-017 (App shell — authenticated layout):
+  * Created src/app/app/layout.tsx — server component, resolves session, redirects to /login if unauthenticated, wraps children in AppShell.
+  * Created src/components/app/app-shell.tsx — client component with sidebar nav (Dashboard, Patients, Schedule, SOAP Notes, Billing, Claims, Reports, Settings), topbar (logo, user menu with role badge, logout), role-based nav visibility (OWNER sees all, THERAPIST sees clinical+scheduling, FRONT_DESK sees patients+schedule, BILLING_MANAGER sees billing+claims+reports). Mobile-responsive collapsible sidebar. Sticky footer.
+  * Created src/app/app/page.tsx — dashboard page with stats cards (patients, appointments, claims, revenue) using the tRPC stats procedure via getServerTRPC() server caller. Includes a "Getting Started" card with next steps.
+
+Verification Gate (all PASS):
+- `bun run lint`: 0 errors, 0 warnings ✅
+- `bunx tsc --noEmit` (src/): 0 errors ✅
+- Login API: POST /api/auth/login with demo credentials → 200, returns user info + sets httpOnly session cookie ✅
+- /app WITHOUT session: 307 redirect to /login?redirect=/app ✅
+- /app WITH session: 200, 78KB dashboard rendered ✅
+- tRPC stats WITH session: {"patients":2,"appointments":0,"claims":0,"tenantId":"..."} — tenant isolation works with real session ✅
+- Login page: 200, 31KB, accessible form structure (labels, required fields, button) ✅
+- Agent Browser: login page renders correctly, 0 console errors ✅
+- Job-runner: running on port 3003, health endpoint responds, polling Outbox ✅
+
+Stage Summary:
+- The foundation is COMPLETE. All critical-path infrastructure is in place:
+  * Multi-tenant isolation (Prisma extension + AsyncLocalStorage) — TASK-005/006
+  * Type-safe API (tRPC v11 + Zod + superjson) — TASK-007
+  * Concurrency primitives (idempotency, optimistic lock, distributed lock, circuit breaker) — TASK-008/009/010/011
+  * Durable execution (outbox + job-runner) — TASK-012
+  * Real authentication (opaque session tokens + argon2 + account lockout) — TASK-013
+  * Audit logging (PHI flag, append-only) — TASK-014
+  * Authenticated app shell (sidebar + topbar + role-based nav) — TASK-017
+- The user can now: visit / → see landing page → click "Sign in" → login with demo credentials → see the dashboard with real stats from the database.
+- Next: domain features (TASK-019+: patients, appointments, SOAP notes, exercises) and TASK-015 (feature flags), TASK-018 (CI/CD pipeline).

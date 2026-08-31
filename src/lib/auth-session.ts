@@ -1,16 +1,21 @@
 /**
- * Session Resolver — PLACEHOLDER
+ * Session Resolver (TASK-013 — real authentication)
  *
- * TASK-013 will replace this with NextAuth credentials provider.
- * For now, this supports a demo mode via the x-demo-tenant-id header/cookie
- * so we can verify the tenant isolation stack end-to-end.
+ * Resolves the session from the httpOnly cookie → Session table → User.
  *
- * In production (DOC1 §7.6 Authentication Flow):
- *   - User submits credentials
- *   - System validates against stored password hash (argon2)
- *   - On success, creates a Session record and returns an opaque session token
- *   - The session token is NOT a JWT (opaque tokens can be revoked instantly)
+ * DOC1 §7.6: "The session token is a random, opaque value; it is not a
+ * JSON Web Token containing user data, because opaque tokens can be revoked
+ * instantly by deleting the session record."
+ *
+ * Flow:
+ *   1. Read the `clinicflow-session` cookie
+ *   2. Look up the Session record (must not be expired or revoked)
+ *   3. Return the session with user info
  */
+
+import { baseDb } from '@/lib/db';
+
+export const SESSION_COOKIE_NAME = 'clinicflow-session';
 
 export interface Session {
   userId: string;
@@ -22,36 +27,37 @@ export interface Session {
 
 /**
  * Resolve the session from a Request.
- * Reads the demo-tenant-id cookie or x-demo-tenant-id header for testing.
- *
- * TODO: TASK-013 — implement NextAuth credentials provider + argon2 password
- * verification + opaque session token in the Session table.
+ * Reads the httpOnly cookie, looks up the Session record.
  */
 export async function resolveSession(req: Request): Promise<Session | null> {
-  // Check for demo tenant cookie (set by the demo login page) or header
   const cookieHeader = req.headers.get('cookie') ?? '';
-  const demoTenantFromCookie = cookieHeader
-    .match(/demo-tenant-id=([^;]+)/)?.[1];
-  const demoTenantId =
-    req.headers.get('x-demo-tenant-id') ?? demoTenantFromCookie;
+  const token = cookieHeader.match(new RegExp(`${SESSION_COOKIE_NAME}=([^;]+)`))?.[1];
 
-  if (demoTenantId) {
-    return {
-      userId: 'demo-user',
-      tenantId: demoTenantId,
-      role: 'OWNER',
-      name: 'Demo User',
-      email: 'demo@clinicflow.test',
-    };
-  }
+  if (!token) return null;
 
-  // TODO: TASK-013 — NextAuth session resolution
-  return null;
+  // Look up the session (use baseDb — no tenant extension, auth is cross-tenant)
+  const session = await baseDb.session.findFirst({
+    where: {
+      token,
+      revokedAt: null,
+      expiresAt: { gt: new Date() },
+    },
+    include: { user: true },
+  });
+
+  if (!session || !session.user) return null;
+
+  return {
+    userId: session.user.id,
+    tenantId: session.user.tenantId,
+    role: session.user.role,
+    name: session.user.name,
+    email: session.user.email,
+  };
 }
 
 /**
  * Resolve session from Next.js headers() — for Server Components.
- * Same logic as resolveSession but reads from the headers() API.
  */
 export async function resolveSessionFromHeaders(
   req: Request,
