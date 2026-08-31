@@ -80,3 +80,19 @@ Stage Summary:
 - Constraints satisfied in this batch: #1 (tenant_id + index on every tenant-scoped model — schema layer; app-layer RLS extension comes in TASK-005), #4 (version field on Patient/Appointment/SoapNote/Claim), #6 (WCAG 2.2 AA — semantic HTML, ARIA, keyboard nav, axe-clean via VLM review), #7 (UI not AI-generated — Major Third scale, neutral palette, 4 elevations, motion principles, teal brand), #9 (4 ADRs authored), #12 (AuditEvent.phi flag + schema for PHI logging).
 - Next tasks in critical path: TASK-005 (tenant-context Prisma extension — app-layer RLS), TASK-006 (AsyncLocalStorage middleware), TASK-007 (tRPC scaffold), then TASK-008/010/013/014 (idempotency/lock/auth/audit), then TASK-017 (app shell) and TASK-019+ (domain features).
 - Awaiting builder confirmation to proceed to the next task batch (TASK-005 → TASK-007, the tRPC + tenant-context core).
+
+---
+Task ID: TASK-000 (fix)
+Agent: senior-fullstack-engineer (primary)
+Task: Fix discovered defect — ADR-0001, 0002, 0003 were not persisted to disk in the original TASK-000 batch (only 0004 landed). Re-write all three.
+
+Work Log:
+- During a filesystem audit prompted by the builder's question about uploaded docs, discovered docs/adr/ contained only 0004-trpc-adoption.md.
+- Root cause: the original multi-Write call for 0001/0002/0003 failed because docs/adr/ did not exist yet; I created the directory and wrote 0004 but did not re-issue the writes for 0001-0003.
+- Re-wrote all three ADRs verbatim from the originally-intended content: 0001-tenant-isolation-sqlite.md (3474 bytes), 0002-managed-service-substitutions.md (3696 bytes), 0003-single-port-gateway.md (2154 bytes).
+- Verified: ls docs/adr/ now shows all 4 files.
+
+Stage Summary:
+- Defect resolved. All 4 governing ADRs are now persisted on disk.
+- Lesson: after a multi-Write where some calls fail, always verify with ls/glob before claiming the task complete. Added to personal checklist.
+- No code impact (ADRs are docs); the schema/seed/landing-page work in the prior batch was unaffected.
