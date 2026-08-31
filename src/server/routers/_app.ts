@@ -9,12 +9,14 @@ import { healthRouter } from '@/server/routers/health';
 import { statsRouter } from '@/server/routers/stats';
 import { patientsRouter } from '@/server/routers/patients';
 import { appointmentsRouter } from '@/server/routers/appointments';
+import { soapNotesRouter } from '@/server/routers/soap-notes';
 
 export const appRouter = router({
   health: healthRouter,
   stats: statsRouter,
   patients: patientsRouter,
   appointments: appointmentsRouter,
+  soapNotes: soapNotesRouter,
 });
 
 /** The AppRouter type — imported by the frontend for type inference */

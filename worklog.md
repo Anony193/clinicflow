@@ -393,3 +393,48 @@ Stage Summary:
   3. Idempotency key prevents duplicate appointments from network retries
 - The booking flow writes an outbox event 'appointment.booked' which the job-runner will pick up to schedule reminders (TASK-023).
 - Next: TASK-024 (SOAP notes with optimistic locking + 4-section editor).
+
+---
+Task ID: TASK-024
+Agent: senior-full-stack-engineer (primary)
+Task: SOAP notes — clinical documentation with 4-section editor (Subjective/Objective/Assessment/Plan), optimistic locking, autosave, and sign-to-lock.
+
+Work Log:
+- Created src/server/schemas/soap-note.ts — Zod schemas for create, update (with version for optimistic locking), sign, list.
+- Created src/server/routers/soap-notes.ts — tRPC router with 5 procedures:
+  * list — filtered by patient/therapist/status, includes patient+therapist names
+  * get — single note with patient DOB + therapist name, logs PHI access
+  * create — idempotent (idempotentProcedure), PHI audit logged
+  * update — optimistic-locked (Constraint #4), supports autosave (partial updates), rejects edits to signed notes
+  * sign — locks the note from further edits (status: draft → signed, sets signedAt)
+- Added soapNotesRouter to appRouter (_app.ts).
+- Created src/components/soap-notes/soap-note-editor.tsx — client component with:
+  * 4-section editor (Subjective, Objective, Assessment, Plan) — each with label, description, textarea
+  * Autosave (debounced 3 seconds per DOC0 §(b).5) — saves automatically after the user stops typing
+  * Manual save button + sign button
+  * Optimistic locking — sends current version, handles 409 conflict (reloads)
+  * Signed notes are read-only (textareas disabled)
+  * Save status indicator: "Saving..." / "Saved HH:MM" / "Unsaved changes"
+  * PHI audit footer
+- Created src/app/app/soap-notes/page.tsx — list page showing all SOAP notes with status badge.
+- Created src/app/app/soap-notes/[id]/page.tsx — detail page (server component) fetching note via serverTRPC, rendering the editor.
+
+Verification Gate (all PASS):
+- `bun run lint`: 0 errors, 0 warnings ✅
+- `bunx tsc --noEmit` (src/): 0 errors ✅
+- Create SOAP note: ✅ creates draft (v0) with all 4 sections
+- Update (autosave): ✅ updates field, version increments to v1
+- Stale version update: ✅ correctly rejected (409 OptimisticLockError)
+- Sign note: ✅ status → signed, signedAt set
+- Edit signed note: ✅ correctly rejected (FORBIDDEN)
+- SOAP notes list page: HTTP 200, 65KB ✅
+- SOAP note editor page: HTTP 200, 50KB, renders all 4 sections + patient info ✅
+
+Stage Summary:
+- Clinical documentation (SOAP notes) is complete and verified.
+- The 4-section editor (Subjective/Objective/Assessment/Plan) is the standard PT documentation format.
+- Autosave (3s debounce) prevents data loss without intrusive manual saves.
+- Optimistic locking prevents lost updates when two therapists edit the same note.
+- Sign-to-lock prevents modification of completed clinical notes (HIPAA requirement — signed notes are legal documents).
+- Every access (list/get/create/update/sign) logs a PHI AuditEvent with phi=true (Constraint #12).
+- Next: TASK-025 (treatment plans), TASK-026 (outcome measures), TASK-027 (exercise library + prescription).
