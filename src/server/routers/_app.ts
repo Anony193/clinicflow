@@ -8,11 +8,13 @@ import { router } from '@/server/trpc';
 import { healthRouter } from '@/server/routers/health';
 import { statsRouter } from '@/server/routers/stats';
 import { patientsRouter } from '@/server/routers/patients';
+import { appointmentsRouter } from '@/server/routers/appointments';
 
 export const appRouter = router({
   health: healthRouter,
   stats: statsRouter,
   patients: patientsRouter,
+  appointments: appointmentsRouter,
 });
 
 /** The AppRouter type — imported by the frontend for type inference */
