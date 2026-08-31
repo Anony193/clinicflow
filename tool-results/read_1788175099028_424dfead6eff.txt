@@ -1,0 +1,1104 @@
+     1→     1→+-----------------------------------------------------------------------+
+     2→     2→| > B U S I N E S S P R O F E S S I O N A L T E S T P R O M P T         |
+     3→     3→| >                                                                     |
+     4→     4→| > **ClinicFlow Test Prompt ---**                                      |
+     5→     5→| >                                                                     |
+     6→     6→| > **Ready to Copy and Paste**                                         |
+     7→     7→| >                                                                     |
+     8→     8→| > A Complete, Pre-Filled Prompt for Testing the 7-Document Playbook   |
+     9→     9→| > with an AI Builder. All Business Details Decided --- Copy           |
+    10→    10→| > Everything in the Code Block and Paste Directly.                    |
+    11→    11→| >                                                                     |
+    12→    12→| > Document Type: Test Prompt for AI Builder                           |
+    13→    13→| >                                                                     |
+    14→    14→| > Style: Business Professional                                        |
+    15→    15→| >                                                                     |
+    16→    16→| > Business: ClinicFlow --- Physical Therapy Practice Management SaaS  |
+    17→    17→| >                                                                     |
+    18→    18→| > Prepared by: Super Z Research                                       |
+    19→    19→| >                                                                     |
+    20→    20→| > Date: August 27, 2026                                               |
+    21→    21→| >                                                                     |
+    22→    22→| > Copy Everything in the Code Block Below 2026 Edition                |
+    23→    23→+-----------------------------------------------------------------------+
+    24→    24→
+    25→    25→**Table of Contents**
+    26→    26→
+    27→    27→[1. How to Use This Document [1](#_Toc100000)](#_Toc100000)
+    28→    28→
+    29→    29→[2. The Complete Prompt (Copy Everything Below This Line)
+    30→    30→[2](#_Toc100001)](#_Toc100001)
+    31→    31→
+    32→    32→*Note: This Table of Contents is generated via field codes. To ensure
+    33→    33→page number accuracy after editing, please right-click the TOC and
+    34→    34→select \"Update Field.\"*
+    35→    35→
+    36→    36→[]{#_Toc100000 .anchor}**1. How to Use This Document**
+    37→    37→
+    38→    38→This document contains a single, complete prompt that you can copy and
+    39→    39→paste directly into any AI builder (Claude Code, Cursor, OpenAI Codex,
+    40→    40→z.ai autoclaw, or any multi-agent system). All business details have
+    41→    41→been decided for you. You do not need to fill in any brackets or replace
+    42→    42→any placeholders. Simply copy the entire contents of the code block in
+    43→    43→Section 2, paste it as your first message to the AI builder, and the
+    44→    44→builder will begin the three-phase process of consuming the 7
+    45→    45→foundational documents, producing a synthesis, decomposing into tasks,
+    46→    46→and implementing with verification gates.
+    47→    47→
+    48→    48→The business chosen for this test prompt is ClinicFlow, a practice
+    49→    49→management SaaS platform for independent physical therapy clinics. This
+    50→    50→business was selected because it is a concrete, realistic vertical with
+    51→    51→a clear buyer, a clear problem, a clear monetization model, and a
+    52→    52→moderate complexity that makes it an ideal test case for verifying
+    53→    53→whether the AI builder can follow the 7-document process and deliver a
+    54→    54→quality result. The prompt specifies the system name, the vertical, the
+    55→    55→target users, the problem statement, the functional and non-functional
+    56→    56→requirements, the target technology stack, the constraints, and the
+    57→    57→three-phase model that the AI builder must follow.
+    58→    58→
+    59→    59→[]{#_Toc100001 .anchor}**2. The Complete Prompt (Copy Everything Below
+    60→    60→This Line)**
+    61→    61→
+    62→    62→Copy the entire contents of the code block below, from the first line
+    63→    63→(ROLE:) to the last line (produce the synthesis.), and paste it as your
+    64→    64→first message to the AI builder. Ensure that the 7 foundational
+    65→    65→documents are placed in a docs/ folder in the project directory before
+    66→    66→you send the prompt, so the AI builder can read them.
+    67→    67→
+    68→    68→+-----------------------------------------------------------------------+
+    69→    69→| ROLE: You are a senior full-stack engineer building a                 |
+    70→    70→| production-grade                                                      |
+    71→    71→|                                                                       |
+    72→    72→| multi-tenant Business SaaS platform called ClinicFlow. You are        |
+    73→    73→| building                                                              |
+    74→    74→|                                                                       |
+    75→    75→| this according to the 7-document AI Builder Playbook that has been    |
+    76→    76→|                                                                       |
+    77→    77→| uploaded to this project\'s docs/ folder. You do not improvise; you   |
+    78→    78→|                                                                       |
+    79→    79→| implement against the documented specification. You do not skip       |
+    80→    80→|                                                                       |
+    81→    81→| verification; you run the gate after every task.                      |
+    82→    82→|                                                                       |
+    83→    83→| THE SYSTEM TO BUILD:                                                  |
+    84→    84→|                                                                       |
+    85→    85→| \- Name: ClinicFlow                                                   |
+    86→    86→|                                                                       |
+    87→    87→| \- Type: Multi-tenant B2B SaaS platform                               |
+    88→    88→|                                                                       |
+    89→    89→| \- Vertical: Practice management for independent physical therapy     |
+    90→    90→| clinics                                                               |
+    91→    91→|                                                                       |
+    92→    92→| \- Target users: Clinic owners, physical therapists, front desk       |
+    93→    93→| staff,                                                                |
+    94→    94→|                                                                       |
+    95→    95→| billing managers, and patients (via patient portal)                   |
+    96→    96→|                                                                       |
+    97→    97→| \- Primary problem: Independent physical therapy clinics (1-10        |
+    98→    98→| therapists)                                                           |
+    99→    99→|                                                                       |
+   100→   100→| currently use 4-5 disconnected tools for scheduling, billing,         |
+   101→   101→| clinical                                                              |
+   102→   102→|                                                                       |
+   103→   103→| documentation, and patient communication. These tools do not share    |
+   104→   104→|                                                                       |
+   105→   105→| data, causing double entry, missed appointments, delayed insurance    |
+   106→   106→|                                                                       |
+   107→   107→| claims, and a poor patient experience. There is no purpose-built      |
+   108→   108→|                                                                       |
+   109→   109→| platform that integrates the clinical workflow (SOAP notes, treatment |
+   110→   110→|                                                                       |
+   111→   111→| plans, outcome tracking) with the business workflow (scheduling,      |
+   112→   112→|                                                                       |
+   113→   113→| billing, insurance claims, patient communication) in a single system. |
+   114→   114→|                                                                       |
+   115→   115→| \- Monetization: Per-seat subscription at \$49/therapist/month +      |
+   116→   116→|                                                                       |
+   117→   117→| \$19/support-staff/month. The patient portal is free for clinics.     |
+   118→   118→|                                                                       |
+   119→   119→| Stripe handles subscription billing with usage metering and           |
+   120→   120→| proration.                                                            |
+   121→   121→|                                                                       |
+   122→   122→| \- Expected scale: 50-100 clinics in year 1 (500-1,000 users),        |
+   123→   123→|                                                                       |
+   124→   124→| 500-1,000 clinics by year 3 (5,000-10,000 users)                      |
+   125→   125→|                                                                       |
+   126→   126→| \- Target market: United States independent PT clinics, single or     |
+   127→   127→|                                                                       |
+   128→   128→| multi-location, 1-10 therapists per location                          |
+   129→   129→|                                                                       |
+   130→   130→| PHASE 1 --- DOCUMENT CONSUMPTION (Do NOT write any code yet):         |
+   131→   131→|                                                                       |
+   132→   132→| Read the following sections from the 7 foundational documents in the  |
+   133→   133→|                                                                       |
+   134→   134→| docs/ folder:                                                         |
+   135→   135→|                                                                       |
+   136→   136→| FROM DOC 1 (Production-Ready Full-Stack Systems Complete):            |
+   137→   137→|                                                                       |
+   138→   138→| \- Section 7: Multi-Tenant SaaS Platform --- read the ENTIRE section: |
+   139→   139→|                                                                       |
+   140→   140→| \- 7.1 Overview and Market Context                                    |
+   141→   141→|                                                                       |
+   142→   142→| \- 7.2 Planning from Scratch (problem statement, ICP, functional and  |
+   143→   143→|                                                                       |
+   144→   144→| non-functional requirements, regulatory regime, scope boundaries)     |
+   145→   145→|                                                                       |
+   146→   146→| \- 7.3 SDLC Application                                               |
+   147→   147→|                                                                       |
+   148→   148→| \- 7.4 Foundation and Reference Architecture (Next.js + PostgreSQL    |
+   149→   149→|                                                                       |
+   150→   150→| with Row-Level Security + Redis + the reference architecture          |
+   151→   151→|                                                                       |
+   152→   152→| diagram at Figure 2)                                                  |
+   153→   153→|                                                                       |
+   154→   154→| \- 7.5 Data Model (Table 2: Tenant, User, Role, Session,              |
+   155→   155→| Subscription,                                                         |
+   156→   156→|                                                                       |
+   157→   157→| Plan, Invoice, AuditEvent, FeatureFlag, Integration --- with the      |
+   158→   158→|                                                                       |
+   159→   159→| tenant_id column and RLS policy on every table)                       |
+   160→   160→|                                                                       |
+   161→   161→| \- 7.6 How It Works (4 process flows: tenant provisioning, user       |
+   162→   162→|                                                                       |
+   163→   163→| authentication, request lifecycle with tenant context, subscription   |
+   164→   164→|                                                                       |
+   165→   165→| billing)                                                              |
+   166→   166→|                                                                       |
+   167→   167→| \- 7.7 Security and Compliance Controls (OWASP Top Ten, SOC 2)        |
+   168→   168→|                                                                       |
+   169→   169→| \- 7.8 UI/UX and Accessibility (WCAG 2.2 AA, Radix UI + Tailwind CSS) |
+   170→   170→|                                                                       |
+   171→   171→| \- 7.9 Building Process and Implementation Roadmap (4 phases,         |
+   172→   172→|                                                                       |
+   173→   173→| 12-18 months)                                                         |
+   174→   174→|                                                                       |
+   175→   175→| \- 7.10 Business Viability and Sources                                |
+   176→   176→|                                                                       |
+   177→   177→| \- Section 5: Common Engineering Standards (all subsections           |
+   178→   178→| 5.1-5.10):                                                            |
+   179→   179→|                                                                       |
+   180→   180→| architecture, security, UI/UX, API design, observability, monitoring  |
+   181→   181→|                                                                       |
+   182→   182→| KPIs (Table 13: SLO targets), disaster recovery, deployment topology, |
+   183→   183→|                                                                       |
+   184→   184→| internationalization, vendor selection                                |
+   185→   185→|                                                                       |
+   186→   186→| \- Section 4: The SDLC as Foundation (all 6 phases with artifacts and |
+   187→   187→|                                                                       |
+   188→   188→| gates)                                                                |
+   189→   189→|                                                                       |
+   190→   190→| \- Section 15: Cross-System Comparison (Table 10, Table 14 team       |
+   191→   191→|                                                                       |
+   192→   192→| composition, Table 15 cost estimation)                                |
+   193→   193→|                                                                       |
+   194→   194→| \- Section 17: Risk Register (Table 11) and Action Items (Table 12)   |
+   195→   195→|                                                                       |
+   196→   196→| FROM DOC 2 (Prompting AI Builder Agents):                             |
+   197→   197→|                                                                       |
+   198→   198→| \- Section 4: The Prompt Architecture (three-phase model: context     |
+   199→   199→|                                                                       |
+   200→   200→| loading, analysis, implementation)                                    |
+   201→   201→|                                                                       |
+   202→   202→| \- Section 6: Use Case 2 --- B2B SaaS System (the tenant isolation    |
+   203→   203→|                                                                       |
+   204→   204→| prompt --- this is the critical prompt for ClinicFlow)                |
+   205→   205→|                                                                       |
+   206→   206→| \- Section 8: Professional UI/UX Standards --- Eliminating AI-Flag    |
+   207→   207→| Work:                                                                 |
+   208→   208→|                                                                       |
+   209→   209→| \- 8.1 Typography Systems (Table 4: Major Third type scale)           |
+   210→   210→|                                                                       |
+   211→   211→| \- 8.2 Motion Design Principles (12 UX in Motion principles)          |
+   212→   212→|                                                                       |
+   213→   213→| \- 8.3 Transparency, Layering, and Depth (4 elevation levels)         |
+   214→   214→|                                                                       |
+   215→   215→| \- 8.4 Color Systems (neutral 10-step palette, semantic colors)       |
+   216→   216→|                                                                       |
+   217→   217→| \- 8.5 The Landing Page Anatomy (Table 5: 10-section structure)       |
+   218→   218→|                                                                       |
+   219→   219→| FROM DOC 3 (Technical Stack and Integration Guide):                   |
+   220→   220→|                                                                       |
+   221→   221→| \- Section 4: Database Selection (Table 1: PostgreSQL vs MySQL vs     |
+   222→   222→|                                                                       |
+   223→   223→| MongoDB vs SQLite --- PostgreSQL recommended for multi-tenant SaaS)   |
+   224→   224→|                                                                       |
+   225→   225→| \- Section 4.3: ORM Choice (Table 2: Prisma vs Drizzle --- Prisma     |
+   226→   226→|                                                                       |
+   227→   227→| recommended for this project)                                         |
+   228→   228→|                                                                       |
+   229→   229→| \- Section 5: Cache, Queue, Search, Storage Selection:                |
+   230→   230→|                                                                       |
+   231→   231→| \- 5.1 Cache: Redis 7 (sessions, rate-limit, hot-path cache)          |
+   232→   232→|                                                                       |
+   233→   233→| \- 5.2 Queue: Inngest (durable execution for billing, notifications)  |
+   234→   234→|                                                                       |
+   235→   235→| \- 5.3 Search: PostgreSQL FTS (sufficient for in-app search)          |
+   236→   236→|                                                                       |
+   237→   237→| \- 5.4 Storage: S3 or Cloudflare R2 (patient documents, exports)      |
+   238→   238→|                                                                       |
+   239→   239→| \- Section 6: Authentication Platform (Table 3: Clerk recommended for |
+   240→   240→|                                                                       |
+   241→   241→| fast start with SAML SSO for enterprise)                              |
+   242→   242→|                                                                       |
+   243→   243→| \- Section 7: API Style Selection (Table 4: tRPC for internal         |
+   244→   244→|                                                                       |
+   245→   245→| communication, REST+OpenAPI for public API)                           |
+   246→   246→|                                                                       |
+   247→   247→| \- Section 8: The Type-Safe Toolchain (Zod + Prisma + tRPC +          |
+   248→   248→|                                                                       |
+   249→   249→| TanStack Query --- with the code block showing the integration        |
+   250→   250→|                                                                       |
+   251→   251→| contract pattern)                                                     |
+   252→   252→|                                                                       |
+   253→   253→| \- Section 9: Error Handling, Pagination, Optimistic Updates          |
+   254→   254→|                                                                       |
+   255→   255→| (discriminated union errors, cursor pagination, onMutate pattern)     |
+   256→   256→|                                                                       |
+   257→   257→| FROM DOC 4 (System Analysis, Quality and Operational Excellence):     |
+   258→   258→|                                                                       |
+   259→   259→| \- Section 4: Requirements Engineering (use cases, BDD/Gherkin        |
+   260→   260→|                                                                       |
+   261→   261→| scenarios, Requirements Traceability Matrix)                          |
+   262→   262→|                                                                       |
+   263→   263→| \- Section 5: Testing Strategy (Table 2: 8 test types --- unit,       |
+   264→   264→|                                                                       |
+   265→   265→| integration, E2E, contract, performance, security, accessibility,     |
+   266→   266→|                                                                       |
+   267→   267→| visual regression --- with tools and coverage targets)                |
+   268→   268→|                                                                       |
+   269→   269→| \- Section 6: DevOps and IaC (Pulumi recommended; CI/CD pipeline with |
+   270→   270→|                                                                       |
+   271→   271→| 8 stages: source, build, test, security, deploy-staging, integration- |
+   272→   272→|                                                                       |
+   273→   273→| test, deploy-production, post-deploy-verification)                    |
+   274→   274→|                                                                       |
+   275→   275→| \- Section 7: SRE and Incident Response (on-call rotation, alerting   |
+   276→   276→| on                                                                    |
+   277→   277→|                                                                       |
+   278→   278→| SLO error budgets, blameless postmortem per Google SRE)               |
+   279→   279→|                                                                       |
+   280→   280→| \- Section 8: Threat Modeling (STRIDE: Spoofing, Tampering,           |
+   281→   281→| Repudiation,                                                          |
+   282→   282→|                                                                       |
+   283→   283→| Information disclosure, Denial of service, Elevation of privilege)    |
+   284→   284→|                                                                       |
+   285→   285→| \- Section 9: Compliance Operationalization (SOC 2 continuous         |
+   286→   286→| compliance,                                                           |
+   287→   287→|                                                                       |
+   288→   288→| GDPR data subject rights, HIPAA for patient health information)       |
+   289→   289→|                                                                       |
+   290→   290→| \- Section 10: Performance Engineering (performance budgets enforced  |
+   291→   291→| in                                                                    |
+   292→   292→|                                                                       |
+   293→   293→| CI, capacity planning, profiling)                                     |
+   294→   294→|                                                                       |
+   295→   295→| \- Section 11: Architecture Decision Records (ADR template: title,    |
+   296→   296→|                                                                       |
+   297→   297→| context, decision, status, consequences)                              |
+   298→   298→|                                                                       |
+   299→   299→| \- Section 12: Go-to-Market and Launch (beta/design partner program,  |
+   300→   300→|                                                                       |
+   301→   301→| feature flags, gradual rollout, product analytics)                    |
+   302→   302→|                                                                       |
+   303→   303→| \- Section 13: Unit Economics (Table 3: CAC, LTV, COGS, gross margin, |
+   304→   304→|                                                                       |
+   305→   305→| payback period, NRR, churn --- with healthy targets)                  |
+   306→   306→|                                                                       |
+   307→   307→| FROM DOC 5 (Scalability, Concurrency and Multi-Database):             |
+   308→   308→|                                                                       |
+   309→   309→| \- Section 4: The AI Builder\'s Document Consumption Protocol (5      |
+   310→   310→| phases:                                                               |
+   311→   311→|                                                                       |
+   312→   312→| inventory, loading, synthesis, planning, implementation)              |
+   313→   313→|                                                                       |
+   314→   314→| \- Section 5: Scalability and Traffic Management:                     |
+   315→   315→|                                                                       |
+   316→   316→| \- 5.1 Load balancing (AWS ALB or Cloudflare)                         |
+   317→   317→|                                                                       |
+   318→   318→| \- 5.2 Auto-scaling (CPU/queue-depth triggered)                       |
+   319→   319→|                                                                       |
+   320→   320→| \- 5.3 Rate limiting (token bucket at API gateway, 429 + Retry-After) |
+   321→   321→|                                                                       |
+   322→   322→| \- 5.4 Caching strategies (Redis cache-aside for hot-path data)       |
+   323→   323→|                                                                       |
+   324→   324→| \- 5.5 Circuit breaker (for Stripe, email, SMS calls)                 |
+   325→   325→|                                                                       |
+   326→   326→| \- Section 6: Concurrency Control:                                    |
+   327→   327→|                                                                       |
+   328→   328→| \- 6.1 Optimistic locking (version field on every concurrent entity)  |
+   329→   329→|                                                                       |
+   330→   330→| \- 6.2 Pessimistic locking (SELECT FOR UPDATE for schedule conflicts) |
+   331→   331→|                                                                       |
+   332→   332→| \- 6.3 Distributed locks with Redis (SET NX with TTL for appointment  |
+   333→   333→|                                                                       |
+   334→   334→| booking --- prevent double-booking)                                   |
+   335→   335→|                                                                       |
+   336→   336→| \- 6.4 Idempotency (the middleware pattern with the code block ---    |
+   337→   337→|                                                                       |
+   338→   338→| idempotency key on every write endpoint)                              |
+   339→   339→|                                                                       |
+   340→   340→| \- 6.5 Database connection pooling (PgBouncer)                        |
+   341→   341→|                                                                       |
+   342→   342→| \- Section 7: Data Consistency (Saga pattern for subscription         |
+   343→   343→| billing,                                                              |
+   344→   344→|                                                                       |
+   345→   345→| Outbox pattern for event publication)                                 |
+   346→   346→|                                                                       |
+   347→   347→| \- Section 8: Multi-Database Architecture (Table 1: polyglot          |
+   348→   348→| persistence                                                           |
+   349→   349→|                                                                       |
+   350→   350→| --- PostgreSQL for transactional, Redis for cache, S3 for documents,  |
+   351→   351→|                                                                       |
+   352→   352→| central data hub for patient data with RBAC)                          |
+   353→   353→|                                                                       |
+   354→   354→| FROM DOC 6 (Multi-Agent Collaboration, Fault Tolerance and            |
+   355→   355→| Continuity):                                                          |
+   356→   356→|                                                                       |
+   357→   357→| \- Section 4: Multi-Agent Collaboration Architecture:                 |
+   358→   358→|                                                                       |
+   359→   359→| \- 4.1 Orchestration patterns (Table 1: supervisor pattern            |
+   360→   360→| recommended)                                                          |
+   361→   361→|                                                                       |
+   362→   362→| \- 4.2 Shared task ledger (PostgreSQL, append-only, versioned)        |
+   363→   363→|                                                                       |
+   364→   364→| \- 4.3 State sharing (event bus, not direct agent-to-agent messages)  |
+   365→   365→|                                                                       |
+   366→   366→| \- 4.4 File-level coordination (version control branching)            |
+   367→   367→|                                                                       |
+   368→   368→| \- Section 5: Fault Tolerance --- Durable Execution:                  |
+   369→   369→|                                                                       |
+   370→   370→| \- 5.1 Why checkpointing is not enough (durable execution recovers    |
+   371→   371→|                                                                       |
+   372→   372→| at the failing step, not the boundary)                                |
+   373→   373→|                                                                       |
+   374→   374→| \- 5.2 Durable execution runtimes (Table 2: Inngest recommended)      |
+   375→   375→|                                                                       |
+   376→   376→| \- 5.3 Workflow and activity split (deterministic workflow,           |
+   377→   377→|                                                                       |
+   378→   378→| nondeterministic activities)                                          |
+   379→   379→|                                                                       |
+   380→   380→| \- 5.4 Idempotent recovery (activities identified by unique key)      |
+   381→   381→|                                                                       |
+   382→   382→| \- Section 6: Continuity and Graceful Degradation:                    |
+   383→   383→|                                                                       |
+   384→   384→| \- 6.1 Solo builder takeover (reads pending tasks from ledger)        |
+   385→   385→|                                                                       |
+   386→   386→| \- 6.2 Agent health monitoring (heartbeats every 30 seconds)          |
+   387→   387→|                                                                       |
+   388→   388→| \- 6.3 Resumption (agent synchronizes with ledger before resuming)    |
+   389→   389→|                                                                       |
+   390→   390→| \- 6.4 Graceful degradation layers (Table 3: 6 layers from retry to   |
+   391→   391→|                                                                       |
+   392→   392→| solo builder takeover)                                                |
+   393→   393→|                                                                       |
+   394→   394→| FROM DOC 7 (Prompt Template Library and Usage Guide):                 |
+   395→   395→|                                                                       |
+   396→   396→| \- Section 3.2: The CLAUDE.md or AGENTS.md file (the context file     |
+   397→   397→|                                                                       |
+   398→   398→| template)                                                             |
+   399→   399→|                                                                       |
+   400→   400→| \- Section 4: The Master Prompt Template (the fill-in-the-blank       |
+   401→   401→|                                                                       |
+   402→   402→| template that this prompt is an instance of)                          |
+   403→   403→|                                                                       |
+   404→   404→| \- Section 5.2: Business SaaS System prompt (the template this prompt |
+   405→   405→|                                                                       |
+   406→   406→| is based on)                                                          |
+   407→   407→|                                                                       |
+   408→   408→| \- Section 7: The Build Strategy (Table 1: 12-step workflow from      |
+   409→   409→| first                                                                 |
+   410→   410→|                                                                       |
+   411→   411→| prompt to launch)                                                     |
+   412→   412→|                                                                       |
+   413→   413→| PRODUCE A SYNTHESIS DOCUMENT that demonstrates your understanding.    |
+   414→   414→|                                                                       |
+   415→   415→| The synthesis must include ALL of the following sections:             |
+   416→   416→|                                                                       |
+   417→   417→| \(a\) PROBLEM STATEMENT AND IDEAL CUSTOMER PROFILE:                   |
+   418→   418→|                                                                       |
+   419→   419→| \- The specific problem ClinicFlow solves for independent physical    |
+   420→   420→|                                                                       |
+   421→   421→| therapy clinics                                                       |
+   422→   422→|                                                                       |
+   423→   423→| \- The ideal customer profile: independent PT clinics, 1-10           |
+   424→   424→|                                                                       |
+   425→   425→| therapists, United States, currently using disconnected tools         |
+   426→   426→|                                                                       |
+   427→   427→| (scheduling software + billing service + paper documentation +        |
+   428→   428→|                                                                       |
+   429→   429→| phone/email for patient communication), annual revenue \$500K-        |
+   430→   430→|                                                                       |
+   431→   431→| \$3M, willingness to pay \$200-\$800/month for an integrated          |
+   432→   432→|                                                                       |
+   433→   433→| solution                                                              |
+   434→   434→|                                                                       |
+   435→   435→| \- The competitive landscape: generic practice management tools       |
+   436→   436→|                                                                       |
+   437→   437→| (Jane, Cliniko) that are not PT-specific, and enterprise PT           |
+   438→   438→|                                                                       |
+   439→   439→| software (WebPT, Raintree) that is too expensive and complex for      |
+   440→   440→|                                                                       |
+   441→   441→| independent clinics. ClinicFlow differentiates by being PT-           |
+   442→   442→|                                                                       |
+   443→   443→| specific, affordable, and integrated.                                 |
+   444→   444→|                                                                       |
+   445→   445→| \- The gap ClinicFlow fills: purpose-built for independent PT         |
+   446→   446→|                                                                       |
+   447→   447→| clinics, integrates clinical documentation (SOAP notes) with          |
+   448→   448→|                                                                       |
+   449→   449→| business operations (scheduling, billing, claims), modern UX,         |
+   450→   450→|                                                                       |
+   451→   451→| affordable per-seat pricing                                           |
+   452→   452→|                                                                       |
+   453→   453→| \(b\) FUNCTIONAL REQUIREMENTS (the complete feature set):             |
+   454→   454→|                                                                       |
+   455→   455→| 1\. Multi-tenant architecture: each clinic is a tenant with isolated  |
+   456→   456→|                                                                       |
+   457→   457→| data (PostgreSQL RLS on every tenant-scoped table)                    |
+   458→   458→|                                                                       |
+   459→   459→| 2\. Authentication and authorization:                                 |
+   460→   460→|                                                                       |
+   461→   461→| \- Email/password, Google SSO, and SAML SSO for enterprise            |
+   462→   462→|                                                                       |
+   463→   463→| \- Roles: clinic owner (full access), therapist (clinical +           |
+   464→   464→|                                                                       |
+   465→   465→| scheduling), front desk (scheduling + patient management),            |
+   466→   466→|                                                                       |
+   467→   467→| billing manager (billing + claims), patient (portal only)             |
+   468→   468→|                                                                       |
+   469→   469→| 3\. Patient management: patient demographics, insurance information,  |
+   470→   470→|                                                                       |
+   471→   471→| medical history, treatment plans, consent forms                       |
+   472→   472→|                                                                       |
+   473→   473→| 4\. Appointment scheduling: therapist availability, room/resource     |
+   474→   474→|                                                                       |
+   475→   475→| availability, appointment types (evaluation, treatment,               |
+   476→   476→|                                                                       |
+   477→   477→| re-evaluation), recurring appointments, waitlist, automated           |
+   478→   478→|                                                                       |
+   479→   479→| reminders (email + SMS), self-service booking via patient portal      |
+   480→   480→|                                                                       |
+   481→   481→| 5\. Clinical documentation: SOAP notes (Subjective, Objective,        |
+   482→   482→|                                                                       |
+   483→   483→| Assessment, Plan), treatment notes, outcome measures (e.g., DASH,     |
+   484→   484→|                                                                       |
+   485→   485→| Oswestry, KOOS), exercise prescription with printable handouts        |
+   486→   486→|                                                                       |
+   487→   487→| 6\. Billing and insurance: fee schedules, claim generation (CMS-1500  |
+   488→   488→|                                                                       |
+   489→   489→| format), claim submission to clearinghouse (e.g., Office Ally),       |
+   490→   490→|                                                                       |
+   491→   491→| payment posting, patient statements, payment plans                    |
+   492→   492→|                                                                       |
+   493→   493→| 7\. Patient portal: appointment booking, appointment history,         |
+   494→   494→|                                                                       |
+   495→   495→| exercise programs, secure messaging with therapist, bill pay,         |
+   496→   496→|                                                                       |
+   497→   497→| intake forms                                                          |
+   498→   498→|                                                                       |
+   499→   499→| 8\. Reporting and analytics: clinic performance (visits, revenue,     |
+   500→   500→|                                                                       |
+   501→   501→| collections), therapist productivity, patient outcomes, no-show       |
+   502→   502→|                                                                       |
+   503→   503→| rates, insurance claim status                                         |
+   504→   504→|                                                                       |
+   505→   505→| 9\. Communication: in-app messaging, automated reminders, broadcast   |
+   506→   506→|                                                                       |
+   507→   507→| announcements                                                         |
+   508→   508→|                                                                       |
+   509→   509→| 10\. Administration: clinic settings, user management, role           |
+   510→   510→|                                                                       |
+   511→   511→| management, feature flags, audit log, integrations (Stripe,           |
+   512→   512→|                                                                       |
+   513→   513→| clearinghouse, email/SMS providers)                                   |
+   514→   514→|                                                                       |
+   515→   515→| \(c\) NON-FUNCTIONAL REQUIREMENTS:                                    |
+   516→   516→|                                                                       |
+   517→   517→| \- 500 concurrent users per tenant at p95 latency below 300ms for     |
+   518→   518→|                                                                       |
+   519→   519→| reads and below 800ms for writes                                      |
+   520→   520→|                                                                       |
+   521→   521→| \- 99.9 percent availability (43 minutes downtime per month)          |
+   522→   522→|                                                                       |
+   523→   523→| \- Recovery time objective: 4 hours                                   |
+   524→   524→|                                                                       |
+   525→   525→| \- Recovery point objective: 15 minutes                               |
+   526→   526→|                                                                       |
+   527→   527→| \- Data retention: 7 years for audit and compliance records           |
+   528→   528→|                                                                       |
+   529→   529→| \- HIPAA compliance for protected health information (PHI) in patient |
+   530→   530→|                                                                       |
+   531→   531→| records, clinical documentation, and insurance claims                 |
+   532→   532→|                                                                       |
+   533→   533→| \- SOC 2 Type II attestation within 18 months of commercial launch    |
+   534→   534→|                                                                       |
+   535→   535→| \- WCAG 2.2 AA conformance on every user-facing page                  |
+   536→   536→|                                                                       |
+   537→   537→| \(d\) REFERENCE ARCHITECTURE AND DATA MODEL:                          |
+   538→   538→|                                                                       |
+   539→   539→| \- Frontend: Next.js 16 (App Router), Tailwind CSS 4, Radix UI        |
+   540→   540→|                                                                       |
+   541→   541→| primitives, Framer Motion for micro-interactions                      |
+   542→   542→|                                                                       |
+   543→   543→| \- Backend: tRPC for type-safe internal API, Prisma ORM               |
+   544→   544→|                                                                       |
+   545→   545→| \- Database: PostgreSQL 16 with Row-Level Security on every           |
+   546→   546→|                                                                       |
+   547→   547→| tenant-scoped table (the tenant_id column and the policy              |
+   548→   548→|                                                                       |
+   549→   549→| USING (tenant_id = current_setting(\'app.current_tenant_id\')::uuid)) |
+   550→   550→|                                                                       |
+   551→   551→| \- Cache: Redis 7 for sessions, rate-limit counters, hot-path data    |
+   552→   552→|                                                                       |
+   553→   553→| (therapist availability, appointment slots), distributed locks        |
+   554→   554→|                                                                       |
+   555→   555→| \- Queue: Inngest for durable background jobs (claim submission,      |
+   556→   556→|                                                                       |
+   557→   557→| reminder sending, report generation)                                  |
+   558→   558→|                                                                       |
+   559→   559→| \- Storage: S3 or Cloudflare R2 for patient documents, exercise       |
+   560→   560→|                                                                       |
+   561→   561→| handouts, intake forms, exported reports                              |
+   562→   562→|                                                                       |
+   563→   563→| \- Auth: Clerk (Pro plan, SAML SSO add-on for enterprise)             |
+   564→   564→|                                                                       |
+   565→   565→| \- Payment: Stripe (subscription billing, idempotent webhooks,        |
+   566→   566→|                                                                       |
+   567→   567→| proration, dunning)                                                   |
+   568→   568→|                                                                       |
+   569→   569→| \- Search: PostgreSQL full-text search (sufficient for patient and    |
+   570→   570→|                                                                       |
+   571→   571→| appointment search)                                                   |
+   572→   572→|                                                                       |
+   573→   573→| \- The data model from Doc 1 Section 7.5 (Table 2): Tenant, User,     |
+   574→   574→|                                                                       |
+   575→   575→| Role, Session, Subscription, Plan, Invoice, AuditEvent,               |
+   576→   576→|                                                                       |
+   577→   577→| FeatureFlag, Integration --- PLUS the ClinicFlow domain entities:     |
+   578→   578→|                                                                       |
+   579→   579→| Patient, Appointment, AppointmentType, SoapNote, TreatmentPlan,       |
+   580→   580→|                                                                       |
+   581→   581→| Exercise, ExercisePrescription, InsurancePlan, Claim, Payment,        |
+   582→   582→|                                                                       |
+   583→   583→| Encounter, OutcomeMeasure, Room, Resource, Message, Notification,     |
+   584→   584→|                                                                       |
+   585→   585→| Reminder, Report                                                      |
+   586→   586→|                                                                       |
+   587→   587→| \- Every domain entity has tenant_id and the RLS policy               |
+   588→   588→|                                                                       |
+   589→   589→| \(e\) SECURITY CONTROLS (OWASP Top Ten + HIPAA):                      |
+   590→   590→|                                                                       |
+   591→   591→| \- Broken access control: RLS at database level + RBAC in application |
+   592→   592→|                                                                       |
+   593→   593→| \- Cryptographic failures: bcrypt/argon2 for passwords, TLS 1.3 for   |
+   594→   594→|                                                                       |
+   595→   595→| transport, AES-256 for PHI at rest, encrypted credentials via         |
+   596→   596→|                                                                       |
+   597→   597→| secrets manager                                                       |
+   598→   598→|                                                                       |
+   599→   599→| \- Injection: parameterized queries via Prisma (no raw SQL)           |
+   600→   600→|                                                                       |
+   601→   601→| \- Insecure design: STRIDE threat modeling in design phase            |
+   602→   602→|                                                                       |
+   603→   603→| \- Security misconfiguration: infrastructure as code (Pulumi)         |
+   604→   604→|                                                                       |
+   605→   605→| \- Vulnerable components: Snyk dependency scanning in CI on every     |
+   606→   606→|                                                                       |
+   607→   607→| commit, 48-hour patch SLA for critical CVEs                           |
+   608→   608→|                                                                       |
+   609→   609→| \- Identification and authentication failures: opaque session tokens  |
+   610→   610→|                                                                       |
+   611→   611→| (not JWT), rate limiting on auth endpoints, account lockout after     |
+   612→   612→|                                                                       |
+   613→   613→| 5 failed attempts                                                     |
+   614→   614→|                                                                       |
+   615→   615→| \- HIPAA: Business Associate Agreements (BAAs) with all subprocessors |
+   616→   616→|                                                                       |
+   617→   617→| (AWS, Clerk, Stripe, Inngest, email/SMS providers), PHI access        |
+   618→   618→|                                                                       |
+   619→   619→| logging, minimum necessary access, breach notification process        |
+   620→   620→|                                                                       |
+   621→   621→| \- SOC 2: audit logging (append-only, immutable), access reviews      |
+   622→   622→|                                                                       |
+   623→   623→| (quarterly), change management (PR review required), vulnerability    |
+   624→   624→|                                                                       |
+   625→   625→| scanning (continuous)                                                 |
+   626→   626→|                                                                       |
+   627→   627→| \(f\) TESTING STRATEGY (from Doc 4 Section 5, Table 2):               |
+   628→   628→|                                                                       |
+   629→   629→| \- Unit tests: Vitest, 70-80% code coverage, every function and       |
+   630→   630→|                                                                       |
+   631→   631→| module tested in isolation                                            |
+   632→   632→|                                                                       |
+   633→   633→| \- Integration tests: Vitest + Supertest, critical paths 100%         |
+   634→   634→|                                                                       |
+   635→   635→| (tenant provisioning, appointment booking, claim generation,          |
+   636→   636→|                                                                       |
+   637→   637→| payment processing)                                                   |
+   638→   638→|                                                                       |
+   639→   639→| \- End-to-end tests: Playwright, top 10 user journeys (signup,        |
+   640→   640→|                                                                       |
+   641→   641→| schedule appointment, write SOAP note, submit claim, patient          |
+   642→   642→|                                                                       |
+   643→   643→| portal booking, bill pay, report generation, user management,         |
+   644→   644→|                                                                       |
+   645→   645→| role change, feature flag toggle)                                     |
+   646→   646→|                                                                       |
+   647→   647→| \- Contract tests: tRPC type inference (zero-step type safety ---     |
+   648→   648→|                                                                       |
+   649→   649→| the frontend types are inferred from the backend, no codegen)         |
+   650→   650→|                                                                       |
+   651→   651→| \- Security tests: Snyk (dependencies), OWASP ZAP (DAST), Semgrep     |
+   652→   652→|                                                                       |
+   653→   653→| (SAST), zero critical or high vulnerabilities                         |
+   654→   654→|                                                                       |
+   655→   655→| \- Accessibility tests: axe-core in CI, zero violations, manual       |
+   656→   656→|                                                                       |
+   657→   657→| screen-reader testing with NVDA before each release                   |
+   658→   658→|                                                                       |
+   659→   659→| \- Load tests: k6, 10x average peak load, p95 latency and throughput  |
+   660→   660→|                                                                       |
+   661→   661→| targets verified                                                      |
+   662→   662→|                                                                       |
+   663→   663→| \- Cross-tenant isolation tests: automated tests that attempt to      |
+   664→   664→|                                                                       |
+   665→   665→| read another tenant\'s data and must return zero rows                 |
+   666→   666→|                                                                       |
+   667→   667→| \- HIPAA tests: PHI access logging verified, encryption at rest       |
+   668→   668→|                                                                       |
+   669→   669→| verified, BAA coverage verified                                       |
+   670→   670→|                                                                       |
+   671→   671→| \(g\) SCALABILITY AND CONCURRENCY PATTERNS (from Doc 5):              |
+   672→   672→|                                                                       |
+   673→   673→| \- Load balancing: AWS Application Load Balancer                      |
+   674→   674→|                                                                       |
+   675→   675→| \- Auto-scaling: CPU utilization above 60% triggers scale-up,         |
+   676→   676→|                                                                       |
+   677→   677→| below 30% triggers scale-down, cooldown 5 minutes                     |
+   678→   678→|                                                                       |
+   679→   679→| \- Rate limiting: 100 requests/minute per user, 1000/minute per       |
+   680→   680→|                                                                       |
+   681→   681→| tenant, 429 Too Many Requests + Retry-After header                    |
+   682→   682→|                                                                       |
+   683→   683→| \- Caching: Redis cache-aside for therapist availability (TTL 60      |
+   684→   684→|                                                                       |
+   685→   685→| seconds), appointment slots (TTL 30 seconds), user session (TTL       |
+   686→   686→|                                                                       |
+   687→   687→| 24 hours), clinic settings (TTL 5 minutes)                            |
+   688→   688→|                                                                       |
+   689→   689→| \- Circuit breaker: for Stripe API (50% failure rate opens circuit,   |
+   690→   690→|                                                                       |
+   691→   691→| 30-second cooldown), for clearinghouse API, for email/SMS             |
+   692→   692→|                                                                       |
+   693→   693→| providers                                                             |
+   694→   694→|                                                                       |
+   695→   695→| \- Optimistic locking: version field on Patient, Appointment,         |
+   696→   696→|                                                                       |
+   697→   697→| SoapNote, Claim --- concurrent updates detected and rejected          |
+   698→   698→|                                                                       |
+   699→   699→| \- Pessimistic locking: SELECT FOR UPDATE on appointment slot         |
+   700→   700→|                                                                       |
+   701→   701→| creation (prevent double-booking)                                     |
+   702→   702→|                                                                       |
+   703→   703→| \- Distributed lock: Redis SET NX with 30-second TTL on appointment   |
+   704→   704→|                                                                       |
+   705→   705→| booking (prevent two patients booking the same slot simultaneously)   |
+   706→   706→|                                                                       |
+   707→   707→| \- Idempotency: idempotency key header on every POST/PUT endpoint     |
+   708→   708→|                                                                       |
+   709→   709→| (the middleware pattern from Doc 5 Section 6.4 with the code          |
+   710→   710→|                                                                       |
+   711→   711→| block) --- prevents duplicate appointments, duplicate claims,         |
+   712→   712→|                                                                       |
+   713→   713→| duplicate payments from network retries                               |
+   714→   714→|                                                                       |
+   715→   715→| \- Connection pooling: PgBouncer in front of PostgreSQL, pool size    |
+   716→   716→|                                                                       |
+   717→   717→| 20 per application instance                                           |
+   718→   718→|                                                                       |
+   719→   719→| \- Saga pattern: for subscription billing (create subscription -\>    |
+   720→   720→|                                                                       |
+   721→   721→| charge payment -\> activate tenant, with compensating transactions:   |
+   722→   722→|                                                                       |
+   723→   723→| refund payment -\> cancel subscription)                               |
+   724→   724→|                                                                       |
+   725→   725→| \- Outbox pattern: for event publication (DB commit + event atomic    |
+   726→   726→| ---                                                                   |
+   727→   727→|                                                                       |
+   728→   728→| the event is written to an outbox table in the same transaction,      |
+   729→   729→|                                                                       |
+   730→   730→| a relay publishes it to Inngest)                                      |
+   731→   731→|                                                                       |
+   732→   732→| \(h\) MULTI-DATABASE ARCHITECTURE (from Doc 5 Section 8, Table 1):    |
+   733→   733→|                                                                       |
+   734→   734→| \- PostgreSQL: transactional data (tenants, users, patients,          |
+   735→   735→|                                                                       |
+   736→   736→| appointments, SOAP notes, claims, payments) --- the source of truth   |
+   737→   737→|                                                                       |
+   738→   738→| \- Redis: sessions, cache, distributed locks, rate-limit counters     |
+   739→   739→|                                                                       |
+   740→   740→| \- S3/R2: patient documents, exercise handouts, intake forms,         |
+   741→   741→|                                                                       |
+   742→   742→| exported reports (pre-signed URLs for direct upload/download)         |
+   743→   743→|                                                                       |
+   744→   744→| \- Central data hub: for patient PHI shared across modules (patient   |
+   745→   745→|                                                                       |
+   746→   746→| demographics, insurance, clinical history), with RBAC enforcing       |
+   747→   747→|                                                                       |
+   748→   748→| that therapists see only their patients, billing managers see         |
+   749→   749→|                                                                       |
+   750→   750→| only financial data, and patients see only their own records via      |
+   751→   751→|                                                                       |
+   752→   752→| the portal                                                            |
+   753→   753→|                                                                       |
+   754→   754→| \(i\) IMPLEMENTATION ROADMAP (12-18 months, 4 phases):                |
+   755→   755→|                                                                       |
+   756→   756→| Phase 1 (months 1-3): Foundation                                      |
+   757→   757→|                                                                       |
+   758→   758→| \- Tenant provisioning flow, authentication (Clerk), tenant-context   |
+   759→   759→|                                                                       |
+   760→   760→| middleware, RLS policies on all tables, basic CRUD for core           |
+   761→   761→|                                                                       |
+   762→   762→| entities, CI/CD pipeline (GitHub Actions), Pulumi IaC                 |
+   763→   763→|                                                                       |
+   764→   764→| Phase 2 (months 4-7): Domain Features                                 |
+   765→   765→|                                                                       |
+   766→   766→| \- Patient management, appointment scheduling (with distributed       |
+   767→   767→|                                                                       |
+   768→   768→| lock and idempotency), clinical documentation (SOAP notes,            |
+   769→   769→|                                                                       |
+   770→   770→| treatment plans, outcome measures), exercise prescription             |
+   771→   771→|                                                                       |
+   772→   772→| Phase 3 (months 8-11): Commercial Layer                               |
+   773→   773→|                                                                       |
+   774→   774→| \- Subscription billing (Stripe, idempotent webhooks, proration,      |
+   775→   775→|                                                                       |
+   776→   776→| dunning), insurance claim generation and submission, patient          |
+   777→   777→|                                                                       |
+   778→   778→| statements, payment posting, feature flags, audit logging             |
+   779→   779→|                                                                       |
+   780→   780→| Phase 4 (months 12-15): Hardening and Launch                          |
+   781→   781→|                                                                       |
+   782→   782→| \- Patient portal (self-service booking, messaging, bill pay),        |
+   783→   783→|                                                                       |
+   784→   784→| reporting and analytics, observability stack (Datadog), load          |
+   785→   785→|                                                                       |
+   786→   786→| testing (k6), penetration testing (external), accessibility           |
+   787→   787→|                                                                       |
+   788→   788→| audit (axe-core + manual), HIPAA compliance review, SOC 2             |
+   789→   789→|                                                                       |
+   790→   790→| preparation, beta with 5-10 design partner clinics, gradual           |
+   791→   791→|                                                                       |
+   792→   792→| rollout                                                               |
+   793→   793→|                                                                       |
+   794→   794→| \(j\) UNIT ECONOMICS (from Doc 4 Section 13, Table 3):                |
+   795→   795→|                                                                       |
+   796→   796→| \- ARPU (Average Revenue Per User): \$150/month per clinic (average   |
+   797→   797→|                                                                       |
+   798→   798→| 2 therapists at \$49 + 2 support staff at \$19 = \$134, rounded up    |
+   799→   799→|                                                                       |
+   800→   800→| with premium features)                                                |
+   801→   801→|                                                                       |
+   802→   802→| \- CAC target: below \$500 per clinic (content marketing, PT          |
+   803→   803→|                                                                       |
+   804→   804→| community engagement, referrals)                                      |
+   805→   805→|                                                                       |
+   806→   806→| \- LTV target: above \$4,500 (30x CAC ratio: \$150/month x 30 months  |
+   807→   807→|                                                                       |
+   808→   808→| average lifetime = \$4,500)                                           |
+   809→   809→|                                                                       |
+   810→   810→| \- LTV:CAC ratio: 9:1 (target is 3:1 or higher --- this is healthy)   |
+   811→   811→|                                                                       |
+   812→   812→| \- COGS per clinic: \$30/month (hosting \$10, Stripe fees \$5, email/ |
+   813→   813→|                                                                       |
+   814→   814→| SMS \$5, support allocation \$10)                                     |
+   815→   815→|                                                                       |
+   816→   816→| \- Gross margin: 80% (target is 70% or higher --- this is healthy)    |
+   817→   817→|                                                                       |
+   818→   818→| \- Payback period: 4 months (target is 12 months or less --- this is  |
+   819→   819→|                                                                       |
+   820→   820→| healthy)                                                              |
+   821→   821→|                                                                       |
+   822→   822→| \- Net Revenue Retention: 110% target (expansion via additional       |
+   823→   823→|                                                                       |
+   824→   824→| seats and premium features)                                           |
+   825→   825→|                                                                       |
+   826→   826→| \- Monthly churn: below 3% (SMB SaaS benchmark)                       |
+   827→   827→|                                                                       |
+   828→   828→| VERIFICATION GATE FOR PHASE 1:                                        |
+   829→   829→|                                                                       |
+   830→   830→| \- The builder reviews the synthesis and confirms it matches the 7    |
+   831→   831→|                                                                       |
+   832→   832→| documents.                                                            |
+   833→   833→|                                                                       |
+   834→   834→| \- All 10 sections (a through j) are present and complete.            |
+   835→   835→|                                                                       |
+   836→   836→| \- The data model includes tenant_id and RLS on every tenant-scoped   |
+   837→   837→|                                                                       |
+   838→   838→| table.                                                                |
+   839→   839→|                                                                       |
+   840→   840→| \- The testing strategy includes cross-tenant isolation tests.        |
+   841→   841→|                                                                       |
+   842→   842→| \- The unit economics targets are healthy (LTV:CAC \>= 3, gross       |
+   843→   843→| margin                                                                |
+   844→   844→|                                                                       |
+   845→   845→| \>= 70%, payback \<= 12 months).                                      |
+   846→   846→|                                                                       |
+   847→   847→| \- The HIPAA compliance controls are specified (BAAs, PHI logging,    |
+   848→   848→|                                                                       |
+   849→   849→| encryption at rest).                                                  |
+   850→   850→|                                                                       |
+   851→   851→| \- NO CODE IS WRITTEN IN THIS PHASE.                                  |
+   852→   852→|                                                                       |
+   853→   853→| Once the synthesis is approved by the builder, proceed to PHASE 2:    |
+   854→   854→|                                                                       |
+   855→   855→| PHASE 2 --- BUILD PLANNING:                                           |
+   856→   856→|                                                                       |
+   857→   857→| Decompose the ClinicFlow build into atomic tasks. Each task must      |
+   858→   858→| have:                                                                 |
+   859→   859→|                                                                       |
+   860→   860→| \- A unique task ID (e.g., TASK-001, TASK-002)                        |
+   861→   861→|                                                                       |
+   862→   862→| \- A defined input (what it depends on)                               |
+   863→   863→|                                                                       |
+   864→   864→| \- A defined output (what it produces)                                |
+   865→   865→|                                                                       |
+   866→   866→| \- An acceptance criterion (how we know it is done correctly)         |
+   867→   867→|                                                                       |
+   868→   868→| \- A verification gate (the specific test or check to run)            |
+   869→   869→|                                                                       |
+   870→   870→| Group tasks by phase:                                                 |
+   871→   871→|                                                                       |
+   872→   872→| \- Phase 1 tasks (months 1-3): foundation (schema, auth, RLS,         |
+   873→   873→|                                                                       |
+   874→   874→| middleware, CI/CD, IaC)                                               |
+   875→   875→|                                                                       |
+   876→   876→| \- Phase 2 tasks (months 4-7): domain features (patients,             |
+   877→   877→| appointments,                                                         |
+   878→   878→|                                                                       |
+   879→   879→| SOAP notes, exercises)                                                |
+   880→   880→|                                                                       |
+   881→   881→| \- Phase 3 tasks (months 8-11): commercial layer (billing, claims,    |
+   882→   882→|                                                                       |
+   883→   883→| feature flags, audit log)                                             |
+   884→   884→|                                                                       |
+   885→   885→| \- Phase 4 tasks (months 12-15): hardening and launch (patient        |
+   886→   886→| portal,                                                               |
+   887→   887→|                                                                       |
+   888→   888→| reporting, testing, beta, rollout)                                    |
+   889→   889→|                                                                       |
+   890→   890→| Produce the complete task list. The builder reviews and approves it   |
+   891→   891→|                                                                       |
+   892→   892→| before any implementation begins.                                     |
+   893→   893→|                                                                       |
+   894→   894→| PHASE 3 --- IMPLEMENTATION (one task at a time):                      |
+   895→   895→|                                                                       |
+   896→   896→| For each task:                                                        |
+   897→   897→|                                                                       |
+   898→   898→| 1\. Implement the task following the type-safe toolchain:             |
+   899→   899→|                                                                       |
+   900→   900→| \- Zod schema for input and output validation                         |
+   901→   901→|                                                                       |
+   902→   902→| \- Prisma for database access (fully typed, no raw SQL)               |
+   903→   903→|                                                                       |
+   904→   904→| \- tRPC procedure for the API (type-inferred from the backend)        |
+   905→   905→|                                                                       |
+   906→   906→| \- TanStack Query on the frontend (loading, error, data states,       |
+   907→   907→|                                                                       |
+   908→   908→| cache invalidation on mutation success)                               |
+   909→   909→|                                                                       |
+   910→   910→| \- Tailwind CSS 4 + Radix UI for the UI (accessible, WCAG 2.2 AA)     |
+   911→   911→|                                                                       |
+   912→   912→| \- Framer Motion for micro-interactions (150-300ms, easeOutExpo)      |
+   913→   913→|                                                                       |
+   914→   914→| 2\. Run the verification gate:                                        |
+   915→   915→|                                                                       |
+   916→   916→| \- npm test \-- \--grep \[task-specific-test\]                        |
+   917→   917→|                                                                       |
+   918→   918→| \- npm run lint                                                       |
+   919→   919→|                                                                       |
+   920→   920→| \- npm run type-check                                                 |
+   921→   921→|                                                                       |
+   922→   922→| \- npm run test:a11y (if frontend --- axe-core, zero violations)      |
+   923→   923→|                                                                       |
+   924→   924→| \- npm run build (production build must succeed)                      |
+   925→   925→|                                                                       |
+   926→   926→| 3\. If ALL gates pass, report success with a one-paragraph summary of |
+   927→   927→|                                                                       |
+   928→   928→| what was implemented and what was verified. Wait for the builder\'s   |
+   929→   929→|                                                                       |
+   930→   930→| confirmation before proceeding to the next task.                      |
+   931→   931→|                                                                       |
+   932→   932→| 4\. If ANY gate fails:                                                |
+   933→   933→|                                                                       |
+   934→   934→| \- Fix the issue                                                      |
+   935→   935→|                                                                       |
+   936→   936→| \- Re-run the gate                                                    |
+   937→   937→|                                                                       |
+   938→   938→| \- Maximum 3 retries                                                  |
+   939→   939→|                                                                       |
+   940→   940→| \- If still failing after 3 retries, STOP and escalate to the builder |
+   941→   941→|                                                                       |
+   942→   942→| with a detailed error report (what failed, what was tried, what       |
+   943→   943→|                                                                       |
+   944→   944→| the builder should decide)                                            |
+   945→   945→|                                                                       |
+   946→   946→| CONSTRAINTS (non-negotiable --- violating any of these is a critical  |
+   947→   947→|                                                                       |
+   948→   948→| defect):                                                              |
+   949→   949→|                                                                       |
+   950→   950→| 1\. Every tenant-scoped table MUST have tenant_id and the RLS policy  |
+   951→   951→|                                                                       |
+   952→   952→| USING (tenant_id = current_setting(\'app.current_tenant_id\')::uuid). |
+   953→   953→|                                                                       |
+   954→   954→| 2\. Cross-tenant access tests MUST pass (automated tests that attempt |
+   955→   955→|                                                                       |
+   956→   956→| to read another tenant\'s data return zero rows).                     |
+   957→   957→|                                                                       |
+   958→   958→| 3\. Every write endpoint (POST, PUT, DELETE) MUST implement           |
+   959→   959→| idempotency                                                           |
+   960→   960→|                                                                       |
+   961→   961→| using the idempotency key middleware (the pattern from Doc 5          |
+   962→   962→|                                                                       |
+   963→   963→| Section 6.4 with the code block).                                     |
+   964→   964→|                                                                       |
+   965→   965→| 4\. Every concurrent-update entity (Patient, Appointment, SoapNote,   |
+   966→   966→|                                                                       |
+   967→   967→| Claim) MUST have optimistic locking (version field, checked in the    |
+   968→   968→|                                                                       |
+   969→   969→| WHERE clause of updates).                                             |
+   970→   970→|                                                                       |
+   971→   971→| 5\. Appointment booking MUST use a distributed lock (Redis SET NX     |
+   972→   972→| with                                                                  |
+   973→   973→|                                                                       |
+   974→   974→| TTL) to prevent double-booking the same slot.                         |
+   975→   975→|                                                                       |
+   976→   976→| 6\. Every user-facing page MUST conform to WCAG 2.2 AA (axe-core      |
+   977→   977→| reports                                                               |
+   978→   978→|                                                                       |
+   979→   979→| zero violations).                                                     |
+   980→   980→|                                                                       |
+   981→   981→| 7\. The UI MUST NOT look AI-generated. Follow the typography scale    |
+   982→   982→|                                                                       |
+   983→   983→| (Major Third 1.25 ratio from Doc 2 Section 8.1 Table 4), the motion   |
+   984→   984→|                                                                       |
+   985→   985→| principles (150-300ms duration, easeOutExpo easing, from Doc 2        |
+   986→   986→|                                                                       |
+   987→   987→| Section 8.2), the elevation system (4 levels with defined             |
+   988→   988→| box-shadows,                                                          |
+   989→   989→|                                                                       |
+   990→   990→| from Doc 2 Section 8.3), and the professional color system (neutral   |
+   991→   991→|                                                                       |
+   992→   992→| 10-step palette, semantic colors, WCAG contrast verified, from Doc 2  |
+   993→   993→|                                                                       |
+   994→   994→| Section 8.4).                                                         |
+   995→   995→|                                                                       |
+   996→   996→| 8\. The subscription billing MUST be idempotent (Stripe webhook       |
+   997→   997→|                                                                       |
+   998→   998→| deduplication using the event ID).                                    |
+   999→   999→|                                                                       |
+  1000→  1000→| 9\. Every significant architectural decision MUST be documented in an |
+  1001→  1001→|                                                                       |
+  1002→  1002→| ADR (Architecture Decision Record) with the template: title, context, |
+  1003→  1003→|                                                                       |
+  1004→  1004→| decision, status, consequences (from Doc 4 Section 11).               |
+  1005→  1005→|                                                                       |
+  1006→  1006→| 10\. The CI/CD pipeline MUST run on every commit: lint, type-check,   |
+  1007→  1007→|                                                                       |
+  1008→  1008→| unit tests, integration tests, security scan (Snyk), accessibility    |
+  1009→  1009→|                                                                       |
+  1010→  1010→| audit (axe-core), build --- and all must pass before merge.           |
+  1011→  1011→|                                                                       |
+  1012→  1012→| 11\. The deployment MUST use canary strategy (5% traffic for 15       |
+  1013→  1013→| minutes,                                                              |
+  1014→  1014→|                                                                       |
+  1015→  1015→| then 25% for 15 minutes, then 50% for 15 minutes, then 100%) with     |
+  1016→  1016→|                                                                       |
+  1017→  1017→| automated rollback if error rate exceeds 1% or p95 latency exceeds    |
+  1018→  1018→|                                                                       |
+  1019→  1019→| 500ms.                                                                |
+  1020→  1020→|                                                                       |
+  1021→  1021→| 12\. PHI (Protected Health Information) MUST be encrypted at rest     |
+  1022→  1022→|                                                                       |
+  1023→  1023→| (AES-256) and in transit (TLS 1.3). PHI access MUST be logged         |
+  1024→  1024→|                                                                       |
+  1025→  1025→| (who, what, when). BAAs MUST be in place with all subprocessors.      |
+  1026→  1026→|                                                                       |
+  1027→  1027→| 13\. The system MUST handle the failure of any external service       |
+  1028→  1028→|                                                                       |
+  1029→  1029→| (Stripe, clearinghouse, email/SMS) gracefully using the circuit       |
+  1030→  1030→|                                                                       |
+  1031→  1031→| breaker pattern (from Doc 5 Section 5.5).                             |
+  1032→  1032→|                                                                       |
+  1033→  1033→| 14\. If this is a multi-agent build, the shared task ledger (from Doc |
+  1034→  1034→| 6                                                                     |
+  1035→  1035→|                                                                       |
+  1036→  1036→| Section 4.2) MUST be used for all task assignments and state          |
+  1037→  1037→|                                                                       |
+  1038→  1038→| updates, and the durable execution runtime (Inngest, from Doc 6       |
+  1039→  1039→|                                                                       |
+  1040→  1040→| Section 5.2) MUST be used for all long-running processes.             |
+  1041→  1041→|                                                                       |
+  1042→  1042→| TARGET STACK (confirmed --- do not deviate without an ADR):           |
+  1043→  1043→|                                                                       |
+  1044→  1044→| \- Frontend: Next.js 16 (App Router), Tailwind CSS 4, Radix UI,       |
+  1045→  1045→|                                                                       |
+  1046→  1046→| Framer Motion, TanStack Query v5                                      |
+  1047→  1047→|                                                                       |
+  1048→  1048→| \- Backend: tRPC v11, Prisma 5 (with PostgreSQL adapter)              |
+  1049→  1049→|                                                                       |
+  1050→  1050→| \- Database: PostgreSQL 16 with Row-Level Security and pgvector (for  |
+  1051→  1051→|                                                                       |
+  1052→  1052→| future AI features)                                                   |
+  1053→  1053→|                                                                       |
+  1054→  1054→| \- Cache: Redis 7 (via Upstash or Redis Cloud for managed service)    |
+  1055→  1055→|                                                                       |
+  1056→  1056→| \- Queue: Inngest (durable execution, automatic retries, state        |
+  1057→  1057→|                                                                       |
+  1058→  1058→| persistence)                                                          |
+  1059→  1059→|                                                                       |
+  1060→  1060→| \- Storage: Cloudflare R2 (zero egress fees, S3-compatible API)       |
+  1061→  1061→|                                                                       |
+  1062→  1062→| \- Auth: Clerk (Pro plan, SAML SSO add-on for enterprise tiers)       |
+  1063→  1063→|                                                                       |
+  1064→  1064→| \- Payment: Stripe (subscriptions, webhooks, idempotent, proration)   |
+  1065→  1065→|                                                                       |
+  1066→  1066→| \- Clearinghouse: Office Ally API (for insurance claim submission)    |
+  1067→  1067→|                                                                       |
+  1068→  1068→| \- Email: Resend or Postmark (transactional email)                    |
+  1069→  1069→|                                                                       |
+  1070→  1070→| \- SMS: Twilio (appointment reminders)                                |
+  1071→  1071→|                                                                       |
+  1072→  1072→| \- Search: PostgreSQL full-text search (tsvector, trigram)            |
+  1073→  1073→|                                                                       |
+  1074→  1074→| \- Testing: Vitest (unit), Playwright (E2E), axe-core                 |
+  1075→  1075→| (accessibility),                                                      |
+  1076→  1076→|                                                                       |
+  1077→  1077→| k6 (load), Snyk (security), Semgrep (SAST)                            |
+  1078→  1078→|                                                                       |
+  1079→  1079→| \- CI/CD: GitHub Actions (lint, type-check, test, security, a11y,     |
+  1080→  1080→| build,                                                                |
+  1081→  1081→|                                                                       |
+  1082→  1082→| deploy)                                                               |
+  1083→  1083→|                                                                       |
+  1084→  1084→| \- IaC: Pulumi (TypeScript --- infrastructure as code for AWS)        |
+  1085→  1085→|                                                                       |
+  1086→  1086→| \- Monitoring: Datadog (metrics, logs, traces, APM)                   |
+  1087→  1087→|                                                                       |
+  1088→  1088→| \- Error tracking: Sentry                                             |
+  1089→  1089→|                                                                       |
+  1090→  1090→| \- Status page: Statuspage.io                                         |
+  1091→  1091→|                                                                       |
+  1092→  1092→| BEGIN NOW:                                                            |
+  1093→  1093→|                                                                       |
+  1094→  1094→| Start with Phase 1. Read the relevant sections from the 7 documents   |
+  1095→  1095→|                                                                       |
+  1096→  1096→| in the docs/ folder, then produce the synthesis document (sections a  |
+  1097→  1097→|                                                                       |
+  1098→  1098→| through j). Do NOT write any code until the synthesis is reviewed and |
+  1099→  1099→|                                                                       |
+  1100→  1100→| approved by the builder. Confirm that you have read the documents by  |
+  1101→  1101→|                                                                       |
+  1102→  1102→| listing the sections you loaded before presenting the synthesis.      |
+  1103→  1103→+-----------------------------------------------------------------------+
+  1104→  1104→

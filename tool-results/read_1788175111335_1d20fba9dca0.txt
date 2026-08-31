@@ -1,0 +1,402 @@
+   400→| \- Search: PostgreSQL FTS or Meilisearch                              |
+   401→|                                                                       |
+   402→| \- Storage: S3 or Cloudflare R2                                       |
+   403→|                                                                       |
+   404→| \- Auth: \[Clerk for fast start, or custom session+RLS for control\]  |
+   405→|                                                                       |
+   406→| \- Testing: Vitest (unit), Playwright (E2E), axe-core (a11y), k6      |
+   407→| (load)                                                                |
+   408→|                                                                       |
+   409→| \- CI/CD: GitHub Actions                                              |
+   410→|                                                                       |
+   411→| \- IaC: Pulumi or Terraform                                           |
+   412→|                                                                       |
+   413→| CONSTRAINTS:                                                          |
+   414→|                                                                       |
+   415→| \- Do not write any code until the synthesis (Phase 1) is approved.   |
+   416→|                                                                       |
+   417→| \- Do not proceed past a failed verification gate.                    |
+   418→|                                                                       |
+   419→| \- Implement idempotency for every write endpoint.                    |
+   420→|                                                                       |
+   421→| \- Implement optimistic locking for every concurrent-update entity.   |
+   422→|                                                                       |
+   423→| \- Enforce WCAG 2.2 AA on every user-facing page.                     |
+   424→|                                                                       |
+   425→| \- Do not produce AI-flag UI; follow the professional UI/UX standards |
+   426→|                                                                       |
+   427→| from Doc 2 (typography scale, motion principles, elevation system).   |
+   428→|                                                                       |
+   429→| Begin with Phase 1. Read the documents and produce the synthesis.     |
+   430→+-----------------------------------------------------------------------+
+   431→
+   432→The master template is the starting point for every build, and the
+   433→system-specific prompts that follow are instances of this template,
+   434→filled in with the content for each system type. The builder uses the
+   435→master template as the reference and the system-specific prompts as the
+   436→starting points, adapting them to the specific requirements of the
+   437→build.
+   438→
+   439→[]{#_Toc100007 .anchor}**5. System-Specific Prompt Templates**
+   440→
+   441→This section provides the copy-paste prompt templates for each of the
+   442→eight system categories, plus the advanced combination prompts that
+   443→integrate multiple systems. Each template is a complete first prompt
+   444→that the builder issues to the AI builder, and each is an instance of
+   445→the master template filled in with the system-specific content. The
+   446→builder adapts the bracketed sections to the specific requirements, and
+   447→the prompt directs the AI builder to consume the relevant document
+   448→sections, to synthesize its understanding, and to produce the task list.
+   449→
+   450→[]{#_Toc100008 .anchor}**5.1 School Management System (Complete Private
+   451→School)**
+   452→
+   453→The School Management System is the most comprehensive of the
+   454→system-specific prompts, because it is a vertical ERP that integrates
+   455→the academic, financial, operational, and communication functions of a
+   456→school. The prompt directs the AI builder to construct a system that
+   457→covers the entire school, with the seven modules documented in the
+   458→second document\'s use case, and with the advanced systems that a modern
+   459→smart school requires, including the library management, the transport
+   460→management, the AI-powered features, and the analytics dashboard.
+   461→
+   462→+-----------------------------------------------------------------------+
+   463→| ROLE: You are a senior full-stack engineer building a complete        |
+   464→|                                                                       |
+   465→| production-grade School Management System for a private school. This  |
+   466→| is a                                                                  |
+   467→|                                                                       |
+   468→| vertical ERP that covers the entire school\'s operations.             |
+   469→|                                                                       |
+   470→| THE SYSTEM TO BUILD:                                                  |
+   471→|                                                                       |
+   472→| \- Name: \[SCHOOL_NAME, e.g., Greenfield Academy Management System\]  |
+   473→|                                                                       |
+   474→| \- Type: Vertical ERP for private K-12 education (single school or    |
+   475→| small group)                                                          |
+   476→|                                                                       |
+   477→| \- Target users: Administrators, teachers, parents, students, finance |
+   478→| staff,                                                                |
+   479→|                                                                       |
+   480→| librarians, transport managers                                        |
+   481→|                                                                       |
+   482→| \- Primary problem: Manual processes (paper attendance, handwritten   |
+   483→| gradebooks,                                                           |
+   484→|                                                                       |
+   485→| cash fee collection, phone-tree announcements, manual scheduling)     |
+   486→|                                                                       |
+   487→| \- School size: \[e.g., 500-2000 students, 50-200 staff\]             |
+   488→|                                                                       |
+   489→| \- Goal: Make the school smarter, faster, and more innovative than    |
+   490→| traditional                                                           |
+   491→|                                                                       |
+   492→| MODULES TO IMPLEMENT (7 core + 4 advanced):                           |
+   493→|                                                                       |
+   494→| CORE MODULES:                                                         |
+   495→|                                                                       |
+   496→| 1\. Admissions --- applicant tracking, online applications, document  |
+   497→| upload,                                                               |
+   498→|                                                                       |
+   499→| interview scheduling, admission decisions                             |
+   500→|                                                                       |
+   501→| 2\. Student Information --- demographics, guardians, medical records, |
+   502→|                                                                       |
+   503→| emergency contacts, academic history                                  |
+   504→|                                                                       |
+   505→| 3\. Academic --- courses, sections, enrollment, scheduling,           |
+   506→| attendance,                                                           |
+   507→|                                                                       |
+   508→| gradebook, transcripts, report cards                                  |
+   509→|                                                                       |
+   510→| 4\. Financial --- fee structures, invoicing, online payments,         |
+   511→| scholarships,                                                         |
+   512→|                                                                       |
+   513→| financial aid, expense tracking                                       |
+   514→|                                                                       |
+   515→| 5\. Communication --- announcements, messaging                        |
+   516→| (teacher-parent-student),                                             |
+   517→|                                                                       |
+   518→| notifications (email, SMS, push), event calendar                      |
+   519→|                                                                       |
+   520→| 6\. Reporting --- transcripts, report cards, attendance reports,      |
+   521→| financial                                                             |
+   522→|                                                                       |
+   523→| reports, custom report builder                                        |
+   524→|                                                                       |
+   525→| 7\. Administration --- users, roles, permissions, school settings,    |
+   526→|                                                                       |
+   527→| academic year/term management                                         |
+   528→|                                                                       |
+   529→| ADVANCED MODULES (to make the school \"smart\"):                      |
+   530→|                                                                       |
+   531→| 8\. Library Management --- catalog, circulation (checkout/return),    |
+   532→| reservations,                                                         |
+   533→|                                                                       |
+   534→| fines, ISBN lookup, digital resources                                 |
+   535→|                                                                       |
+   536→| 9\. Transport Management --- bus routes, stops, student assignment,   |
+   537→| driver                                                                |
+   538→|                                                                       |
+   539→| tracking, parent pickup notifications, GPS tracking                   |
+   540→|                                                                       |
+   541→| 10\. Health & Medical --- health records, medication tracking,        |
+   542→| immunization                                                          |
+   543→|                                                                       |
+   544→| tracking, clinic visits, allergy alerts                               |
+   545→|                                                                       |
+   546→| 11\. AI-Powered Features --- automated attendance analytics, early    |
+   547→| warning                                                               |
+   548→|                                                                       |
+   549→| system for at-risk students, automated report card comments,          |
+   550→|                                                                       |
+   551→| chatbot for parent queries, predictive enrollment                     |
+   552→|                                                                       |
+   553→| PHASE 1 --- DOCUMENT CONSUMPTION:                                     |
+   554→|                                                                       |
+   555→| Read from the foundational documents:                                 |
+   556→|                                                                       |
+   557→| \- Doc 1: Section 10 (ERP) for the financial module pattern and       |
+   558→| shared data                                                           |
+   559→|                                                                       |
+   560→| backbone; Section 14 (LMS) for the academic module pattern; Section 7 |
+   561→|                                                                       |
+   562→| (Multi-Tenant SaaS) if serving multiple schools.                      |
+   563→|                                                                       |
+   564→| \- Doc 2: The school management system use case (Section 5) with the  |
+   565→| prompt                                                                |
+   566→|                                                                       |
+   567→| sequence and the manual-to-digital process mapping.                   |
+   568→|                                                                       |
+   569→| \- Doc 3: The database selection (PostgreSQL for transactional,       |
+   570→| ClickHouse                                                            |
+   571→|                                                                       |
+   572→| if analytics-heavy), the auth selection (Clerk or custom), the tRPC   |
+   573→|                                                                       |
+   574→| integration contract.                                                 |
+   575→|                                                                       |
+   576→| \- Doc 4: The requirements engineering (use cases for each module),   |
+   577→| the                                                                   |
+   578→|                                                                       |
+   579→| testing strategy (including FERPA compliance testing), the threat     |
+   580→|                                                                       |
+   581→| modeling (STRIDE for student data).                                   |
+   582→|                                                                       |
+   583→| \- Doc 5: The concurrency patterns (distributed lock for schedule     |
+   584→| conflicts,                                                            |
+   585→|                                                                       |
+   586→| idempotency for fee payments), the multi-database architecture        |
+   587→|                                                                       |
+   588→| (PostgreSQL for records, Redis for sessions, S3 for documents).       |
+   589→|                                                                       |
+   590→| \- Doc 6: The durable execution for long-running processes (report    |
+   591→| card                                                                  |
+   592→|                                                                       |
+   593→| generation, bulk notifications).                                      |
+   594→|                                                                       |
+   595→| Produce a SYNTHESIS that includes:                                    |
+   596→|                                                                       |
+   597→| \(a\) The complete data model for all 11 modules (entities,           |
+   598→| relationships).                                                       |
+   599→|                                                                       |
+   600→| \(b\) The process flows for: admissions, attendance, fee payment,     |
+   601→| grading,                                                              |
+   602→|                                                                       |
+   603→| library circulation, transport assignment, report card generation.    |
+   604→|                                                                       |
+   605→| \(c\) The FERPA compliance controls (student data access, audit       |
+   606→| logging).                                                             |
+   607→|                                                                       |
+   608→| \(d\) The WCAG 2.2 AA accessibility plan (for all user types          |
+   609→| including                                                             |
+   610→|                                                                       |
+   611→| parents with disabilities).                                           |
+   612→|                                                                       |
+   613→| \(e\) The AI features integration plan (which model, which data,      |
+   614→| which                                                                 |
+   615→|                                                                       |
+   616→| guardrails, which evaluation harness).                                |
+   617→|                                                                       |
+   618→| \(f\) The implementation roadmap (12-18 months, phased by module).    |
+   619→|                                                                       |
+   620→| ACCEPTANCE CRITERIA FOR THE SYNTHESIS:                                |
+   621→|                                                                       |
+   622→| \- All 11 modules are covered with their entities and relationships.  |
+   623→|                                                                       |
+   624→| \- FERPA is identified as the applicable regulation.                  |
+   625→|                                                                       |
+   626→| \- The AI features have guardrails and an evaluation harness.         |
+   627→|                                                                       |
+   628→| \- The roadmap is phased with dependencies identified.                |
+   629→|                                                                       |
+   630→| VERIFICATION GATE:                                                    |
+   631→|                                                                       |
+   632→| \- Builder reviews the synthesis and confirms it matches the          |
+   633→| documents.                                                            |
+   634→|                                                                       |
+   635→| \- No code is written in this phase.                                  |
+   636→|                                                                       |
+   637→| TARGET STACK:                                                         |
+   638→|                                                                       |
+   639→| \- Next.js 16, PostgreSQL 16 with RLS, Redis 7, tRPC, Prisma          |
+   640→|                                                                       |
+   641→| \- Auth: Clerk (for fast start) or custom session+RLS                 |
+   642→|                                                                       |
+   643→| \- Queue: Inngest (for report generation, bulk notifications)         |
+   644→|                                                                       |
+   645→| \- Storage: S3 (for student documents, report cards)                  |
+   646→|                                                                       |
+   647→| \- AI: OpenAI or Anthropic via unified gateway (for AI features)      |
+   648→|                                                                       |
+   649→| \- Testing: Vitest, Playwright, axe-core, k6                          |
+   650→|                                                                       |
+   651→| CONSTRAINTS:                                                          |
+   652→|                                                                       |
+   653→| \- Student data is FERPA-protected; enforce RLS and audit logging.    |
+   654→|                                                                       |
+   655→| \- Fee payments must be idempotent (prevent double charges).          |
+   656→|                                                                       |
+   657→| \- Schedule conflicts must be detected before publication.            |
+   658→|                                                                       |
+   659→| \- Report cards must be accessible to screen readers.                 |
+   660→|                                                                       |
+   661→| \- The system must handle concurrent grade entry by multiple          |
+   662→| teachers.                                                             |
+   663→|                                                                       |
+   664→| Begin with Phase 1. Read the documents and produce the synthesis.     |
+   665→+-----------------------------------------------------------------------+
+   666→
+   667→[]{#_Toc100009 .anchor}**5.2 Business SaaS System (Multi-Tenant)**
+   668→
+   669→+-----------------------------------------------------------------------+
+   670→| ROLE: You are a senior full-stack engineer building a                 |
+   671→| production-grade                                                      |
+   672→|                                                                       |
+   673→| multi-tenant Business SaaS platform for \[VERTICAL, e.g., physical    |
+   674→| therapy                                                               |
+   675→|                                                                       |
+   676→| practice management / legal practice management / field service       |
+   677→| management\].                                                         |
+   678→|                                                                       |
+   679→| THE SYSTEM TO BUILD:                                                  |
+   680→|                                                                       |
+   681→| \- Name: \[PRODUCT_NAME\]                                             |
+   682→|                                                                       |
+   683→| \- Type: Multi-tenant B2B SaaS                                        |
+   684→|                                                                       |
+   685→| \- Vertical: \[VERTICAL\]                                             |
+   686→|                                                                       |
+   687→| \- Target users: \[PRIMARY_USERS\]                                    |
+   688→|                                                                       |
+   689→| \- Primary problem: \[THE SPECIFIC WORKFLOW INEFFICIENCY\]            |
+   690→|                                                                       |
+   691→| \- Monetization: Per-seat subscription (\$X/seat/month)               |
+   692→|                                                                       |
+   693→| PHASE 1 --- DOCUMENT CONSUMPTION:                                     |
+   694→|                                                                       |
+   695→| Read from the foundational documents:                                 |
+   696→|                                                                       |
+   697→| \- Doc 1: Section 7 (Multi-Tenant SaaS) --- the data model (Tenant,   |
+   698→| User,                                                                 |
+   699→|                                                                       |
+   700→| Role, Session, Subscription), the tenant isolation (PostgreSQL RLS),  |
+   701→|                                                                       |
+   702→| the process flows (tenant provisioning, auth, billing).               |
+   703→|                                                                       |
+   704→| \- Doc 2: The B2B SaaS use case (Section 6) with the tenant isolation |
+   705→| prompt.                                                               |
+   706→|                                                                       |
+   707→| \- Doc 3: The database (PostgreSQL with RLS), cache (Redis), auth     |
+   708→| (Clerk),                                                              |
+   709→|                                                                       |
+   710→| API style (tRPC), ORM (Prisma or Drizzle).                            |
+   711→|                                                                       |
+   712→| \- Doc 4: The requirements engineering, testing strategy, SOC 2       |
+   713→| compliance.                                                           |
+   714→|                                                                       |
+   715→| \- Doc 5: The scalability (load balancing, rate limiting),            |
+   716→| concurrency                                                           |
+   717→|                                                                       |
+   718→| (optimistic locking, idempotency), multi-database (PostgreSQL + Redis |
+   719→|                                                                       |
+   720→| \+ S3).                                                               |
+   721→|                                                                       |
+   722→| \- Doc 6: The durable execution for subscription billing, the         |
+   723→| graceful                                                              |
+   724→|                                                                       |
+   725→| degradation for agent failures.                                       |
+   726→|                                                                       |
+   727→| Produce a SYNTHESIS that includes:                                    |
+   728→|                                                                       |
+   729→| \(a\) The problem statement, ICP, functional and non-functional       |
+   730→| requirements.                                                         |
+   731→|                                                                       |
+   732→| \(b\) The data model with tenant_id on every tenant-scoped table and  |
+   733→| the                                                                   |
+   734→|                                                                       |
+   735→| RLS policy.                                                           |
+   736→|                                                                       |
+   737→| \(c\) The subscription billing flow (Stripe integration, idempotent   |
+   738→| webhooks).                                                            |
+   739→|                                                                       |
+   740→| \(d\) The SOC 2 compliance controls (audit logging, access reviews).  |
+   741→|                                                                       |
+   742→| \(e\) The implementation roadmap (12-18 months).                      |
+   743→|                                                                       |
+   744→| CONSTRAINTS:                                                          |
+   745→|                                                                       |
+   746→| \- Every tenant-scoped table has tenant_id and the RLS policy.        |
+   747→|                                                                       |
+   748→| \- Cross-tenant access tests must pass (return zero rows).            |
+   749→|                                                                       |
+   750→| \- The subscription billing is idempotent.                            |
+   751→|                                                                       |
+   752→| \- WCAG 2.2 AA on every page.                                         |
+   753→|                                                                       |
+   754→| \- Rate limiting on the API.                                          |
+   755→|                                                                       |
+   756→| Begin with Phase 1.                                                   |
+   757→+-----------------------------------------------------------------------+
+   758→
+   759→[]{#_Toc100010 .anchor}**5.3 E-Commerce and Marketplace System**
+   760→
+   761→+-----------------------------------------------------------------------+
+   762→| ROLE: You are a senior full-stack engineer building a                 |
+   763→| production-grade                                                      |
+   764→|                                                                       |
+   765→| E-Commerce system for \[VERTICAL, e.g., specialty food / industrial   |
+   766→| parts /                                                               |
+   767→|                                                                       |
+   768→| handcrafted goods\]. \[Optional: This is a marketplace with multiple  |
+   769→| sellers.\]                                                            |
+   770→|                                                                       |
+   771→| THE SYSTEM TO BUILD:                                                  |
+   772→|                                                                       |
+   773→| \- Name: \[STORE_NAME\]                                               |
+   774→|                                                                       |
+   775→| \- Type: \[Single-merchant store / Multi-seller marketplace\]         |
+   776→|                                                                       |
+   777→| \- Vertical: \[VERTICAL\]                                             |
+   778→|                                                                       |
+   779→| \- Target users: \[Shoppers, merchants/admins\]                       |
+   780→|                                                                       |
+   781→| \- Primary problem: \[THE SPECIFIC COMMERCE INEFFICIENCY\]            |
+   782→|                                                                       |
+   783→| \- Monetization: \[Transaction fee + subscription / pure              |
+   784→| subscription\]                                                        |
+   785→|                                                                       |
+   786→| PHASE 1 --- DOCUMENT CONSUMPTION:                                     |
+   787→|                                                                       |
+   788→| Read from the foundational documents:                                 |
+   789→|                                                                       |
+   790→| \- Doc 1: Section 8 (E-Commerce) --- the data model (Product,         |
+   791→| ProductVariant,                                                       |
+   792→|                                                                       |
+   793→| Order, OrderItem, Payment, Shipment), the order state machine, the    |
+   794→|                                                                       |
+   795→| process flows (checkout, fulfillment, returns).                       |
+   796→|                                                                       |
+   797→| \- Doc 2: The e-commerce use case.                                    |
+   798→|                                                                       |
+   799→| \- Doc 3: The database (PostgreSQL), search (Meilisearch for product  |
+
+[showing lines 400-799 of 1874; use offset=800 with limit to continue reading]

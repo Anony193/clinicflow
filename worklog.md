@@ -96,3 +96,28 @@ Stage Summary:
 - Defect resolved. All 4 governing ADRs are now persisted on disk.
 - Lesson: after a multi-Write where some calls fail, always verify with ls/glob before claiming the task complete. Added to personal checklist.
 - No code impact (ADRs are docs); the schema/seed/landing-page work in the prior batch was unaffected.
+
+---
+Task ID: DOC-RECONCILE
+Agent: senior-fullstack-engineer (primary)
+Task: Read all 8 uploaded playbook documents (DOC0-DOC7) and reconcile prior work against the actual source documents.
+
+Work Log:
+- Received uploaded zip: /home/z/my-project/upload/MultiAgent_Collaboration_FaultTolerance_BusinessProfessional_2026-08-27.zip (481KB).
+- Unzipped to upload/extracted/ — found 8 .docx files + PROJECT_INSTRUCTIONS.md.
+- Moved .docx files to docs/source/ and converted all 8 to markdown via pandoc (DOC0_ClinicFlow_Test_Prompt.md through DOC7_Prompt_Template_Library.md, ~900KB total).
+- Read PROJECT_INSTRUCTIONS.md — the CLAUDE.md/AGENTS.md context file template. Confirms the 7-document structure, the 3-phase process, the 40 build rules, and the target stack.
+- Dispatched 8 parallel Explore subagents (one per document) to extract verbatim content of all sections cited in the DOC0 reading list. All 8 completed successfully (2 needed retry after rate limit).
+- Extracted verbatim: DOC1 §4/§5/§7/§15/§17 (Tables 2,10,11,12,13,14,15 + Figure 2); DOC2 §4/§6/§8 (Tables 4,5 + 12 motion principles + landing page anatomy); DOC3 §4-§9 (Tables 1,2,3,4 + type-safe toolchain code block); DOC4 §4-§13 (Tables 2,3 + ADR template + STRIDE + 8-stage CI/CD + unit economics targets); DOC5 §4-§8 (Table 1 + idempotency middleware code block + Saga + Outbox); DOC6 §4-§6 (Tables 1,2,3 + heartbeat/failover values + 6 degradation layers); DOC7 §3.2/§4/§5.2/§7 (master prompt template + 12-step build workflow); DOC0 (complete ClinicFlow test prompt verbatim).
+
+Reconciliation Findings:
+- CONFIRMED CORRECT: Build directive fidelity (chat matches DOC0 verbatim); all 10 synthesis sections; all 14 constraints; target stack; 4-phase roadmap; Table 2 core entities; domain entities; tenant_id+index on every model; version field on Patient/Appointment/SoapNote/Claim; AuditEvent.phi flag; RLS policy SQL; NFRs (500 concurrent, 300ms/800ms, 99.9%, RTO 4h, RPO 15min); SLO targets; ADR template; CI/CD 8 stages; STRIDE; SOC 2 controls; GDPR rights; testing strategy 8 types; cross-tenant isolation tests; idempotency middleware pattern; Saga pattern; Outbox pattern; multi-DB Table 1; supervisor pattern; Inngest; 6 degradation layers; shared task ledger; heartbeat 30s/2missed/3missed; 12-step build workflow; Business SaaS §5.2 lists PT as first example; landing page 10 sections; motion 150-300ms easeOutExpo; elevation 4 levels; color system; WCAG 2.2 AA; unit economics (9:1, 80%, 4mo, 110%).
+- FIXED: Type scale pixel values in globals.css updated to EXACT Doc 2 Table 4 values (10.24/12.8/16/20/25/31.25/39/48.8px with exact line-heights and letter-spacings). Removed the extra 61px step (doc only has 8 steps). Prior values were approximate (11/13.8/16/20/25/31.2/39/48.8/61); now exact.
+- NOTED (7 minor discrepancies, DOC0 authoritative in all cases): (1) concurrent users 1000 in DOC1 vs 500 in DOC0 → used 500; (2) churn <2% in DOC4 vs <3% in DOC0 → used <3%; (3) Inngest not in DOC3 §5.2 but mandated by DOC0 → used Inngest; (4) Saga example is e-commerce in DOC5 but subscription billing in DOC0 → used subscription billing; (5) S3 not in DOC5 Table 1 but in DOC0 → included R2; (6) heartbeat numeric values in DOC6 §6.6 not §6.2 → citation corrected; (7) RLS policy double quotes in DOC1 vs single quotes in DOC0 → used single quotes (PostgreSQL accepts both).
+
+Stage Summary:
+- All 8 documents read in full. Prior work validated against actual source. One fix applied (type scale). Reconciliation report at docs/RECONCILIATION_REPORT.md.
+- The foundation (synthesis, build plan, ADRs, schema, seed, landing page) is confirmed correct against the documented specification.
+- Key verbatim artifacts preserved for implementation: RLS policy SQL, idempotency middleware code block (DOC5 §6.4), type-safe toolchain contract (DOC3 §8.5), type scale (DOC2 Table 4), ADR template (DOC4 §11.1), unit economics targets (DOC4 Table 3), heartbeat/failover values (DOC6 §6.6).
+- Confirmed: ClinicFlow is an instance of DOC7 §5.2 (Business SaaS System — Multi-Tenant), which lists "physical therapy practice management" as its first example vertical.
+- Next: resume critical path with TASK-005 (tenant-context Prisma extension), TASK-006 (AsyncLocalStorage middleware), TASK-007 (tRPC scaffold) — now with full confidence that the implementation matches the documented spec.

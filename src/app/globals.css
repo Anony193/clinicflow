@@ -58,16 +58,15 @@
   --color-brand-600: oklch(0.55 0.13 178);
   --color-brand-700: oklch(0.45 0.11 178);
 
-  /* Major Third type scale (1.25) — Doc 2 §8.1 Table 4 */
-  --text-xs: 0.69rem;     /* 11px */
-  --text-sm: 0.86rem;     /* ~13.8px */
-  --text-base: 1rem;      /* 16px base */
-  --text-md: 1.25rem;     /* 20px */
-  --text-lg: 1.56rem;     /* 25px */
-  --text-xl: 1.95rem;     /* 31px */
-  --text-2xl: 2.44rem;    /* 39px */
-  --text-3xl: 3.05rem;    /* 49px */
-  --text-4xl: 3.81rem;    /* 61px */
+  /* Major Third type scale (1.25) — Doc 2 §8.1 Table 4 EXACT values */
+  --text-xs: 0.64rem;     /* 10.24px — Step -2: captions, labels, overlines */
+  --text-sm: 0.8rem;      /* 12.8px  — Step -1: secondary text, footnotes */
+  --text-base: 1rem;      /* 16px    — Step 0: body text, form inputs */
+  --text-md: 1.25rem;     /* 20px    — Step 1: H4, large body, card titles */
+  --text-lg: 1.5625rem;   /* 25px    — Step 2: H3, section headings */
+  --text-xl: 1.953rem;    /* 31.25px — Step 3: H2, page headings */
+  --text-2xl: 2.4375rem;  /* 39px    — Step 4: H1, display */
+  --text-3xl: 3.05rem;    /* 48.8px  — Step 5: hero display */
 
   /* Motion — easeOutExpo, 150-300ms (Doc 2 §8.2) */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);

@@ -1,0 +1,1075 @@
+     1→     1→+-----------------------------------------------------------------------+
+     2→     2→| > B U S I N E S S P R O F E S S I O N A L R E S E A R C H             |
+     3→     3→| >                                                                     |
+     4→     4→| > **Multi-Agent Collaboration,**                                      |
+     5→     5→| >                                                                     |
+     6→     6→| > **Fault Tolerance, and**                                            |
+     7→     7→| >                                                                     |
+     8→     8→| > **Continuity**                                                      |
+     9→     9→| >                                                                     |
+    10→    10→| > The Sixth Foundational Document: How Multi-Agent AI Builders        |
+    11→    11→| > Collaborate Without Conflict, Survive Agent Failures, and Ensure    |
+    12→    12→| > Continuity Without Data Loss Through Durable Execution and Graceful |
+    13→    13→| > Degradation                                                         |
+    14→    14→| >                                                                     |
+    15→    15→| > Document Type: In-Depth Research Report                             |
+    16→    16→| >                                                                     |
+    17→    17→| > Style: Business Professional                                        |
+    18→    18→| >                                                                     |
+    19→    19→| > Scope: Multi-Agent Orchestration, Fault Tolerance, Continuity       |
+    20→    20→| >                                                                     |
+    21→    21→| > Prepared by: Super Z Research                                       |
+    22→    22→| >                                                                     |
+    23→    23→| > Date: August 27, 2026                                               |
+    24→    24→| >                                                                     |
+    25→    25→| > Confidential --- For Strategic Planning 2026 Edition                |
+    26→    26→+-----------------------------------------------------------------------+
+    27→    27→
+    28→    28→**Table of Contents**
+    29→    29→
+    30→    30→[1. Executive Summary [1](#_Toc100000)](#_Toc100000)
+    31→    31→
+    32→    32→[2. Opening Hook and Thesis [2](#_Toc100001)](#_Toc100001)
+    33→    33→
+    34→    34→[3. Background and Context [2](#_Toc100002)](#_Toc100002)
+    35→    35→
+    36→    36→> [3.1 Key Definitions [2](#_Toc100003)](#_Toc100003)
+    37→    37→>
+    38→    38→> [3.2 Scope [3](#_Toc100004)](#_Toc100004)
+    39→    39→>
+    40→    40→> [3.3 Historical Context [3](#_Toc100005)](#_Toc100005)
+    41→    41→
+    42→    42→[4. Multi-Agent Collaboration Architecture
+    43→    43→[3](#_Toc100006)](#_Toc100006)
+    44→    44→
+    45→    45→> [4.1 The Orchestration Patterns [3](#_Toc100007)](#_Toc100007)
+    46→    46→>
+    47→    47→> [4.2 Task Assignment and the Shared Task Ledger
+    48→    48→> [4](#_Toc100008)](#_Toc100008)
+    49→    49→>
+    50→    50→> [4.3 State Sharing and the Inter-Agent Communication
+    51→    51→> [4](#_Toc100009)](#_Toc100009)
+    52→    52→>
+    53→    53→> [4.4 File-Level Coordination [4](#_Toc100010)](#_Toc100010)
+    54→    54→
+    55→    55→[5. Fault Tolerance: The Durable Execution Pattern
+    56→    56→[5](#_Toc100011)](#_Toc100011)
+    57→    57→
+    58→    58→> [5.1 Why Checkpointing Is Not Enough [5](#_Toc100012)](#_Toc100012)
+    59→    59→>
+    60→    60→> [5.2 The Durable Execution Runtimes [5](#_Toc100013)](#_Toc100013)
+    61→    61→>
+    62→    62→> [5.3 The Workflow and Activity Split [6](#_Toc100014)](#_Toc100014)
+    63→    63→>
+    64→    64→> [5.4 Idempotent Recovery: Preventing Duplicate Side Effects
+    65→    65→> [6](#_Toc100015)](#_Toc100015)
+    66→    66→>
+    67→    67→> [5.5 The Circuit Breaker for Agent Calls
+    68→    68→> [6](#_Toc100016)](#_Toc100016)
+    69→    69→
+    70→    70→[6. Continuity and Graceful Degradation [6](#_Toc100017)](#_Toc100017)
+    71→    71→
+    72→    72→> [6.1 The Solo Builder Takeover [7](#_Toc100018)](#_Toc100018)
+    73→    73→>
+    74→    74→> [6.2 Agent Health Monitoring [7](#_Toc100019)](#_Toc100019)
+    75→    75→>
+    76→    76→> [6.3 The Resumption: Bringing Agents Back Online
+    77→    77→> [7](#_Toc100020)](#_Toc100020)
+    78→    78→>
+    79→    79→> [6.4 The Graceful Degradation Layers [8](#_Toc100021)](#_Toc100021)
+    80→    80→>
+    81→    81→> [6.5 The Complete Continuity Architecture
+    82→    82→> [8](#_Toc100022)](#_Toc100022)
+    83→    83→>
+    84→    84→> [6.6 The Continuity Architecture as a Prompt
+    85→    85→> [8](#_Toc100023)](#_Toc100023)
+    86→    86→
+    87→    87→[7. Counterarguments and Limitations [9](#_Toc100024)](#_Toc100024)
+    88→    88→
+    89→    89→[8. Conclusion and Strategic Implications [9](#_Toc100025)](#_Toc100025)
+    90→    90→
+    91→    91→[9. References [10](#_Toc100026)](#_Toc100026)
+    92→    92→
+    93→    93→*Note: This Table of Contents is generated via field codes. To ensure
+    94→    94→page number accuracy after editing, please right-click the TOC and
+    95→    95→select \"Update Field.\"*
+    96→    96→
+    97→    97→[]{#_Toc100000 .anchor}**1. Executive Summary**
+    98→    98→
+    99→    99→This report is the sixth foundational document in the AI builder
+   100→   100→playbook, and it addresses the question of how multi-agent AI builders
+   101→   101→collaborate without conflict, how they survive the failure of individual
+   102→   102→agents or of the entire agent team, and how the build continues without
+   103→   103→data loss when agents fail and when they come back online. The five
+   104→   104→existing documents specify the architecture, the prompting, the stack,
+   105→   105→the operational disciplines, and the scalability and concurrency
+   106→   106→patterns; this sixth document specifies the multi-agent collaboration,
+   107→   107→the fault tolerance, and the continuity patterns that ensure the build
+   108→   108→completes regardless of which agents fail and when. The document exists
+   109→   109→because multi-agent AI systems, as practitioner sources document, fail
+   110→   110→at rates exceeding 50 percent in production, and the failures are
+   111→   111→structural rather than model-specific, meaning that a stronger model
+   112→   112→does not fix them and that only the architectural patterns this document
+   113→   113→specifies can.
+   114→   114→
+   115→   115→The document is organized into five parts. Part I establishes the
+   116→   116→foundations, including the multi-agent failure data and the
+   117→   117→collaboration requirements. Part II covers the multi-agent collaboration
+   118→   118→architecture, including the orchestration patterns, the task assignment,
+   119→   119→the state sharing, and the inter-agent communication. Part III covers
+   120→   120→the fault tolerance and the durable execution, including the checkpoint
+   121→   121→and restart patterns, the durable execution runtimes such as Temporal,
+   122→   122→Inngest, and Restate, and the idempotent recovery that prevents the
+   123→   123→duplicate side effects. Part IV covers the continuity and the graceful
+   124→   124→degradation, including the solo builder takeover when the agent team
+   125→   125→fails, the agent health monitoring, and the resumption when the agents
+   126→   126→come back online. Part V covers the counterarguments, the conclusion,
+   127→   127→and the references.
+   128→   128→
+   129→   129→The central finding is that the continuity of a multi-agent build is not
+   130→   130→a property of the agents but a property of the orchestration layer that
+   131→   131→coordinates them, and the property is achieved through the durable
+   132→   132→execution pattern that persists the state at every step, that recovers
+   133→   133→at the failing step rather than at the nearest checkpoint, and that
+   134→   134→ensures the build resumes without data loss regardless of which agents
+   135→   135→fail. An AI builder system that is orchestrated by a durable execution
+   136→   136→runtime will complete the build even if every agent fails and restarts
+   137→   137→multiple times, because the runtime reconstructs the state and resumes
+   138→   138→from the exact point of failure. An AI builder system that is not
+   139→   139→orchestrated by a durable execution runtime will lose the
+   140→   140→work-in-progress when an agent fails, will restart from the beginning or
+   141→   141→from the nearest checkpoint, and will produce the duplicate side effects
+   142→   142→and the data inconsistencies that destroy the build\'s integrity.
+   143→   143→
+   144→   144→[]{#_Toc100001 .anchor}**2. Opening Hook and Thesis**
+   145→   145→
+   146→   146→The user\'s question, asked plainly, is how the multi-agent AI builders
+   147→   147→collaborate exactly and properly, how they understand each other and
+   148→   148→follow the whole process, how they handle the failure of individual
+   149→   149→agents or of the entire agent team, and how the solo or main builder
+   150→   150→takes over without data loss and resumes the process when the agents
+   151→   151→come back online. The question is not hypothetical; it is the question
+   152→   152→that every builder of a multi-agent system encounters, and it is the
+   153→   153→question that the practitioner literature has been documenting
+   154→   154→throughout 2025 and 2026. Multi-agent AI systems fail at high rates,
+   155→   155→often exceeding 50 percent across production workloads, and the failures
+   156→   156→are systemic, not model-specific, meaning that a stronger model does not
+   157→   157→correct them and that the correction requires the architectural patterns
+   158→   158→this document specifies.
+   159→   159→
+   160→   160→The failure modes are well documented. Two agents book the same
+   161→   161→resource, because neither knew the other had claimed it. A third agent
+   162→   162→overwrites the file the second was still using, because the file lock
+   163→   163→was not coordinated. A fourth agent loops forever waiting on a fifth
+   164→   164→that already gave up, because the timeout and the failure propagation
+   165→   165→were not designed. An agent calls an external API, the API returns a 503
+   166→   166→at step 4 of 7, and the entire workflow restarts from scratch, burning
+   167→   167→compute, duplicating the side effects, and leaving the build in an
+   168→   168→inconsistent state. These failures are not the agents being stupid; they
+   169→   169→are the orchestration layer being absent, and the orchestration layer is
+   170→   170→what this document specifies. The hard problem in agentic AI in 2026 is
+   171→   171→no longer making an agent smart enough; it is making a team of agents
+   172→   172→work together without stepping on each other, and that is an
+   173→   173→orchestration problem, solved with architecture, not with cleverness.
+   174→   174→
+   175→   175→The thesis is therefore the following. A multi-agent AI builder system
+   176→   176→collaborates without conflict, survives the failure of any subset of
+   177→   177→agents, and resumes without data loss only when it is orchestrated by a
+   178→   178→durable execution runtime that persists the state at every step, that
+   179→   179→recovers at the failing step, that coordinates the task assignment and
+   180→   180→the state sharing through a shared ledger, and that implements the
+   181→   181→graceful degradation that allows the solo builder to take over when the
+   182→   182→agent team is unavailable. The durable execution runtime is the
+   183→   183→component that converts the multi-agent system from a fragile prototype
+   184→   184→into a production-grade build system, and it is the component that this
+   185→   185→document directs the AI builder to implement.
+   186→   186→
+   187→   187→[]{#_Toc100002 .anchor}**3. Background and Context**
+   188→   188→
+   189→   189→[]{#_Toc100003 .anchor}**3.1 Key Definitions**
+   190→   190→
+   191→   191→Before proceeding, it is necessary to define the key terms. A
+   192→   192→multi-agent AI builder system is a system in which multiple AI agents,
+   193→   193→each with a defined role, collaborate to construct a software system,
+   194→   194→with the collaboration coordinated by an orchestration layer. The
+   195→   195→orchestration layer is the component that decomposes the build into
+   196→   196→tasks, assigns the tasks to the agents, tracks the task state, and
+   197→   197→integrates the outputs. A durable execution runtime is a runtime that
+   198→   198→guarantees the completion of a workflow despite failures, by persisting
+   199→   199→the state at every step, by replaying the workflow from the persisted
+   200→   200→state after a crash, and by handling the retries and the compensations
+   201→   201→automatically. Durable execution is distinct from checkpointing: a
+   202→   202→checkpoint saves the state at a boundary and restarts from that
+   203→   203→boundary, while durable execution recovers at the failing step, with the
+   204→   204→intermediate side effects recorded and not re-executed.
+   205→   205→
+   206→   206→Graceful degradation is the property of a system to continue operating,
+   207→   207→possibly with reduced functionality, when a component fails, and it is
+   208→   208→the property that allows the solo builder to take over when the agent
+   209→   209→team is unavailable. The solo builder is the single agent, or the human
+   210→   210→builder, that handles the tasks when the multi-agent team cannot, and
+   211→   211→the takeover is the transition from the multi-agent mode to the solo
+   212→   212→mode that must be seamless and must not lose the work-in-progress. The
+   213→   213→agent health monitoring is the discipline of continuously checking the
+   214→   214→availability and the performance of the agents, of detecting the
+   215→   215→failures, and of triggering the failover. The resumption is the process
+   216→   216→of bringing the failed agents back online, of synchronizing their state
+   217→   217→with the current build state, and of reintegrating them into the agent
+   218→   218→team.
+   219→   219→
+   220→   220→[]{#_Toc100004 .anchor}**3.2 Scope**
+   221→   221→
+   222→   222→The scope of this document is the multi-agent collaboration, the fault
+   223→   223→tolerance, and the continuity, as they apply to the AI builder system
+   224→   224→that constructs software. The document covers the orchestration
+   225→   225→patterns, the task assignment, the state sharing, the durable execution,
+   226→   226→the checkpoint and restart, the graceful degradation, the solo builder
+   227→   227→takeover, the agent health monitoring, and the resumption. The document
+   228→   228→does not cover the architecture, the prompting, the stack, the
+   229→   229→operational disciplines, or the scalability and concurrency of the
+   230→   230→system being built, which are covered in the first five documents, and
+   231→   231→it assumes the reader has loaded those documents as context. The
+   232→   232→document also does not provide the depth that a distributed-systems
+   233→   233→specialist would require for the implementation of a durable execution
+   234→   234→runtime from scratch; it recommends the use of the existing runtimes,
+   235→   235→such as Temporal, Inngest, and Restate, and it provides the depth needed
+   236→   236→to direct the AI builder to integrate them.
+   237→   237→
+   238→   238→[]{#_Toc100005 .anchor}**3.3 Historical Context**
+   239→   239→
+   240→   240→The disciplines this document covers have evolved over decades and have
+   241→   241→been reshaped by the AI agent era. The distributed systems research of
+   242→   242→the 1970s and 1980s established the consensus algorithms, the two-phase
+   243→   243→commit, and the fault-tolerance patterns that the multi-agent systems
+   244→   244→inherit. The workflow engines of the 2000s, such as BizTalk and the
+   245→   245→business process management systems, established the durable execution
+   246→   246→pattern for the business workflows. The microservices era of the 2010s
+   247→   247→brought the Saga pattern and the event-driven architecture, and the
+   248→   248→orchestration of the microservices brought the patterns that the
+   249→   249→multi-agent systems now use. The durable execution runtimes, Temporal,
+   250→   250→Inngest, Restate, and Dapr Workflows, emerged in the late 2010s and
+   251→   251→early 2020s and crossed into the early majority in 2025, driven
+   252→   252→primarily by the AI agent infrastructure needs. The AI agent era of 2024
+   253→   253→to 2026 brought the specific failure modes of the probabilistic LLM
+   254→   254→behavior, the malformed tool calls, the hallucinated function
+   255→   255→signatures, and the agent-to-agent message passing that breaks under
+   256→   256→load, and the field converged on a layered resilience model that adapts
+   257→   257→the circuit breakers, the fallback chains, the context compaction, and
+   258→   258→the bulkhead isolation to the LLM-backed systems. This document is the
+   259→   259→synthesis of these traditions, directed at the AI builder system.
+   260→   260→
+   261→   261→[]{#_Toc100006 .anchor}**4. Multi-Agent Collaboration Architecture**
+   262→   262→
+   263→   263→The multi-agent collaboration architecture is the structural pattern by
+   264→   264→which the agents work together, and it is the pattern that most
+   265→   265→determines whether the collaboration succeeds or fails. The Azure
+   266→   266→Architecture Center\'s guide to AI agent design patterns documents that
+   267→   267→the agent architectures exist on a spectrum of complexity, and that each
+   268→   268→level introduces coordination overhead, latency, and cost, with the
+   269→   269→recommendation to use the lowest level of complexity that reliably meets
+   270→   270→the requirements. The architecture must be chosen deliberately, because
+   271→   271→the wrong choice produces the coordination gaps and the conflicts that
+   272→   272→the practitioner literature documents.
+   273→   273→
+   274→   274→[]{#_Toc100007 .anchor}**4.1 The Orchestration Patterns**
+   275→   275→
+   276→   276→Practitioner sources document five orchestration patterns that dominate
+   277→   277→the production multi-agent systems in 2026: the supervisor, the fan-out,
+   278→   278→the pipeline, the debate, and the swarm. The supervisor pattern has one
+   279→   279→agent, the supervisor, that receives the task, decomposes it into
+   280→   280→subtasks, delegates each subtask to a specialist worker, and assembles
+   281→   281→the results; it is the 2026 default for most builds because it provides
+   282→   282→the clear ownership and the single point of coordination. The fan-out
+   283→   283→pattern has a single task distributed to multiple agents that work in
+   284→   284→parallel and whose results are aggregated; it is suited to the tasks
+   285→   285→that can be partitioned without interaction. The pipeline pattern has
+   286→   286→the tasks flow through a sequence of agents, each performing a specific
+   287→   287→transformation; it is suited to the sequential workflows. The debate
+   288→   288→pattern has multiple agents argue different positions and a judge agent
+   289→   289→select the best; it costs approximately 2.5 times a single-model run and
+   290→   290→is suited to the high-stakes decisions. The swarm pattern has a large
+   291→   291→number of agents, up to 300 with the recent models, that self-organize;
+   292→   292→it is suited to the large-scale, emergent-behavior tasks. The
+   293→   293→recommendation for the AI builder system is the supervisor pattern,
+   294→   294→because it provides the clear task assignment, the single point of
+   295→   295→coordination, and the straightforward failure handling that the build
+   296→   296→requires.
+   297→   297→
+   298→   298→**Table 1: Multi-Agent Orchestration Patterns Comparison**
+   299→   299→
+   300→   300→  -----------------------------------------------------------------------
+   301→   301→  **Pattern**       **How It Works**  **Best For**      **Trade-off**
+   302→   302→  ----------------- ----------------- ----------------- -----------------
+   303→   303→  Supervisor        One agent         Default for most  Supervisor is a
+   304→   304→                    decomposes,       builds            bottleneck;
+   305→   305→                    delegates,                          single point of
+   306→   306→                    assembles                           failure
+   307→   307→
+   308→   308→  Fan-out           One task to many  Partitionable     Aggregation logic
+   309→   309→                    agents in         tasks             can be complex
+   310→   310→                    parallel, then                      
+   311→   311→                    aggregate                           
+   312→   312→
+   313→   313→  Pipeline          Sequential        Sequential        Slowest agent
+   314→   314→                    agents, each      workflows         limits throughput
+   315→   315→                    transforming the                    
+   316→   316→                    output                              
+   317→   317→
+   318→   318→  Debate            Multiple agents   High-stakes       \~2.5x cost of
+   319→   319→                    argue, judge      decisions         single model
+   320→   320→                    selects best                        
+   321→   321→
+   322→   322→  Swarm             Many agents       Large-scale       Hard to debug;
+   323→   323→                    self-organize     emergent tasks    unpredictable
+   324→   324→  -----------------------------------------------------------------------
+   325→   325→
+   326→   326→*Table 1: The five multi-agent orchestration patterns, how each works,
+   327→   327→the best-fit use case, and the trade-off. The supervisor pattern is the
+   328→   328→recommended default for the AI builder system because it provides clear
+   329→   329→task assignment and straightforward failure handling.*
+   330→   330→
+   331→   331→[]{#_Toc100008 .anchor}**4.2 Task Assignment and the Shared Task
+   332→   332→Ledger**
+   333→   333→
+   334→   334→The task assignment is the process by which the supervisor decomposes
+   335→   335→the build into tasks and assigns each task to a worker agent, and it is
+   336→   336→the process that must be coordinated through a shared task ledger to
+   337→   337→prevent the conflicts. The shared task ledger is a persistent,
+   338→   338→append-only record of every task, its assignee, its state, and its
+   339→   339→result, and it is the single source of truth that all the agents
+   340→   340→consult. When the supervisor assigns a task, it writes the assignment to
+   341→   341→the ledger; when the worker accepts the task, it updates the ledger;
+   342→   342→when the worker completes the task, it writes the result to the ledger.
+   343→   343→The ledger prevents the double-assignment, because a task that is
+   344→   344→already assigned is visible to all agents, and it prevents the
+   345→   345→lost-work, because the task state is persisted and is recoverable. The
+   346→   346→AI builder should be directed to implement the shared task ledger as a
+   347→   347→durable, versioned data store, with the PostgreSQL database or the
+   348→   348→durable execution runtime\'s state store as the backend, and to direct
+   349→   349→all the task assignments and the updates through the ledger.
+   350→   350→
+   351→   351→[]{#_Toc100009 .anchor}**4.3 State Sharing and the Inter-Agent
+   352→   352→Communication**
+   353→   353→
+   354→   354→The state sharing and the inter-agent communication are the mechanisms
+   355→   355→by which the agents exchange the information, and they are the
+   356→   356→mechanisms that must be designed to prevent the silent message passing
+   357→   357→that breaks under load. The state that the agents share includes the
+   358→   358→build context, the task results, the file changes, and the error
+   359→   359→reports, and the sharing must be through the shared ledger rather than
+   360→   360→through the direct agent-to-agent messages, because the direct messages
+   361→   361→are not persisted, are not visible to the supervisor, and are the source
+   362→   362→of the silent failures. The inter-agent communication should be through
+   363→   363→the published events, with each agent publishing its results to the
+   364→   364→event bus and the other agents subscribing to the events they need, and
+   365→   365→the event bus should be persistent, with the events stored and
+   366→   366→replayable. The Model Context Protocol and the Agent Communication
+   367→   367→Protocol, documented in the recent research, are the emerging standards
+   368→   368→for the inter-agent communication, and the AI builder should be directed
+   369→   369→to use them or to use the durable execution runtime\'s built-in
+   370→   370→communication mechanisms.
+   371→   371→
+   372→   372→[]{#_Toc100010 .anchor}**4.4 File-Level Coordination**
+   373→   373→
+   374→   374→The file-level coordination is the discipline that prevents the agents
+   375→   375→from overwriting each other\'s changes, and it is the discipline that
+   376→   376→the practitioner literature identifies as a common failure mode. When
+   377→   377→two agents modify the same file simultaneously, the second agent\'s
+   378→   378→write overwrites the first, and the first agent\'s work is lost. The
+   379→   379→coordination is achieved through the file locking, with the agent
+   380→   380→acquiring a lock on the file before modifying it and releasing the lock
+   381→   381→after, and through the version control, with the agent committing its
+   382→   382→changes to a branch and the supervisor merging the branches. The version
+   383→   383→control approach is the recommended pattern, because it preserves the
+   384→   384→history, allows the concurrent work on different branches, and provides
+   385→   385→the merge and the conflict resolution that the file locking does not.
+   386→   386→The AI builder should be directed to use the version control as the file
+   387→   387→coordination mechanism, with each agent working on a branch and the
+   388→   388→supervisor merging the branches, and the merge conflicts should be
+   389→   389→detected and resolved before the build proceeds.
+   390→   390→
+   391→   391→[]{#_Toc100011 .anchor}**5. Fault Tolerance: The Durable Execution
+   392→   392→Pattern**
+   393→   393→
+   394→   394→The fault tolerance is the property of the system to continue operating
+   395→   395→despite the failures of its components, and it is the property that the
+   396→   396→user\'s question about the agent failures and the data loss directly
+   397→   397→addresses. The fault tolerance for the multi-agent AI builder system is
+   398→   398→achieved through the durable execution pattern, which is the programming
+   399→   399→model that guarantees the code completion despite the failures, by
+   400→   400→persisting the state, by replaying the workflow, and by handling the
+   401→   401→retries and the compensations automatically. The durable execution
+   402→   402→pattern has crossed into the early majority in 2025, with the new
+   403→   403→offerings from AWS, Cloudflare, and Vercel, driven primarily by the AI
+   404→   404→agent infrastructure needs, and it is the pattern that the AI builder
+   405→   405→system must adopt to meet the real-world standard.
+   406→   406→
+   407→   407→[]{#_Toc100012 .anchor}**5.1 Why Checkpointing Is Not Enough**
+   408→   408→
+   409→   409→The checkpointing is the practice of periodically saving the agent\'s
+   410→   410→state, so that after a failure the agent can restart from the last save
+   411→   411→rather than from the beginning. The checkpointing is necessary but not
+   412→   412→sufficient, because a checkpoint can only take the agent back to a
+   413→   413→boundary, and it does not record how far the code got between the
+   414→   414→boundaries. The Restate blog, a practitioner authority on the durable
+   415→   415→execution, documents the limitation: if a tool performs three calls, an
+   416→   416→API call, an email send, and a database write, and the process dies
+   417→   417→after the second, restarting from the checkpoint re-runs all three,
+   418→   418→because nothing recorded that the first two happened. The checkpoint
+   419→   419→describes the state at a boundary, not the progress within the boundary,
+   420→   420→and the limitation is the source of the duplicate side effects that
+   421→   421→corrupt the build. The durable execution, by contrast, records every
+   422→   422→side effect as a durable event, and on the recovery, it replays the
+   423→   423→events and skips the side effects that have already been recorded, so
+   424→   424→that the recovery lands on the failing step, not on the nearest
+   425→   425→boundary.
+   426→   426→
+   427→   427→[]{#_Toc100013 .anchor}**5.2 The Durable Execution Runtimes**
+   428→   428→
+   429→   429→The durable execution runtimes are the systems that implement the
+   430→   430→durable execution pattern, and the dominant options in 2026 are
+   431→   431→Temporal, Inngest, Restate, and Dapr Workflows. Temporal is the most
+   432→   432→mature, with the event-sourcing approach that replays the workflow code
+   433→   433→against the event history to reconstruct the state after a worker crash;
+   434→   434→it requires the separation of the deterministic workflow logic from the
+   435→   435→nondeterministic activities, with the LLM calls, the API requests, and
+   436→   436→the file writes implemented as activities. Inngest is the
+   437→   437→developer-friendly option, with the steps as the atomic execution units,
+   438→   438→the automatic retries, and the state persistence between the steps, and
+   439→   439→it requires no workers, no cluster, and no queue to run, just the
+   440→   440→functions in the existing application. Restate is the journaled
+   441→   441→approach, with the durable execution that recovers at the failing step
+   442→   442→and that handles the parallel work correctly. Dapr Workflows is the
+   443→   443→runtime-provided option, with the automatic state persistence at every
+   444→   444→await point and the automatic failure recovery through the durable
+   445→   445→reminders. The recommendation for the AI builder system is Inngest for
+   446→   446→the ease of integration, with Temporal as the alternative for the
+   447→   447→systems that need the maximum maturity and the event-sourcing
+   448→   448→guarantees.
+   449→   449→
+   450→   450→**Table 2: Durable Execution Runtime Comparison**
+   451→   451→
+   452→   452→  -------------------------------------------------------------------------
+   453→   453→  **Runtime**       **Approach**        **Strengths**     **Best For**
+   454→   454→  ----------------- ------------------- ----------------- -----------------
+   455→   455→  Temporal          Event sourcing,     Most mature;      Complex
+   456→   456→                    deterministic       strong guarantees workflows;
+   457→   457→                    replay                                enterprise
+   458→   458→
+   459→   459→  Inngest           Steps with          No workers; easy  AI builder
+   460→   460→                    automatic           integration       systems; SaaS
+   461→   461→                    persistence                           
+   462→   462→
+   463→   463→  Restate           Journaled steps,    Correct parallel  Parallel agent
+   464→   464→                    recovers at failing work recovery     workflows
+   465→   465→                    step                                  
+   466→   466→
+   467→   467→  Dapr Workflows    Runtime-provided,   Integrated with   Dapr-based
+   468→   468→                    await-point         Dapr runtime      systems
+   469→   469→                    persistence                           
+   470→   470→  -------------------------------------------------------------------------
+   471→   471→
+   472→   472→*Table 2: The durable execution runtime comparison. Inngest is the
+   473→   473→recommended default for the AI builder system because of its ease of
+   474→   474→integration; Temporal is the alternative for systems needing maximum
+   475→   475→maturity.*
+   476→   476→
+   477→   477→[]{#_Toc100014 .anchor}**5.3 The Workflow and Activity Split**
+   478→   478→
+   479→   479→The durable execution requires the separation of the deterministic
+   480→   480→workflow logic from the nondeterministic activities, and the separation
+   481→   481→is the discipline that makes the replay possible. The workflow logic is
+   482→   482→the deterministic code that orchestrates the steps, that decides the
+   483→   483→next step based on the previous results, and that must produce the same
+   484→   484→output given the same input and the same event history. The activities
+   485→   485→are the nondeterministic operations, the LLM calls, the API requests,
+   486→   486→the file writes, the random values, and the wall-clock reads, that
+   487→   487→cannot be inside the workflow logic because they would produce different
+   488→   488→results on the replay. The activities are recorded as durable external
+   489→   489→results, and on the replay, the workflow reads the recorded results
+   490→   490→rather than re-executing the activities. The AI builder should be
+   491→   491→directed to implement the build as a workflow with the activities, with
+   492→   492→the LLM calls, the file writes, and the tool invocations as activities,
+   493→   493→and the orchestration logic as the workflow.
+   494→   494→
+   495→   495→[]{#_Toc100015 .anchor}**5.4 Idempotent Recovery: Preventing Duplicate
+   496→   496→Side Effects**
+   497→   497→
+   498→   498→The idempotent recovery is the property that the recovery from a failure
+   499→   499→does not produce the duplicate side effects, and it is the property that
+   500→   500→the durable execution runtime ensures through the idempotency of the
+   501→   501→activities. Each activity is identified by a unique key, derived from
+   502→   502→the workflow id and the step id, and the runtime records the activity\'s
+   503→   503→result with the key. On the replay, the runtime checks the key before
+   504→   504→executing the activity, and if the key exists, the runtime returns the
+   505→   505→recorded result rather than re-executing the activity. The idempotency
+   506→   506→ensures that the recovery lands on the failing step, that the steps
+   507→   507→before the failure are not re-executed, and that the side effects, the
+   508→   508→file writes, the API calls, the database updates, are not duplicated.
+   509→   509→The AI builder should be directed to implement the activities as
+   510→   510→idempotent, with the idempotency keys, and to use the durable execution
+   511→   511→runtime\'s built-in idempotency rather than implementing it from
+   512→   512→scratch.
+   513→   513→
+   514→   514→+-----------------------------------------------------------------------+
+   515→   515→| // Durable execution workflow example (Inngest-style pseudocode)      |
+   516→   516→|                                                                       |
+   517→   517→| // The workflow is deterministic; the steps are the activities.       |
+   518→   518→|                                                                       |
+   519→   519→| // The runtime persists the state after each step and recovers at the |
+   520→   520→| failing step.                                                         |
+   521→   521→|                                                                       |
+   522→   522→| export const buildSystem = inngest.createFunction(                    |
+   523→   523→|                                                                       |
+   524→   524→| { id: \"build-system\", retries: 3 },                                 |
+   525→   525→|                                                                       |
+   526→   526→| { event: \"build/requested\" },                                       |
+   527→   527→|                                                                       |
+   528→   528→| async ({ event, step }) =\> {                                         |
+   529→   529→|                                                                       |
+   530→   530→| // Step 1: Context loading (durable --- persisted, not re-run on      |
+   531→   531→| recovery)                                                             |
+   532→   532→|                                                                       |
+   533→   533→| const context = await step.run(\"load-context\", async () =\> {       |
+   534→   534→|                                                                       |
+   535→   535→| return await loadFoundationDocuments(event.systemType);               |
+   536→   536→|                                                                       |
+   537→   537→| });                                                                   |
+   538→   538→|                                                                       |
+   539→   539→| // Step 2: Synthesis (durable --- the LLM call is an activity)        |
+   540→   540→|                                                                       |
+   541→   541→| const synthesis = await step.run(\"synthesize\", async () =\> {       |
+   542→   542→|                                                                       |
+   543→   543→| return await llm.generateSynthesis(context);                          |
+   544→   544→|                                                                       |
+   545→   545→| });                                                                   |
+   546→   546→|                                                                       |
+   547→   547→| // Step 3: Task decomposition (durable)                               |
+   548→   548→|                                                                       |
+   549→   549→| const tasks = await step.run(\"decompose\", async () =\> {            |
+   550→   550→|                                                                       |
+   551→   551→| return await llm.decomposeIntoTasks(synthesis);                       |
+   552→   552→|                                                                       |
+   553→   553→| });                                                                   |
+   554→   554→|                                                                       |
+   555→   555→| // Step 4: Parallel task execution (durable, parallel)                |
+   556→   556→|                                                                       |
+   557→   557→| const results = await Promise.all(                                    |
+   558→   558→|                                                                       |
+   559→   559→| tasks.map(task =\>                                                    |
+   560→   560→|                                                                       |
+   561→   561→| step.run(\'task-\' + task.id, async () =\> {                          |
+   562→   562→|                                                                       |
+   563→   563→| return await executeTask(task); // file writes are idempotent         |
+   564→   564→|                                                                       |
+   565→   565→| })                                                                    |
+   566→   566→|                                                                       |
+   567→   567→| )                                                                     |
+   568→   568→|                                                                       |
+   569→   569→| );                                                                    |
+   570→   570→|                                                                       |
+   571→   571→| // Step 5: Integration and verification                               |
+   572→   572→|                                                                       |
+   573→   573→| const integrated = await step.run(\"integrate\", async () =\> {       |
+   574→   574→|                                                                       |
+   575→   575→| return await integrateResults(results);                               |
+   576→   576→|                                                                       |
+   577→   577→| });                                                                   |
+   578→   578→|                                                                       |
+   579→   579→| // If any step fails, the runtime recovers at that step,              |
+   580→   580→|                                                                       |
+   581→   581→| // not from the beginning. Side effects before the failure            |
+   582→   582→|                                                                       |
+   583→   583→| // are not re-executed.                                               |
+   584→   584→|                                                                       |
+   585→   585→| return { status: \"complete\", result: integrated };                  |
+   586→   586→|                                                                       |
+   587→   587→| }                                                                     |
+   588→   588→|                                                                       |
+   589→   589→| );                                                                    |
+   590→   590→+-----------------------------------------------------------------------+
+   591→   591→
+   592→   592→[]{#_Toc100016 .anchor}**5.5 The Circuit Breaker for Agent Calls**
+   593→   593→
+   594→   594→The circuit breaker, documented in the fifth document for the external
+   595→   595→service calls, applies equally to the agent calls, and it is the pattern
+   596→   596→that prevents the cascading failure when an agent becomes unavailable.
+   597→   597→The circuit breaker monitors the failure rate of the calls to the agent,
+   598→   598→and when the failure rate exceeds a threshold, the circuit opens, and
+   599→   599→subsequent calls to the agent fail fast rather than waiting for the
+   600→   600→timeout. The circuit remains open for a cooldown period, after which it
+   601→   601→enters the half-open state, where a limited number of calls test whether
+   602→   602→the agent has recovered. The circuit breaker for the agent calls is the
+   603→   603→pattern that allows the supervisor to detect the agent failure quickly
+   604→   604→and to trigger the failover, rather than waiting for the timeout on
+   605→   605→every call. The AI builder should be directed to implement the circuit
+   606→   606→breaker for every agent call, with the failure thresholds and the
+   607→   607→cooldown periods based on the agent\'s reliability.
+   608→   608→
+   609→   609→[]{#_Toc100017 .anchor}**6. Continuity and Graceful Degradation**
+   610→   610→
+   611→   611→The continuity is the property of the build to continue despite the
+   612→   612→failures, and it is the property that the user\'s question about the
+   613→   613→solo builder takeover and the agent resumption directly addresses. The
+   614→   614→continuity is achieved through the graceful degradation, the pattern
+   615→   615→that allows the system to continue operating, possibly with reduced
+   616→   616→functionality, when a component fails. The graceful degradation for the
+   617→   617→multi-agent AI builder system includes the solo builder takeover when
+   618→   618→the agent team is unavailable, the agent health monitoring that detects
+   619→   619→the failures, and the resumption that brings the failed agents back
+   620→   620→online. This section covers each of these patterns.
+   621→   621→
+   622→   622→[]{#_Toc100018 .anchor}**6.1 The Solo Builder Takeover**
+   623→   623→
+   624→   624→The solo builder takeover is the pattern that allows the build to
+   625→   625→continue when the entire agent team is unavailable, and it is the
+   626→   626→pattern that the user\'s question about the solo or main builder doing
+   627→   627→the task without data loss directly addresses. The takeover is the
+   628→   628→transition from the multi-agent mode to the solo mode, and the
+   629→   629→transition must be seamless, with the solo builder picking up the tasks
+   630→   630→that the agents were working on, and with the work-in-progress
+   631→   631→preserved. The takeover is enabled by the shared task ledger and the
+   632→   632→durable execution runtime, because the ledger holds the task state and
+   633→   633→the runtime holds the workflow state, and the solo builder reads the
+   634→   634→ledger and the runtime state to determine what to do next. The solo
+   635→   635→builder, whether a single agent or a human, executes the pending tasks
+   636→   636→one by one, updates the ledger, and continues the build. When the agent
+   637→   637→team comes back online, the resumption process synchronizes the agents
+   638→   638→with the current state and reintegrates them.
+   639→   639→
+   640→   640→The takeover is not a fallback that is invoked only in the emergency; it
+   641→   641→is a mode that the system must be designed to enter and to exit
+   642→   642→routinely, because the agent failures are the norm rather than the
+   643→   643→exception in the multi-agent systems. The design principle is that the
+   644→   644→solo builder must be able to execute any task that an agent can execute,
+   645→   645→with the difference being the speed and the parallelism, not the
+   646→   646→capability. The implication is that the tasks must be specified with
+   647→   647→sufficient detail that the solo builder can execute them, and the
+   648→   648→specification is the task definition in the shared ledger, with the
+   649→   649→input, the output, the acceptance criteria, and the verification gate.
+   650→   650→The AI builder should be directed to design the tasks for the solo
+   651→   651→executability, to implement the takeover mode, and to test the takeover
+   652→   652→routinely, not just in the emergency.
+   653→   653→
+   654→   654→[]{#_Toc100019 .anchor}**6.2 Agent Health Monitoring**
+   655→   655→
+   656→   656→The agent health monitoring is the discipline of continuously checking
+   657→   657→the availability and the performance of the agents, of detecting the
+   658→   658→failures, and of triggering the failover. The monitoring is implemented
+   659→   659→through the heartbeat, a periodic signal that each agent sends to the
+   660→   660→supervisor, and through the health check, a query that the supervisor
+   661→   661→sends to the agent to verify its responsiveness. The heartbeat includes
+   662→   662→the agent\'s current task, its progress, and its resource usage, and the
+   663→   663→supervisor uses the heartbeat to track the agent\'s state and to detect
+   664→   664→the failures. If an agent misses a heartbeat, the supervisor marks it as
+   665→   665→suspected, and after a configured number of missed heartbeats, the
+   666→   666→supervisor marks it as failed and triggers the failover. The AI builder
+   667→   667→should be directed to implement the heartbeat and the health check, to
+   668→   668→configure the failure detection thresholds, and to implement the
+   669→   669→failover that reassigns the failed agent\'s tasks to the other agents or
+   670→   670→to the solo builder.
+   671→   671→
+   672→   672→[]{#_Toc100020 .anchor}**6.3 The Resumption: Bringing Agents Back
+   673→   673→Online**
+   674→   674→
+   675→   675→The resumption is the process of bringing the failed agents back online,
+   676→   676→of synchronizing their state with the current build state, and of
+   677→   677→reintegrating them into the agent team, and it is the process that the
+   678→   678→user\'s question about the agents coming back online and continuing the
+   679→   679→process properly directly addresses. The resumption is the complement to
+   680→   680→the failover, and it is the process that must be designed to avoid the
+   681→   681→issues and the missing data that a careless resumption would produce.
+   682→   682→The resumption process begins when the agent comes back online and sends
+   683→   683→a heartbeat; the supervisor detects the heartbeat, marks the agent as
+   684→   684→recovered, and sends it the current build state. The agent synchronizes
+   685→   685→its local state with the shared task ledger, reads the tasks that are
+   686→   686→pending, and requests the assignment. The supervisor assigns the tasks,
+   687→   687→and the agent resumes the work. The AI builder should be directed to
+   688→   688→implement the resumption process, to verify the state synchronization
+   689→   689→before the agent resumes the work, and to monitor the resumed agent\'s
+   690→   690→performance to ensure it is operating correctly.
+   691→   691→
+   692→   692→[]{#_Toc100021 .anchor}**6.4 The Graceful Degradation Layers**
+   693→   693→
+   694→   694→The graceful degradation for the AI builder system is implemented in
+   695→   695→layers, with each layer providing a fallback for the layer above. The
+   696→   696→practitioner literature documents the layered resilience model that the
+   697→   697→field has converged on in 2025 to 2026, adapted specifically for the
+   698→   698→LLM-backed systems. The first layer is the retry, which handles the
+   699→   699→transient failures through the automatic retry with the exponential
+   700→   700→backoff. The second layer is the circuit breaker, which handles the
+   701→   701→sustained failures by failing fast and by triggering the failover. The
+   702→   702→third layer is the fallback chain, which provides the alternative agents
+   703→   703→or the alternative models that can handle the task when the primary is
+   704→   704→unavailable. The fourth layer is the context compaction, which handles
+   705→   705→the context window overflow by summarizing the context and by retaining
+   706→   706→the essential information. The fifth layer is the bulkhead isolation,
+   707→   707→which isolates the failures to the affected component and prevents the
+   708→   708→propagation to the rest of the system. The sixth layer is the solo
+   709→   709→builder takeover, which handles the failure of the entire agent team.
+   710→   710→The AI builder should be directed to implement each layer, with the
+   711→   711→layers providing the defense in depth that ensures the build continues
+   712→   712→regardless of the failure mode.
+   713→   713→
+   714→   714→**Table 3: The Graceful Degradation Layers for the AI Builder System**
+   715→   715→
+   716→   716→  -----------------------------------------------------------------------
+   717→   717→  **Layer**         **What It         **Trigger**       **Recovery
+   718→   718→                    Handles**                           Action**
+   719→   719→  ----------------- ----------------- ----------------- -----------------
+   720→   720→  1\. Retry         Transient         Single request    Retry with
+   721→   721→                    failures (503,    failure           exponential
+   722→   722→                    timeout)                            backoff
+   723→   723→
+   724→   724→  2\. Circuit       Sustained agent   Failure rate      Fail fast;
+   725→   725→  Breaker           failures          exceeds threshold trigger failover
+   726→   726→
+   727→   727→  3\. Fallback      Primary agent     Circuit open      Use alternative
+   728→   728→  Chain             unavailable                         agent or model
+   729→   729→
+   730→   730→  4\. Context       Context window    Token limit       Summarize
+   731→   731→  Compaction        overflow          approached        context; retain
+   732→   732→                                                        essentials
+   733→   733→
+   734→   734→  5\. Bulkhead      Component failure Component failure Isolate affected
+   735→   735→  Isolation         propagation       detected          component
+   736→   736→
+   737→   737→  6\. Solo Builder  Entire agent team All agents failed Solo builder
+   738→   738→  Takeover          unavailable                         executes pending
+   739→   739→                                                        tasks
+   740→   740→  -----------------------------------------------------------------------
+   741→   741→
+   742→   742→*Table 3: The six layers of graceful degradation for the AI builder
+   743→   743→system. Each layer handles a specific failure mode and provides a
+   744→   744→recovery action, with the layers providing the defense in depth that
+   745→   745→ensures the build continues regardless of the failure mode.*
+   746→   746→
+   747→   747→[]{#_Toc100022 .anchor}**6.5 The Complete Continuity Architecture**
+   748→   748→
+   749→   749→The complete continuity architecture combines the durable execution, the
+   750→   750→shared task ledger, the agent health monitoring, and the graceful
+   751→   751→degradation layers into a coherent system that ensures the build
+   752→   752→completes regardless of the failures. The build is orchestrated by the
+   753→   753→durable execution runtime, which persists the state at every step and
+   754→   754→recovers at the failing step. The tasks are assigned and tracked through
+   755→   755→the shared task ledger, which is the single source of truth. The agents
+   756→   756→are monitored through the heartbeats and the health checks, and the
+   757→   757→failures trigger the graceful degradation layers, from the retry through
+   758→   758→the solo builder takeover. The file changes are coordinated through the
+   759→   759→version control, with each agent on a branch and the supervisor merging.
+   760→   760→The inter-agent communication is through the published events on the
+   761→   761→persistent event bus. The result is a system that continues the build
+   762→   762→when an agent fails, that continues when multiple agents fail, that
+   763→   763→continues when the entire agent team fails, and that resumes correctly
+   764→   764→when the agents come back online, all without data loss and without the
+   765→   765→duplicate side effects. The AI builder should be directed to implement
+   766→   766→the complete continuity architecture, with each component specified,
+   767→   767→verified, and documented.
+   768→   768→
+   769→   769→[]{#_Toc100023 .anchor}**6.6 The Continuity Architecture as a Prompt**
+   770→   770→
+   771→   771→The following prompt directs the AI builder to implement the continuity
+   772→   772→architecture. The prompt specifies the durable execution runtime, the
+   773→   773→shared task ledger, the agent health monitoring, the graceful
+   774→   774→degradation layers, and the solo builder takeover, and it is the prompt
+   775→   775→that the builder issues to implement the continuity.
+   776→   776→
+   777→   777→+-----------------------------------------------------------------------+
+   778→   778→| ROLE: You are implementing the continuity architecture for a          |
+   779→   779→| multi-agent                                                           |
+   780→   780→|                                                                       |
+   781→   781→| AI builder system. The system must continue the build regardless of   |
+   782→   782→| which                                                                 |
+   783→   783→|                                                                       |
+   784→   784→| agents fail and when, without data loss and without duplicate side    |
+   785→   785→| effects.                                                              |
+   786→   786→|                                                                       |
+   787→   787→| ARCHITECTURE COMPONENTS TO IMPLEMENT:                                 |
+   788→   788→|                                                                       |
+   789→   789→| 1\. DURABLE EXECUTION RUNTIME (Inngest or Temporal):                  |
+   790→   790→|                                                                       |
+   791→   791→| \- Every build step is a durable activity with an idempotency key.    |
+   792→   792→|                                                                       |
+   793→   793→| \- The runtime persists state after each step and recovers at the     |
+   794→   794→|                                                                       |
+   795→   795→| failing step, not from the beginning.                                 |
+   796→   796→|                                                                       |
+   797→   797→| \- Side effects (file writes, API calls) are not re-executed on       |
+   798→   798→| recovery.                                                             |
+   799→   799→|                                                                       |
+   800→   800→| 2\. SHARED TASK LEDGER (PostgreSQL):                                  |
+   801→   801→|                                                                       |
+   802→   802→| \- Every task assignment, state change, and result is written to the  |
+   803→   803→| ledger.                                                               |
+   804→   804→|                                                                       |
+   805→   805→| \- The ledger is the single source of truth for all agents.           |
+   806→   806→|                                                                       |
+   807→   807→| \- The ledger is append-only and versioned.                           |
+   808→   808→|                                                                       |
+   809→   809→| 3\. AGENT HEALTH MONITORING:                                          |
+   810→   810→|                                                                       |
+   811→   811→| \- Each agent sends a heartbeat every 30 seconds with its current     |
+   812→   812→| task.                                                                 |
+   813→   813→|                                                                       |
+   814→   814→| \- The supervisor marks an agent as suspected after 2 missed          |
+   815→   815→| heartbeats.                                                           |
+   816→   816→|                                                                       |
+   817→   817→| \- The supervisor marks an agent as failed after 3 missed heartbeats. |
+   818→   818→|                                                                       |
+   819→   819→| \- On failure, the agent\'s tasks are reassigned.                     |
+   820→   820→|                                                                       |
+   821→   821→| 4\. GRACEFUL DEGRADATION LAYERS (implement all 6):                    |
+   822→   822→|                                                                       |
+   823→   823→| \- Layer 1: Retry with exponential backoff (max 3 retries).           |
+   824→   824→|                                                                       |
+   825→   825→| \- Layer 2: Circuit breaker per agent (open at 50% failure rate).     |
+   826→   826→|                                                                       |
+   827→   827→| \- Layer 3: Fallback chain (alternative agent or model).              |
+   828→   828→|                                                                       |
+   829→   829→| \- Layer 4: Context compaction (summarize at 80% of context window).  |
+   830→   830→|                                                                       |
+   831→   831→| \- Layer 5: Bulkhead isolation (isolate failed components).           |
+   832→   832→|                                                                       |
+   833→   833→| \- Layer 6: Solo builder takeover (when all agents fail).             |
+   834→   834→|                                                                       |
+   835→   835→| 5\. SOLO BUILDER TAKEOVER:                                            |
+   836→   836→|                                                                       |
+   837→   837→| \- When the agent team is unavailable, the solo builder reads the     |
+   838→   838→|                                                                       |
+   839→   839→| pending tasks from the shared task ledger.                            |
+   840→   840→|                                                                       |
+   841→   841→| \- The solo builder executes the tasks one by one, updates the        |
+   842→   842→| ledger.                                                               |
+   843→   843→|                                                                       |
+   844→   844→| \- When agents come back online, they synchronize with the ledger     |
+   845→   845→|                                                                       |
+   846→   846→| and resume the work.                                                  |
+   847→   847→|                                                                       |
+   848→   848→| 6\. FILE-LEVEL COORDINATION:                                          |
+   849→   849→|                                                                       |
+   850→   850→| \- Each agent works on a version control branch.                      |
+   851→   851→|                                                                       |
+   852→   852→| \- The supervisor merges branches; conflicts are detected and         |
+   853→   853→| resolved.                                                             |
+   854→   854→|                                                                       |
+   855→   855→| 7\. RESUMPTION:                                                       |
+   856→   856→|                                                                       |
+   857→   857→| \- When an agent comes back online, it sends a heartbeat.             |
+   858→   858→|                                                                       |
+   859→   859→| \- The supervisor sends it the current build state.                   |
+   860→   860→|                                                                       |
+   861→   861→| \- The agent synchronizes with the ledger before resuming work.       |
+   862→   862→|                                                                       |
+   863→   863→| CONSTRAINT: The build must complete without data loss, even if every  |
+   864→   864→|                                                                       |
+   865→   865→| agent fails and restarts multiple times. The durable execution        |
+   866→   866→| runtime                                                               |
+   867→   867→|                                                                       |
+   868→   868→| guarantees this.                                                      |
+   869→   869→+-----------------------------------------------------------------------+
+   870→   870→
+   871→   871→[]{#_Toc100024 .anchor}**7. Counterarguments and Limitations**
+   872→   872→
+   873→   873→The recommendations in this report are subject to several
+   874→   874→counterarguments and limitations. The first counterargument is that the
+   875→   875→durable execution runtime, the shared task ledger, and the six layers of
+   876→   876→graceful degradation are excessive for a build that is not yet at the
+   877→   877→scale where the agent failures are frequent, and that a builder who
+   878→   878→implements them prematurely will incur the complexity without the
+   879→   879→benefit. This argument is valid for the simplest builds, where a single
+   880→   880→agent and a single workflow suffice. The counterargument fails for the
+   881→   881→multi-agent builds that the user\'s question specifies, because the
+   882→   882→multi-agent systems fail at rates exceeding 50 percent, and the failures
+   883→   883→are structural, not model-specific. The patterns this document specifies
+   884→   884→are the patterns that address the structural failures, and the patterns
+   885→   885→are easier to implement at the design stage than to retrofit after the
+   886→   886→failures have manifested. The recommendation is to implement the
+   887→   887→patterns for any multi-agent build, with the understanding that the
+   888→   888→patterns are designed to be implemented at the start and to scale with
+   889→   889→the system.
+   890→   890→
+   891→   891→The second counterargument is that the durable execution runtimes,
+   892→   892→Temporal, Inngest, and Restate, introduce a new infrastructure component
+   893→   893→and a new operational burden that a small team cannot sustain. This
+   894→   894→argument has merit, and the report acknowledges that the runtimes add a
+   895→   895→component to the infrastructure. The counterargument is mitigated by the
+   896→   896→managed offerings of the runtimes, with Inngest, Temporal Cloud, and
+   897→   897→Restate Cloud providing the runtime as a service, without the need to
+   898→   898→operate the infrastructure. The recommendation is to use the managed
+   899→   899→offering, which removes the operational burden and which provides the
+   900→   900→durable execution guarantees at a cost that is proportional to the
+   901→   901→usage. The cost of the managed runtime is far lower than the cost of the
+   902→   902→data loss and the rework that the absence of the runtime would produce.
+   903→   903→
+   904→   904→The third counterargument is that the solo builder takeover is a
+   905→   905→theoretical pattern that is not practical, because a single agent or a
+   906→   906→human cannot match the throughput of a multi-agent team, and the build
+   907→   907→will be delayed unacceptably. This argument is valid in the sense that
+   908→   908→the solo builder is slower than the team, but the argument misses the
+   909→   909→point. The takeover is not a replacement for the team; it is a
+   910→   910→continuation mode that prevents the data loss and the work-in-progress
+   911→   911→loss when the team is unavailable. The build that continues slowly is
+   912→   912→better than the build that is lost, and the takeover is the pattern that
+   913→   913→ensures the continuation. The recommendation is to implement the
+   914→   914→takeover, to test it routinely, and to use it when the team is
+   915→   915→unavailable, with the expectation that the team will be restored and the
+   916→   916→build will resume at the full speed.
+   917→   917→
+   918→   918→A limitation is that the document provides the patterns and the
+   919→   919→recommendations but does not provide the complete implementation, which
+   920→   920→is the work of the AI builder directed by the prompts. The patterns are
+   921→   921→the specification, and the implementation is the execution, and the two
+   922→   922→are distinct. The builder who needs the complete implementation should
+   923→   923→direct the AI builder with the prompts from this document and the prompt
+   924→   924→guide, and should verify the output against the verification gates. The
+   925→   925→document is the specification; the builder and the agent are the
+   926→   926→implementation.
+   927→   927→
+   928→   928→[]{#_Toc100025 .anchor}**8. Conclusion and Strategic Implications**
+   929→   929→
+   930→   930→The question that opened this report was how the multi-agent AI builders
+   931→   931→collaborate without conflict, how they survive the failures, and how the
+   932→   932→build continues without data loss when the agents fail and when they
+   933→   933→come back online. The document has specified the multi-agent
+   934→   934→collaboration architecture, with the supervisor pattern as the
+   935→   935→recommended default, the shared task ledger as the coordination
+   936→   936→mechanism, and the version control as the file-level coordination. The
+   937→   937→document has specified the fault tolerance through the durable execution
+   938→   938→pattern, with the durable execution runtime persisting the state at
+   939→   939→every step, recovering at the failing step, and preventing the duplicate
+   940→   940→side effects through the idempotent activities. The document has
+   941→   941→specified the continuity and the graceful degradation, with the six
+   942→   942→layers from the retry through the solo builder takeover, the agent
+   943→   943→health monitoring, and the resumption that brings the failed agents back
+   944→   944→online. The central finding is that the continuity is a property of the
+   945→   945→orchestration layer, not of the agents, and the property is achieved
+   946→   946→through the durable execution and the graceful degradation that this
+   947→   947→document specifies.
+   948→   948→
+   949→   949→The strategic implication is that the six documents, the foundation, the
+   950→   950→prompt guide, the stack guide, the operational excellence guide, the
+   951→   951→scalability and concurrency guide, and this multi-agent collaboration
+   952→   952→and continuity guide, together constitute the complete playbook for
+   953→   953→building a real-world system through a multi-agent AI builder, with the
+   954→   954→collaboration, the fault tolerance, and the continuity that the
+   955→   955→real-world standard requires. The six documents cover the architecture,
+   956→   956→the prompting, the stack, the operational disciplines, the scalability
+   957→   957→and concurrency, and the multi-agent collaboration and continuity, and
+   958→   958→together they give the AI builder the complete specification it needs to
+   959→   959→build a system that does not lose data when agents fail, that does not
+   960→   960→produce conflicts when agents collaborate, and that continues the build
+   961→   961→regardless of the failure mode.
+   962→   962→
+   963→   963→The closing recommendation is therefore the following. A builder who
+   964→   964→intends to direct a multi-agent AI builder team to construct a
+   965→   965→production-grade system should load all six documents as the complete
+   966→   966→context, should follow the document consumption protocol from the fifth
+   967→   967→document to ensure the understanding, should implement the multi-agent
+   968→   968→collaboration architecture of Part II, the durable execution of Part
+   969→   969→III, and the continuity and graceful degradation of Part IV. The
+   970→   970→discipline of the six documents, the durable execution runtime, and the
+   971→   971→verification gates is the discipline that produces a system that meets
+   972→   972→the real-world standard across all the dimensions, from the architecture
+   973→   973→to the collaboration, from the prompting to the continuity, and from the
+   974→   974→stack to the operational excellence. The six documents are the complete
+   975→   975→playbook, and this document is the sixth that completes it for the
+   976→   976→multi-agent collaboration, the fault tolerance, and the continuity that
+   977→   977→the real-world standard requires.
+   978→   978→
+   979→   979→[]{#_Toc100026 .anchor}**9. References**
+   980→   980→
+   981→   981→The following sources informed the analysis presented in this report.
+   982→   982→Sources are listed in the order of first citation. All URLs were
+   983→   983→accessible at the time of writing; readers verifying specific claims
+   984→   984→should consult the cited source directly.
+   985→   985→
+   986→   986→**\[1\]** Microsoft Azure Architecture Center. AI Agent Orchestration
+   987→   987→Patterns (February 2026).
+   988→   988→[[https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns]{.underline}](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns)
+   989→   989→
+   990→   990→**\[2\]** Beam AI. 6 Multi-Agent Orchestration Patterns for Production
+   991→   991→(2026).
+   992→   992→[[https://beam.ai/agentic-insights/multi-agent-orchestration-patterns-production]{.underline}](https://beam.ai/agentic-insights/multi-agent-orchestration-patterns-production)
+   993→   993→
+   994→   994→**\[3\]** arXiv. The Orchestration of Multi-Agent Systems:
+   995→   995→Architectures, Communication Protocols, and Quality Operations (January
+   996→   996→2026).
+   997→   997→[[https://arxiv.org/html/2601.13671v1]{.underline}](https://arxiv.org/html/2601.13671v1)
+   998→   998→
+   999→   999→**\[4\]** Apptad. Multi-Agent Orchestration: Architecture Patterns for
+  1000→  1000→2026.
+  1001→  1001→[[https://apptad.com/insights/multi-agent-orchestration-architecture-patterns]{.underline}](https://apptad.com/insights/multi-agent-orchestration-architecture-patterns)
+  1002→  1002→
+  1003→  1003→**\[5\]** Digital Applied. Multi-Agent Orchestration: 5 Patterns That
+  1004→  1004→Work in 2026.
+  1005→  1005→[[https://www.digitalapplied.com/blog/multi-agent-orchestration-5-patterns-that-work]{.underline}](https://www.digitalapplied.com/blog/multi-agent-orchestration-5-patterns-that-work)
+  1006→  1006→
+  1007→  1007→**\[6\]** Eunomia. Checkpoint/Restore Systems: Evolution, Techniques,
+  1008→  1008→and Applications in AI Agents (May 2025).
+  1009→  1009→[[https://eunomia.dev/blog/2025/05/11/checkpoint-restore-systems-evolution-techniques-and-applications-in-ai-agents]{.underline}](https://eunomia.dev/blog/2025/05/11/checkpoint-restore-systems-evolution-techniques-and-applications-in-ai-agents)
+  1010→  1010→
+  1011→  1011→**\[7\]** Towards AI. Fault-Tolerant Agent Pipelines: Checkpoint, Retry,
+  1012→  1012→and Compensate (July 2026).
+  1013→  1013→[[https://towardsai.com/p/machine-learning/fault-tolerant-agent-pipelines-checkpoint-retry-and-compensate]{.underline}](https://towardsai.com/p/machine-learning/fault-tolerant-agent-pipelines-checkpoint-retry-and-compensate)
+  1014→  1014→
+  1015→  1015→**\[8\]** Newline. 5 Recovery Strategies for Multi-Agent LLM Failures
+  1016→  1016→(June 2025).
+  1017→  1017→[[https://www.newline.co/@zaoyang/5-recovery-strategies-for-multi-agent-llm-failures\--673fe4c4]{.underline}](https://www.newline.co/@zaoyang/5-recovery-strategies-for-multi-agent-llm-failures--673fe4c4)
+  1018→  1018→
+  1019→  1019→**\[9\]** Inngest. Durable Execution: The Key to Harnessing AI Agents in
+  1020→  1020→Production (February 2026).
+  1021→  1021→[[https://www.inngest.com/blog/durable-execution-key-to-harnessing-ai-agents]{.underline}](https://www.inngest.com/blog/durable-execution-key-to-harnessing-ai-agents)
+  1022→  1022→
+  1023→  1023→**\[10\]** Zylos AI. Durable Execution for AI Agent Runtimes:
+  1024→  1024→Checkpointing (April 2026).
+  1025→  1025→[[https://zylos.ai/research/2026-04-24-durable-execution-agent-runtimes]{.underline}](https://zylos.ai/research/2026-04-24-durable-execution-agent-runtimes)
+  1026→  1026→
+  1027→  1027→**\[11\]** Inngest. Inngest vs Temporal: Durable Execution That
+  1028→  1028→Developers Love.
+  1029→  1029→[[https://www.inngest.com/compare-to-temporal]{.underline}](https://www.inngest.com/compare-to-temporal)
+  1030→  1030→
+  1031→  1031→**\[12\]** Restate. Agent Checkpointing Is Far From Production-Grade
+  1032→  1032→Resiliency.
+  1033→  1033→[[https://restate.dev/blog/why-checkpointing-is-not-production-grade-durable-execution]{.underline}](https://restate.dev/blog/why-checkpointing-is-not-production-grade-durable-execution)
+  1034→  1034→
+  1035→  1035→**\[13\]** Diagrid. Why Checkpoints Are Not Durable Execution:
+  1036→  1036→LangGraph, CrewAI, Google ADK Fall Short.
+  1037→  1037→[[https://www.diagrid.io/blog/checkpoints-are-not-durable-execution-why-langgraph-crewai-google-adk-and-others-fall-short-for-production-agent-workflows]{.underline}](https://www.diagrid.io/blog/checkpoints-are-not-durable-execution-why-langgraph-crewai-google-adk-and-others-fall-short-for-production-agent-workflows)
+  1038→  1038→
+  1039→  1039→**\[14\]** Augment Code. How Async AI Agent Workflows Survive Failures.
+  1040→  1040→[[https://www.augmentcode.com/guides/async-ai-agent-workflows]{.underline}](https://www.augmentcode.com/guides/async-ai-agent-workflows)
+  1041→  1041→
+  1042→  1042→**\[15\]** TianPan.co. Async Agent Workflows: Designing for Long-Running
+  1043→  1043→Tasks (March 2026).
+  1044→  1044→[[https://tianpan.co/blog/2026-03-07-async-agent-workflows-long-running-task-design]{.underline}](https://tianpan.co/blog/2026-03-07-async-agent-workflows-long-running-task-design)
+  1045→  1045→
+  1046→  1046→**\[16\]** Yugabyte. What is the Raft Consensus Algorithm?
+  1047→  1047→[[https://www.yugabyte.com/key-concepts/raft-consensus-algorithm]{.underline}](https://www.yugabyte.com/key-concepts/raft-consensus-algorithm)
+  1048→  1048→
+  1049→  1049→**\[17\]** Raft.github.io. Raft Consensus Algorithm.
+  1050→  1050→[[https://raft.github.io]{.underline}](https://raft.github.io)
+  1051→  1051→
+  1052→  1052→**\[18\]** Zylos AI. Graceful Degradation Patterns for AI Agent Systems
+  1053→  1053→(May 2026).
+  1054→  1054→[[https://zylos.ai/research/2026-05-30-graceful-degradation-patterns-ai-agent-systems]{.underline}](https://zylos.ai/research/2026-05-30-graceful-degradation-patterns-ai-agent-systems)
+  1055→  1055→
+  1056→  1056→**\[19\]** Augment Code. Multi-Agent AI Systems: Why They Fail and How
+  1057→  1057→to Fix Them (September 2025).
+  1058→  1058→[[https://www.augmentcode.com/guides/why-multi-agent-llm-systems-fail-and-how-to-fix-them]{.underline}](https://www.augmentcode.com/guides/why-multi-agent-llm-systems-fail-and-how-to-fix-them)
+  1059→  1059→
+  1060→  1060→**\[20\]** Medium (Micheal Lanham). Multi-Agent in Production in 2026:
+  1061→  1061→What Actually Survived.
+  1062→  1062→[[https://medium.com/@Micheal-Lanham/multi-agent-in-production-in-2026-what-actually-survived-f86de8bb1cd1]{.underline}](https://medium.com/@Micheal-Lanham/multi-agent-in-production-in-2026-what-actually-survived-f86de8bb1cd1)
+  1063→  1063→
+  1064→  1064→**\[21\]** Cribl. What\'s Really Holding Back Multi-Agent AI (February
+  1065→  1065→2026).
+  1066→  1066→[[https://cribl.io/blog/more-agents-more-problems-whats-really-holding-back-multi-agent-ai]{.underline}](https://cribl.io/blog/more-agents-more-problems-whats-really-holding-back-multi-agent-ai)
+  1067→  1067→
+  1068→  1068→**\[22\]** arXiv. Crab: A Semantics-Aware Checkpoint/Restore Runtime for
+  1069→  1069→AI Agents.
+  1070→  1070→[[https://arxiv.org/html/2604.28138v1]{.underline}](https://arxiv.org/html/2604.28138v1)
+  1071→  1071→
+  1072→  1072→**\[23\]** IEEE/CAA Journal of Automatica Sinica. Secure Consensus
+  1073→  1073→Control on Multi-Agent Systems Based on Improved PBFT and Raft (2025).
+  1074→  1074→[[https://www.ieee-jas.com/en/article/doi/10.1109/JAS.2025.125300]{.underline}](https://www.ieee-jas.com/en/article/doi/10.1109/JAS.2025.125300)
+  1075→  1075→

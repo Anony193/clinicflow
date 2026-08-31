@@ -1,0 +1,402 @@
+     1→   200→   200→| \- Read: the section for the system you are building                  |
+     2→   201→   201→|                                                                       |
+     3→   202→   202→| 2\. docs/02_Prompting_AI_Builder_Agents.docx                          |
+     4→   203→   203→|                                                                       |
+     5→   204→   204→| \- Three-phase model: Context Loading -\> Analysis -\> Implementation |
+     6→   205→   205→|                                                                       |
+     7→   206→   206→| \- Read: the master prompt template and the three-phase model         |
+     8→   207→   207→|                                                                       |
+     9→   208→   208→| 3\. docs/03_Technical_Stack_Integration_Guide.docx                    |
+    10→   209→   209→|                                                                       |
+    11→   210→   210→| \- Database, cache, queue, search, storage, auth selection            |
+    12→   211→   211→|                                                                       |
+    13→   212→   212→| \- Read: the stack selection for your system                          |
+    14→   213→   213→|                                                                       |
+    15→   214→   214→| 4\. docs/04_System_Analysis_Quality_Operational_Excellence.docx       |
+    16→   215→   215→|                                                                       |
+    17→   216→   216→| \- Requirements, testing, DevOps, SRE, security, compliance           |
+    18→   217→   217→|                                                                       |
+    19→   218→   218→| \- Read: the requirements engineering and testing strategy            |
+    20→   219→   219→|                                                                       |
+    21→   220→   220→| 5\. docs/05_Scalability_Concurrency_MultiDatabase.docx                |
+    22→   221→   221→|                                                                       |
+    23→   222→   222→| \- Load balancing, concurrency, idempotency, Saga, multi-DB           |
+    24→   223→   223→|                                                                       |
+    25→   224→   224→| \- Read: the scalability and concurrency patterns                     |
+    26→   225→   225→|                                                                       |
+    27→   226→   226→| 6\. docs/06_MultiAgent_Collaboration_FaultTolerance.docx              |
+    28→   227→   227→|                                                                       |
+    29→   228→   228→| \- Multi-agent orchestration, durable execution, continuity           |
+    30→   229→   229→|                                                                       |
+    31→   230→   230→| \- Read: if using multi-agent mode                                    |
+    32→   231→   231→|                                                                       |
+    33→   232→   232→| \## Build Rules                                                       |
+    34→   233→   233→|                                                                       |
+    35→   234→   234→| \- Follow the three-phase model for every task.                       |
+    36→   235→   235→|                                                                       |
+    37→   236→   236→| \- Run the verification gate after every task.                        |
+    38→   237→   237→|                                                                       |
+    39→   238→   238→| \- Do not proceed past a failed gate.                                 |
+    40→   239→   239→|                                                                       |
+    41→   240→   240→| \- Do not improvise; implement against the documented specification.  |
+    42→   241→   241→|                                                                       |
+    43→   242→   242→| \- Use the type-safe toolchain: Zod + Prisma/Drizzle + tRPC +         |
+    44→   243→   243→| TanStack Query.                                                       |
+    45→   244→   244→|                                                                       |
+    46→   245→   245→| \- Use PostgreSQL with Row-Level Security for multi-tenant isolation. |
+    47→   246→   246→|                                                                       |
+    48→   247→   247→| \- Use Redis for cache, sessions, and distributed locks.              |
+    49→   248→   248→|                                                                       |
+    50→   249→   249→| \- Implement idempotency for every write endpoint.                    |
+    51→   250→   250→|                                                                       |
+    52→   251→   251→| \- Write tests for every feature; enforce WCAG 2.2 AA.                |
+    53→   252→   252→|                                                                       |
+    54→   253→   253→| \- Document every significant decision in an ADR.                     |
+    55→   254→   254→|                                                                       |
+    56→   255→   255→| \## Current Build                                                     |
+    57→   256→   256→|                                                                       |
+    58→   257→   257→| \- System: \[SPECIFY: e.g., School Management System\]                |
+    59→   258→   258→|                                                                       |
+    60→   259→   259→| \- Stack: Next.js 16, PostgreSQL 16, Redis 7, Tailwind CSS 4, tRPC    |
+    61→   260→   260→|                                                                       |
+    62→   261→   261→| \- Phase: \[SPECIFY: Context Loading / Analysis / Implementation\]    |
+    63→   262→   262→+-----------------------------------------------------------------------+
+    64→   263→   263→
+    65→   264→   264→[]{#_Toc100005 .anchor}**3.3 The First Message to the AI Builder**
+    66→   265→   265→
+    67→   266→   266→After the documents are loaded and the context file is in place, the
+    68→   267→   267→builder issues the first message to the AI builder. The first message is
+    69→   268→   268→the prompt that starts the build, and it follows the master prompt
+    70→   269→   269→template that the next section presents. The first message establishes
+    71→   270→   270→the builder\'s role, specifies the system to build, directs the builder
+    72→   271→   271→to consume the relevant document sections, and begins the three-phase
+    73→   272→   272→model. The first message is the most consequential prompt in the build,
+    74→   273→   273→because it sets the context and the expectations for everything that
+    75→   274→   274→follows, and a poorly constructed first message will produce a build
+    76→   275→   275→that drifts from the specification.
+    77→   276→   276→
+    78→   277→   277→[]{#_Toc100006 .anchor}**4. The Master Prompt Template**
+    79→   278→   278→
+    80→   279→   279→The master prompt template is the fill-in-the-blank prompt that the
+    81→   280→   280→builder uses to start any system build. The template follows the
+    82→   281→   281→three-phase model from the second document and incorporates the document
+    83→   282→   282→consumption protocol from the fifth document. The builder replaces the
+    84→   283→   283→bracketed sections with the specific content for the system being built,
+    85→   284→   284→and the result is a complete first prompt that directs the AI builder to
+    86→   285→   285→consume the documents, to synthesize its understanding, and to produce
+    87→   286→   286→the task list that the implementation will follow.
+    88→   287→   287→
+    89→   288→   288→+-----------------------------------------------------------------------+
+    90→   289→   289→| ROLE: You are a senior full-stack engineer building a                 |
+    91→   290→   290→| production-grade                                                      |
+    92→   291→   291→|                                                                       |
+    93→   292→   292→| \[SYSTEM_TYPE, e.g., School Management System\] according to the      |
+    94→   293→   293→| six-document                                                          |
+    95→   294→   294→|                                                                       |
+    96→   295→   295→| AI builder playbook. You do not improvise; you implement against the  |
+    97→   296→   296→|                                                                       |
+    98→   297→   297→| documented specification. You do not skip verification; you run the   |
+    99→   298→   298→| gate                                                                  |
+   100→   299→   299→|                                                                       |
+   101→   300→   300→| after every task.                                                     |
+   102→   301→   301→|                                                                       |
+   103→   302→   302→| THE SYSTEM TO BUILD:                                                  |
+   104→   303→   303→|                                                                       |
+   105→   304→   304→| \- Name: \[SYSTEM_NAME, e.g., Greenfield Academy Management System\]  |
+   106→   305→   305→|                                                                       |
+   107→   306→   306→| \- Type: \[SYSTEM_TYPE, e.g., vertical ERP for a private school\]     |
+   108→   307→   307→|                                                                       |
+   109→   308→   308→| \- Target users: \[USERS, e.g., administrators, teachers, parents,    |
+   110→   309→   309→| students\]                                                            |
+   111→   310→   310→|                                                                       |
+   112→   311→   311→| \- Primary problem solved: \[PROBLEM, e.g., manual processes in       |
+   113→   312→   312→| school admin\]                                                        |
+   114→   313→   313→|                                                                       |
+   115→   314→   314→| \- Vertical: \[VERTICAL, e.g., private K-12 education, 500-2000       |
+   116→   315→   315→| students\]                                                            |
+   117→   316→   316→|                                                                       |
+   118→   317→   317→| PHASE 1 --- DOCUMENT CONSUMPTION:                                     |
+   119→   318→   318→|                                                                       |
+   120→   319→   319→| Read the following sections from the foundational documents:          |
+   121→   320→   320→|                                                                       |
+   122→   321→   321→| \- Doc 1 (Foundation): Section \[X\] on \[SYSTEM_TYPE\] --- the data  |
+   123→   322→   322→| model,                                                                |
+   124→   323→   323→|                                                                       |
+   125→   324→   324→| the process flows, the reference architecture.                        |
+   126→   325→   325→|                                                                       |
+   127→   326→   326→| \- Doc 2 (Prompt Guide): The three-phase model and the master prompt  |
+   128→   327→   327→| template.                                                             |
+   129→   328→   328→|                                                                       |
+   130→   329→   329→| \- Doc 3 (Stack Guide): The database, cache, auth, and API style      |
+   131→   330→   330→| selection                                                             |
+   132→   331→   331→|                                                                       |
+   133→   332→   332→| for \[SYSTEM_TYPE\].                                                  |
+   134→   333→   333→|                                                                       |
+   135→   334→   334→| \- Doc 4 (Operational Excellence): The requirements engineering and   |
+   136→   335→   335→| the                                                                   |
+   137→   336→   336→|                                                                       |
+   138→   337→   337→| testing strategy.                                                     |
+   139→   338→   338→|                                                                       |
+   140→   339→   339→| \- Doc 5 (Scalability): The concurrency patterns and the              |
+   141→   340→   340→| multi-database                                                        |
+   142→   341→   341→|                                                                       |
+   143→   342→   342→| architecture for \[SYSTEM_TYPE\].                                     |
+   144→   343→   343→|                                                                       |
+   145→   344→   344→| \- Doc 6 (Multi-Agent): If using multi-agent mode, the orchestration  |
+   146→   345→   345→| pattern.                                                              |
+   147→   346→   346→|                                                                       |
+   148→   347→   347→| Produce a SYNTHESIS document that demonstrates your understanding:    |
+   149→   348→   348→|                                                                       |
+   150→   349→   349→| \(a\) The system\'s problem statement and ideal customer profile.     |
+   151→   350→   350→|                                                                       |
+   152→   351→   351→| \(b\) The functional and non-functional requirements.                 |
+   153→   352→   352→|                                                                       |
+   154→   353→   353→| \(c\) The reference architecture and the data model.                  |
+   155→   354→   354→|                                                                       |
+   156→   355→   355→| \(d\) The security controls and the testing strategy.                 |
+   157→   356→   356→|                                                                       |
+   158→   357→   357→| \(e\) The scalability, concurrency, and multi-database patterns.      |
+   159→   358→   358→|                                                                       |
+   160→   359→   359→| \(f\) The implementation roadmap (phases and milestones).             |
+   161→   360→   360→|                                                                       |
+   162→   361→   361→| The builder reviews the synthesis and confirms it before you proceed. |
+   163→   362→   362→|                                                                       |
+   164→   363→   363→| PHASE 2 --- BUILD PLANNING:                                           |
+   165→   364→   364→|                                                                       |
+   166→   365→   365→| Decompose the build into atomic tasks. Each task must have:           |
+   167→   366→   366→|                                                                       |
+   168→   367→   367→| \- A defined input and output.                                        |
+   169→   368→   368→|                                                                       |
+   170→   369→   369→| \- An acceptance criterion.                                           |
+   171→   370→   370→|                                                                       |
+   172→   371→   371→| \- A verification gate (test, lint, type check, accessibility check). |
+   173→   372→   372→|                                                                       |
+   174→   373→   373→| Produce the task list. The builder reviews and approves it.           |
+   175→   374→   374→|                                                                       |
+   176→   375→   375→| PHASE 3 --- IMPLEMENTATION:                                           |
+   177→   376→   376→|                                                                       |
+   178→   377→   377→| For each task:                                                        |
+   179→   378→   378→|                                                                       |
+   180→   379→   379→| 1\. Implement the task.                                               |
+   181→   380→   380→|                                                                       |
+   182→   381→   381→| 2\. Run the verification gate.                                        |
+   183→   382→   382→|                                                                       |
+   184→   383→   383→| 3\. If the gate passes, proceed to the next task.                     |
+   185→   384→   384→|                                                                       |
+   186→   385→   385→| 4\. If the gate fails, fix and re-run (max 3 retries, then escalate). |
+   187→   386→   386→|                                                                       |
+   188→   387→   387→| TARGET STACK:                                                         |
+   189→   388→   388→|                                                                       |
+   190→   389→   389→| \- Frontend: Next.js 16 (App Router), Tailwind CSS 4, Radix UI,       |
+   191→   390→   390→| Framer Motion                                                         |
+   192→   391→   391→|                                                                       |
+   193→   392→   392→| \- Backend: tRPC (type-safe API), Prisma or Drizzle (ORM)             |
+   194→   393→   393→|                                                                       |
+   195→   394→   394→| \- Database: PostgreSQL 16 with Row-Level Security                    |
+   196→   395→   395→|                                                                       |
+   197→   396→   396→| \- Cache: Redis 7 (sessions, cache, distributed locks)                |
+   198→   397→   397→|                                                                       |
+   199→   398→   398→| \- Queue: Inngest or SQS (background jobs, durable execution)         |
+   200→   399→   399→|                                                                       |
+   201→   400→   400→| \- Search: PostgreSQL FTS or Meilisearch                              |
+   202→   401→   401→|                                                                       |
+   203→   402→   402→| \- Storage: S3 or Cloudflare R2                                       |
+   204→   403→   403→|                                                                       |
+   205→   404→   404→| \- Auth: \[Clerk for fast start, or custom session+RLS for control\]  |
+   206→   405→   405→|                                                                       |
+   207→   406→   406→| \- Testing: Vitest (unit), Playwright (E2E), axe-core (a11y), k6      |
+   208→   407→   407→| (load)                                                                |
+   209→   408→   408→|                                                                       |
+   210→   409→   409→| \- CI/CD: GitHub Actions                                              |
+   211→   410→   410→|                                                                       |
+   212→   411→   411→| \- IaC: Pulumi or Terraform                                           |
+   213→   412→   412→|                                                                       |
+   214→   413→   413→| CONSTRAINTS:                                                          |
+   215→   414→   414→|                                                                       |
+   216→   415→   415→| \- Do not write any code until the synthesis (Phase 1) is approved.   |
+   217→   416→   416→|                                                                       |
+   218→   417→   417→| \- Do not proceed past a failed verification gate.                    |
+   219→   418→   418→|                                                                       |
+   220→   419→   419→| \- Implement idempotency for every write endpoint.                    |
+   221→   420→   420→|                                                                       |
+   222→   421→   421→| \- Implement optimistic locking for every concurrent-update entity.   |
+   223→   422→   422→|                                                                       |
+   224→   423→   423→| \- Enforce WCAG 2.2 AA on every user-facing page.                     |
+   225→   424→   424→|                                                                       |
+   226→   425→   425→| \- Do not produce AI-flag UI; follow the professional UI/UX standards |
+   227→   426→   426→|                                                                       |
+   228→   427→   427→| from Doc 2 (typography scale, motion principles, elevation system).   |
+   229→   428→   428→|                                                                       |
+   230→   429→   429→| Begin with Phase 1. Read the documents and produce the synthesis.     |
+   231→   430→   430→+-----------------------------------------------------------------------+
+   232→   431→   431→
+   233→   432→   432→The master template is the starting point for every build, and the
+   234→   433→   433→system-specific prompts that follow are instances of this template,
+   235→   434→   434→filled in with the content for each system type. The builder uses the
+   236→   435→   435→master template as the reference and the system-specific prompts as the
+   237→   436→   436→starting points, adapting them to the specific requirements of the
+   238→   437→   437→build.
+   239→   438→   438→
+   240→   439→   439→[]{#_Toc100007 .anchor}**5. System-Specific Prompt Templates**
+   241→   440→   440→
+   242→   441→   441→This section provides the copy-paste prompt templates for each of the
+   243→   442→   442→eight system categories, plus the advanced combination prompts that
+   244→   443→   443→integrate multiple systems. Each template is a complete first prompt
+   245→   444→   444→that the builder issues to the AI builder, and each is an instance of
+   246→   445→   445→the master template filled in with the system-specific content. The
+   247→   446→   446→builder adapts the bracketed sections to the specific requirements, and
+   248→   447→   447→the prompt directs the AI builder to consume the relevant document
+   249→   448→   448→sections, to synthesize its understanding, and to produce the task list.
+   250→   449→   449→
+   251→   450→   450→[]{#_Toc100008 .anchor}**5.1 School Management System (Complete Private
+   252→   451→   451→School)**
+   253→   452→   452→
+   254→   453→   453→The School Management System is the most comprehensive of the
+   255→   454→   454→system-specific prompts, because it is a vertical ERP that integrates
+   256→   455→   455→the academic, financial, operational, and communication functions of a
+   257→   456→   456→school. The prompt directs the AI builder to construct a system that
+   258→   457→   457→covers the entire school, with the seven modules documented in the
+   259→   458→   458→second document\'s use case, and with the advanced systems that a modern
+   260→   459→   459→smart school requires, including the library management, the transport
+   261→   460→   460→management, the AI-powered features, and the analytics dashboard.
+   262→   461→   461→
+   263→   462→   462→+-----------------------------------------------------------------------+
+   264→   463→   463→| ROLE: You are a senior full-stack engineer building a complete        |
+   265→   464→   464→|                                                                       |
+   266→   465→   465→| production-grade School Management System for a private school. This  |
+   267→   466→   466→| is a                                                                  |
+   268→   467→   467→|                                                                       |
+   269→   468→   468→| vertical ERP that covers the entire school\'s operations.             |
+   270→   469→   469→|                                                                       |
+   271→   470→   470→| THE SYSTEM TO BUILD:                                                  |
+   272→   471→   471→|                                                                       |
+   273→   472→   472→| \- Name: \[SCHOOL_NAME, e.g., Greenfield Academy Management System\]  |
+   274→   473→   473→|                                                                       |
+   275→   474→   474→| \- Type: Vertical ERP for private K-12 education (single school or    |
+   276→   475→   475→| small group)                                                          |
+   277→   476→   476→|                                                                       |
+   278→   477→   477→| \- Target users: Administrators, teachers, parents, students, finance |
+   279→   478→   478→| staff,                                                                |
+   280→   479→   479→|                                                                       |
+   281→   480→   480→| librarians, transport managers                                        |
+   282→   481→   481→|                                                                       |
+   283→   482→   482→| \- Primary problem: Manual processes (paper attendance, handwritten   |
+   284→   483→   483→| gradebooks,                                                           |
+   285→   484→   484→|                                                                       |
+   286→   485→   485→| cash fee collection, phone-tree announcements, manual scheduling)     |
+   287→   486→   486→|                                                                       |
+   288→   487→   487→| \- School size: \[e.g., 500-2000 students, 50-200 staff\]             |
+   289→   488→   488→|                                                                       |
+   290→   489→   489→| \- Goal: Make the school smarter, faster, and more innovative than    |
+   291→   490→   490→| traditional                                                           |
+   292→   491→   491→|                                                                       |
+   293→   492→   492→| MODULES TO IMPLEMENT (7 core + 4 advanced):                           |
+   294→   493→   493→|                                                                       |
+   295→   494→   494→| CORE MODULES:                                                         |
+   296→   495→   495→|                                                                       |
+   297→   496→   496→| 1\. Admissions --- applicant tracking, online applications, document  |
+   298→   497→   497→| upload,                                                               |
+   299→   498→   498→|                                                                       |
+   300→   499→   499→| interview scheduling, admission decisions                             |
+   301→   500→   500→|                                                                       |
+   302→   501→   501→| 2\. Student Information --- demographics, guardians, medical records, |
+   303→   502→   502→|                                                                       |
+   304→   503→   503→| emergency contacts, academic history                                  |
+   305→   504→   504→|                                                                       |
+   306→   505→   505→| 3\. Academic --- courses, sections, enrollment, scheduling,           |
+   307→   506→   506→| attendance,                                                           |
+   308→   507→   507→|                                                                       |
+   309→   508→   508→| gradebook, transcripts, report cards                                  |
+   310→   509→   509→|                                                                       |
+   311→   510→   510→| 4\. Financial --- fee structures, invoicing, online payments,         |
+   312→   511→   511→| scholarships,                                                         |
+   313→   512→   512→|                                                                       |
+   314→   513→   513→| financial aid, expense tracking                                       |
+   315→   514→   514→|                                                                       |
+   316→   515→   515→| 5\. Communication --- announcements, messaging                        |
+   317→   516→   516→| (teacher-parent-student),                                             |
+   318→   517→   517→|                                                                       |
+   319→   518→   518→| notifications (email, SMS, push), event calendar                      |
+   320→   519→   519→|                                                                       |
+   321→   520→   520→| 6\. Reporting --- transcripts, report cards, attendance reports,      |
+   322→   521→   521→| financial                                                             |
+   323→   522→   522→|                                                                       |
+   324→   523→   523→| reports, custom report builder                                        |
+   325→   524→   524→|                                                                       |
+   326→   525→   525→| 7\. Administration --- users, roles, permissions, school settings,    |
+   327→   526→   526→|                                                                       |
+   328→   527→   527→| academic year/term management                                         |
+   329→   528→   528→|                                                                       |
+   330→   529→   529→| ADVANCED MODULES (to make the school \"smart\"):                      |
+   331→   530→   530→|                                                                       |
+   332→   531→   531→| 8\. Library Management --- catalog, circulation (checkout/return),    |
+   333→   532→   532→| reservations,                                                         |
+   334→   533→   533→|                                                                       |
+   335→   534→   534→| fines, ISBN lookup, digital resources                                 |
+   336→   535→   535→|                                                                       |
+   337→   536→   536→| 9\. Transport Management --- bus routes, stops, student assignment,   |
+   338→   537→   537→| driver                                                                |
+   339→   538→   538→|                                                                       |
+   340→   539→   539→| tracking, parent pickup notifications, GPS tracking                   |
+   341→   540→   540→|                                                                       |
+   342→   541→   541→| 10\. Health & Medical --- health records, medication tracking,        |
+   343→   542→   542→| immunization                                                          |
+   344→   543→   543→|                                                                       |
+   345→   544→   544→| tracking, clinic visits, allergy alerts                               |
+   346→   545→   545→|                                                                       |
+   347→   546→   546→| 11\. AI-Powered Features --- automated attendance analytics, early    |
+   348→   547→   547→| warning                                                               |
+   349→   548→   548→|                                                                       |
+   350→   549→   549→| system for at-risk students, automated report card comments,          |
+   351→   550→   550→|                                                                       |
+   352→   551→   551→| chatbot for parent queries, predictive enrollment                     |
+   353→   552→   552→|                                                                       |
+   354→   553→   553→| PHASE 1 --- DOCUMENT CONSUMPTION:                                     |
+   355→   554→   554→|                                                                       |
+   356→   555→   555→| Read from the foundational documents:                                 |
+   357→   556→   556→|                                                                       |
+   358→   557→   557→| \- Doc 1: Section 10 (ERP) for the financial module pattern and       |
+   359→   558→   558→| shared data                                                           |
+   360→   559→   559→|                                                                       |
+   361→   560→   560→| backbone; Section 14 (LMS) for the academic module pattern; Section 7 |
+   362→   561→   561→|                                                                       |
+   363→   562→   562→| (Multi-Tenant SaaS) if serving multiple schools.                      |
+   364→   563→   563→|                                                                       |
+   365→   564→   564→| \- Doc 2: The school management system use case (Section 5) with the  |
+   366→   565→   565→| prompt                                                                |
+   367→   566→   566→|                                                                       |
+   368→   567→   567→| sequence and the manual-to-digital process mapping.                   |
+   369→   568→   568→|                                                                       |
+   370→   569→   569→| \- Doc 3: The database selection (PostgreSQL for transactional,       |
+   371→   570→   570→| ClickHouse                                                            |
+   372→   571→   571→|                                                                       |
+   373→   572→   572→| if analytics-heavy), the auth selection (Clerk or custom), the tRPC   |
+   374→   573→   573→|                                                                       |
+   375→   574→   574→| integration contract.                                                 |
+   376→   575→   575→|                                                                       |
+   377→   576→   576→| \- Doc 4: The requirements engineering (use cases for each module),   |
+   378→   577→   577→| the                                                                   |
+   379→   578→   578→|                                                                       |
+   380→   579→   579→| testing strategy (including FERPA compliance testing), the threat     |
+   381→   580→   580→|                                                                       |
+   382→   581→   581→| modeling (STRIDE for student data).                                   |
+   383→   582→   582→|                                                                       |
+   384→   583→   583→| \- Doc 5: The concurrency patterns (distributed lock for schedule     |
+   385→   584→   584→| conflicts,                                                            |
+   386→   585→   585→|                                                                       |
+   387→   586→   586→| idempotency for fee payments), the multi-database architecture        |
+   388→   587→   587→|                                                                       |
+   389→   588→   588→| (PostgreSQL for records, Redis for sessions, S3 for documents).       |
+   390→   589→   589→|                                                                       |
+   391→   590→   590→| \- Doc 6: The durable execution for long-running processes (report    |
+   392→   591→   591→| card                                                                  |
+   393→   592→   592→|                                                                       |
+   394→   593→   593→| generation, bulk notifications).                                      |
+   395→   594→   594→|                                                                       |
+   396→   595→   595→| Produce a SYNTHESIS that includes:                                    |
+   397→   596→   596→|                                                                       |
+   398→   597→   597→| \(a\) The complete data model for all 11 modules (entities,           |
+   399→   598→   598→| relationships).                                                       |
+   400→   599→   599→|                                                                       |
+   401→
+   402→[showing lines 200-599 of 1874; use offset=600 with limit to continue reading]

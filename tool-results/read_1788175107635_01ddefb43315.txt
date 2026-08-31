@@ -1,0 +1,402 @@
+     1→     1→+-----------------------------------------------------------------------+
+     2→     2→| > B U S I N E S S P R O F E S S I O N A L T E S T P R O M P T         |
+     3→     3→| >                                                                     |
+     4→     4→| > **ClinicFlow Test Prompt ---**                                      |
+     5→     5→| >                                                                     |
+     6→     6→| > **Ready to Copy and Paste**                                         |
+     7→     7→| >                                                                     |
+     8→     8→| > A Complete, Pre-Filled Prompt for Testing the 7-Document Playbook   |
+     9→     9→| > with an AI Builder. All Business Details Decided --- Copy           |
+    10→    10→| > Everything in the Code Block and Paste Directly.                    |
+    11→    11→| >                                                                     |
+    12→    12→| > Document Type: Test Prompt for AI Builder                           |
+    13→    13→| >                                                                     |
+    14→    14→| > Style: Business Professional                                        |
+    15→    15→| >                                                                     |
+    16→    16→| > Business: ClinicFlow --- Physical Therapy Practice Management SaaS  |
+    17→    17→| >                                                                     |
+    18→    18→| > Prepared by: Super Z Research                                       |
+    19→    19→| >                                                                     |
+    20→    20→| > Date: August 27, 2026                                               |
+    21→    21→| >                                                                     |
+    22→    22→| > Copy Everything in the Code Block Below 2026 Edition                |
+    23→    23→+-----------------------------------------------------------------------+
+    24→    24→
+    25→    25→**Table of Contents**
+    26→    26→
+    27→    27→[1. How to Use This Document [1](#_Toc100000)](#_Toc100000)
+    28→    28→
+    29→    29→[2. The Complete Prompt (Copy Everything Below This Line)
+    30→    30→[2](#_Toc100001)](#_Toc100001)
+    31→    31→
+    32→    32→*Note: This Table of Contents is generated via field codes. To ensure
+    33→    33→page number accuracy after editing, please right-click the TOC and
+    34→    34→select \"Update Field.\"*
+    35→    35→
+    36→    36→[]{#_Toc100000 .anchor}**1. How to Use This Document**
+    37→    37→
+    38→    38→This document contains a single, complete prompt that you can copy and
+    39→    39→paste directly into any AI builder (Claude Code, Cursor, OpenAI Codex,
+    40→    40→z.ai autoclaw, or any multi-agent system). All business details have
+    41→    41→been decided for you. You do not need to fill in any brackets or replace
+    42→    42→any placeholders. Simply copy the entire contents of the code block in
+    43→    43→Section 2, paste it as your first message to the AI builder, and the
+    44→    44→builder will begin the three-phase process of consuming the 7
+    45→    45→foundational documents, producing a synthesis, decomposing into tasks,
+    46→    46→and implementing with verification gates.
+    47→    47→
+    48→    48→The business chosen for this test prompt is ClinicFlow, a practice
+    49→    49→management SaaS platform for independent physical therapy clinics. This
+    50→    50→business was selected because it is a concrete, realistic vertical with
+    51→    51→a clear buyer, a clear problem, a clear monetization model, and a
+    52→    52→moderate complexity that makes it an ideal test case for verifying
+    53→    53→whether the AI builder can follow the 7-document process and deliver a
+    54→    54→quality result. The prompt specifies the system name, the vertical, the
+    55→    55→target users, the problem statement, the functional and non-functional
+    56→    56→requirements, the target technology stack, the constraints, and the
+    57→    57→three-phase model that the AI builder must follow.
+    58→    58→
+    59→    59→[]{#_Toc100001 .anchor}**2. The Complete Prompt (Copy Everything Below
+    60→    60→This Line)**
+    61→    61→
+    62→    62→Copy the entire contents of the code block below, from the first line
+    63→    63→(ROLE:) to the last line (produce the synthesis.), and paste it as your
+    64→    64→first message to the AI builder. Ensure that the 7 foundational
+    65→    65→documents are placed in a docs/ folder in the project directory before
+    66→    66→you send the prompt, so the AI builder can read them.
+    67→    67→
+    68→    68→+-----------------------------------------------------------------------+
+    69→    69→| ROLE: You are a senior full-stack engineer building a                 |
+    70→    70→| production-grade                                                      |
+    71→    71→|                                                                       |
+    72→    72→| multi-tenant Business SaaS platform called ClinicFlow. You are        |
+    73→    73→| building                                                              |
+    74→    74→|                                                                       |
+    75→    75→| this according to the 7-document AI Builder Playbook that has been    |
+    76→    76→|                                                                       |
+    77→    77→| uploaded to this project\'s docs/ folder. You do not improvise; you   |
+    78→    78→|                                                                       |
+    79→    79→| implement against the documented specification. You do not skip       |
+    80→    80→|                                                                       |
+    81→    81→| verification; you run the gate after every task.                      |
+    82→    82→|                                                                       |
+    83→    83→| THE SYSTEM TO BUILD:                                                  |
+    84→    84→|                                                                       |
+    85→    85→| \- Name: ClinicFlow                                                   |
+    86→    86→|                                                                       |
+    87→    87→| \- Type: Multi-tenant B2B SaaS platform                               |
+    88→    88→|                                                                       |
+    89→    89→| \- Vertical: Practice management for independent physical therapy     |
+    90→    90→| clinics                                                               |
+    91→    91→|                                                                       |
+    92→    92→| \- Target users: Clinic owners, physical therapists, front desk       |
+    93→    93→| staff,                                                                |
+    94→    94→|                                                                       |
+    95→    95→| billing managers, and patients (via patient portal)                   |
+    96→    96→|                                                                       |
+    97→    97→| \- Primary problem: Independent physical therapy clinics (1-10        |
+    98→    98→| therapists)                                                           |
+    99→    99→|                                                                       |
+   100→   100→| currently use 4-5 disconnected tools for scheduling, billing,         |
+   101→   101→| clinical                                                              |
+   102→   102→|                                                                       |
+   103→   103→| documentation, and patient communication. These tools do not share    |
+   104→   104→|                                                                       |
+   105→   105→| data, causing double entry, missed appointments, delayed insurance    |
+   106→   106→|                                                                       |
+   107→   107→| claims, and a poor patient experience. There is no purpose-built      |
+   108→   108→|                                                                       |
+   109→   109→| platform that integrates the clinical workflow (SOAP notes, treatment |
+   110→   110→|                                                                       |
+   111→   111→| plans, outcome tracking) with the business workflow (scheduling,      |
+   112→   112→|                                                                       |
+   113→   113→| billing, insurance claims, patient communication) in a single system. |
+   114→   114→|                                                                       |
+   115→   115→| \- Monetization: Per-seat subscription at \$49/therapist/month +      |
+   116→   116→|                                                                       |
+   117→   117→| \$19/support-staff/month. The patient portal is free for clinics.     |
+   118→   118→|                                                                       |
+   119→   119→| Stripe handles subscription billing with usage metering and           |
+   120→   120→| proration.                                                            |
+   121→   121→|                                                                       |
+   122→   122→| \- Expected scale: 50-100 clinics in year 1 (500-1,000 users),        |
+   123→   123→|                                                                       |
+   124→   124→| 500-1,000 clinics by year 3 (5,000-10,000 users)                      |
+   125→   125→|                                                                       |
+   126→   126→| \- Target market: United States independent PT clinics, single or     |
+   127→   127→|                                                                       |
+   128→   128→| multi-location, 1-10 therapists per location                          |
+   129→   129→|                                                                       |
+   130→   130→| PHASE 1 --- DOCUMENT CONSUMPTION (Do NOT write any code yet):         |
+   131→   131→|                                                                       |
+   132→   132→| Read the following sections from the 7 foundational documents in the  |
+   133→   133→|                                                                       |
+   134→   134→| docs/ folder:                                                         |
+   135→   135→|                                                                       |
+   136→   136→| FROM DOC 1 (Production-Ready Full-Stack Systems Complete):            |
+   137→   137→|                                                                       |
+   138→   138→| \- Section 7: Multi-Tenant SaaS Platform --- read the ENTIRE section: |
+   139→   139→|                                                                       |
+   140→   140→| \- 7.1 Overview and Market Context                                    |
+   141→   141→|                                                                       |
+   142→   142→| \- 7.2 Planning from Scratch (problem statement, ICP, functional and  |
+   143→   143→|                                                                       |
+   144→   144→| non-functional requirements, regulatory regime, scope boundaries)     |
+   145→   145→|                                                                       |
+   146→   146→| \- 7.3 SDLC Application                                               |
+   147→   147→|                                                                       |
+   148→   148→| \- 7.4 Foundation and Reference Architecture (Next.js + PostgreSQL    |
+   149→   149→|                                                                       |
+   150→   150→| with Row-Level Security + Redis + the reference architecture          |
+   151→   151→|                                                                       |
+   152→   152→| diagram at Figure 2)                                                  |
+   153→   153→|                                                                       |
+   154→   154→| \- 7.5 Data Model (Table 2: Tenant, User, Role, Session,              |
+   155→   155→| Subscription,                                                         |
+   156→   156→|                                                                       |
+   157→   157→| Plan, Invoice, AuditEvent, FeatureFlag, Integration --- with the      |
+   158→   158→|                                                                       |
+   159→   159→| tenant_id column and RLS policy on every table)                       |
+   160→   160→|                                                                       |
+   161→   161→| \- 7.6 How It Works (4 process flows: tenant provisioning, user       |
+   162→   162→|                                                                       |
+   163→   163→| authentication, request lifecycle with tenant context, subscription   |
+   164→   164→|                                                                       |
+   165→   165→| billing)                                                              |
+   166→   166→|                                                                       |
+   167→   167→| \- 7.7 Security and Compliance Controls (OWASP Top Ten, SOC 2)        |
+   168→   168→|                                                                       |
+   169→   169→| \- 7.8 UI/UX and Accessibility (WCAG 2.2 AA, Radix UI + Tailwind CSS) |
+   170→   170→|                                                                       |
+   171→   171→| \- 7.9 Building Process and Implementation Roadmap (4 phases,         |
+   172→   172→|                                                                       |
+   173→   173→| 12-18 months)                                                         |
+   174→   174→|                                                                       |
+   175→   175→| \- 7.10 Business Viability and Sources                                |
+   176→   176→|                                                                       |
+   177→   177→| \- Section 5: Common Engineering Standards (all subsections           |
+   178→   178→| 5.1-5.10):                                                            |
+   179→   179→|                                                                       |
+   180→   180→| architecture, security, UI/UX, API design, observability, monitoring  |
+   181→   181→|                                                                       |
+   182→   182→| KPIs (Table 13: SLO targets), disaster recovery, deployment topology, |
+   183→   183→|                                                                       |
+   184→   184→| internationalization, vendor selection                                |
+   185→   185→|                                                                       |
+   186→   186→| \- Section 4: The SDLC as Foundation (all 6 phases with artifacts and |
+   187→   187→|                                                                       |
+   188→   188→| gates)                                                                |
+   189→   189→|                                                                       |
+   190→   190→| \- Section 15: Cross-System Comparison (Table 10, Table 14 team       |
+   191→   191→|                                                                       |
+   192→   192→| composition, Table 15 cost estimation)                                |
+   193→   193→|                                                                       |
+   194→   194→| \- Section 17: Risk Register (Table 11) and Action Items (Table 12)   |
+   195→   195→|                                                                       |
+   196→   196→| FROM DOC 2 (Prompting AI Builder Agents):                             |
+   197→   197→|                                                                       |
+   198→   198→| \- Section 4: The Prompt Architecture (three-phase model: context     |
+   199→   199→|                                                                       |
+   200→   200→| loading, analysis, implementation)                                    |
+   201→   201→|                                                                       |
+   202→   202→| \- Section 6: Use Case 2 --- B2B SaaS System (the tenant isolation    |
+   203→   203→|                                                                       |
+   204→   204→| prompt --- this is the critical prompt for ClinicFlow)                |
+   205→   205→|                                                                       |
+   206→   206→| \- Section 8: Professional UI/UX Standards --- Eliminating AI-Flag    |
+   207→   207→| Work:                                                                 |
+   208→   208→|                                                                       |
+   209→   209→| \- 8.1 Typography Systems (Table 4: Major Third type scale)           |
+   210→   210→|                                                                       |
+   211→   211→| \- 8.2 Motion Design Principles (12 UX in Motion principles)          |
+   212→   212→|                                                                       |
+   213→   213→| \- 8.3 Transparency, Layering, and Depth (4 elevation levels)         |
+   214→   214→|                                                                       |
+   215→   215→| \- 8.4 Color Systems (neutral 10-step palette, semantic colors)       |
+   216→   216→|                                                                       |
+   217→   217→| \- 8.5 The Landing Page Anatomy (Table 5: 10-section structure)       |
+   218→   218→|                                                                       |
+   219→   219→| FROM DOC 3 (Technical Stack and Integration Guide):                   |
+   220→   220→|                                                                       |
+   221→   221→| \- Section 4: Database Selection (Table 1: PostgreSQL vs MySQL vs     |
+   222→   222→|                                                                       |
+   223→   223→| MongoDB vs SQLite --- PostgreSQL recommended for multi-tenant SaaS)   |
+   224→   224→|                                                                       |
+   225→   225→| \- Section 4.3: ORM Choice (Table 2: Prisma vs Drizzle --- Prisma     |
+   226→   226→|                                                                       |
+   227→   227→| recommended for this project)                                         |
+   228→   228→|                                                                       |
+   229→   229→| \- Section 5: Cache, Queue, Search, Storage Selection:                |
+   230→   230→|                                                                       |
+   231→   231→| \- 5.1 Cache: Redis 7 (sessions, rate-limit, hot-path cache)          |
+   232→   232→|                                                                       |
+   233→   233→| \- 5.2 Queue: Inngest (durable execution for billing, notifications)  |
+   234→   234→|                                                                       |
+   235→   235→| \- 5.3 Search: PostgreSQL FTS (sufficient for in-app search)          |
+   236→   236→|                                                                       |
+   237→   237→| \- 5.4 Storage: S3 or Cloudflare R2 (patient documents, exports)      |
+   238→   238→|                                                                       |
+   239→   239→| \- Section 6: Authentication Platform (Table 3: Clerk recommended for |
+   240→   240→|                                                                       |
+   241→   241→| fast start with SAML SSO for enterprise)                              |
+   242→   242→|                                                                       |
+   243→   243→| \- Section 7: API Style Selection (Table 4: tRPC for internal         |
+   244→   244→|                                                                       |
+   245→   245→| communication, REST+OpenAPI for public API)                           |
+   246→   246→|                                                                       |
+   247→   247→| \- Section 8: The Type-Safe Toolchain (Zod + Prisma + tRPC +          |
+   248→   248→|                                                                       |
+   249→   249→| TanStack Query --- with the code block showing the integration        |
+   250→   250→|                                                                       |
+   251→   251→| contract pattern)                                                     |
+   252→   252→|                                                                       |
+   253→   253→| \- Section 9: Error Handling, Pagination, Optimistic Updates          |
+   254→   254→|                                                                       |
+   255→   255→| (discriminated union errors, cursor pagination, onMutate pattern)     |
+   256→   256→|                                                                       |
+   257→   257→| FROM DOC 4 (System Analysis, Quality and Operational Excellence):     |
+   258→   258→|                                                                       |
+   259→   259→| \- Section 4: Requirements Engineering (use cases, BDD/Gherkin        |
+   260→   260→|                                                                       |
+   261→   261→| scenarios, Requirements Traceability Matrix)                          |
+   262→   262→|                                                                       |
+   263→   263→| \- Section 5: Testing Strategy (Table 2: 8 test types --- unit,       |
+   264→   264→|                                                                       |
+   265→   265→| integration, E2E, contract, performance, security, accessibility,     |
+   266→   266→|                                                                       |
+   267→   267→| visual regression --- with tools and coverage targets)                |
+   268→   268→|                                                                       |
+   269→   269→| \- Section 6: DevOps and IaC (Pulumi recommended; CI/CD pipeline with |
+   270→   270→|                                                                       |
+   271→   271→| 8 stages: source, build, test, security, deploy-staging, integration- |
+   272→   272→|                                                                       |
+   273→   273→| test, deploy-production, post-deploy-verification)                    |
+   274→   274→|                                                                       |
+   275→   275→| \- Section 7: SRE and Incident Response (on-call rotation, alerting   |
+   276→   276→| on                                                                    |
+   277→   277→|                                                                       |
+   278→   278→| SLO error budgets, blameless postmortem per Google SRE)               |
+   279→   279→|                                                                       |
+   280→   280→| \- Section 8: Threat Modeling (STRIDE: Spoofing, Tampering,           |
+   281→   281→| Repudiation,                                                          |
+   282→   282→|                                                                       |
+   283→   283→| Information disclosure, Denial of service, Elevation of privilege)    |
+   284→   284→|                                                                       |
+   285→   285→| \- Section 9: Compliance Operationalization (SOC 2 continuous         |
+   286→   286→| compliance,                                                           |
+   287→   287→|                                                                       |
+   288→   288→| GDPR data subject rights, HIPAA for patient health information)       |
+   289→   289→|                                                                       |
+   290→   290→| \- Section 10: Performance Engineering (performance budgets enforced  |
+   291→   291→| in                                                                    |
+   292→   292→|                                                                       |
+   293→   293→| CI, capacity planning, profiling)                                     |
+   294→   294→|                                                                       |
+   295→   295→| \- Section 11: Architecture Decision Records (ADR template: title,    |
+   296→   296→|                                                                       |
+   297→   297→| context, decision, status, consequences)                              |
+   298→   298→|                                                                       |
+   299→   299→| \- Section 12: Go-to-Market and Launch (beta/design partner program,  |
+   300→   300→|                                                                       |
+   301→   301→| feature flags, gradual rollout, product analytics)                    |
+   302→   302→|                                                                       |
+   303→   303→| \- Section 13: Unit Economics (Table 3: CAC, LTV, COGS, gross margin, |
+   304→   304→|                                                                       |
+   305→   305→| payback period, NRR, churn --- with healthy targets)                  |
+   306→   306→|                                                                       |
+   307→   307→| FROM DOC 5 (Scalability, Concurrency and Multi-Database):             |
+   308→   308→|                                                                       |
+   309→   309→| \- Section 4: The AI Builder\'s Document Consumption Protocol (5      |
+   310→   310→| phases:                                                               |
+   311→   311→|                                                                       |
+   312→   312→| inventory, loading, synthesis, planning, implementation)              |
+   313→   313→|                                                                       |
+   314→   314→| \- Section 5: Scalability and Traffic Management:                     |
+   315→   315→|                                                                       |
+   316→   316→| \- 5.1 Load balancing (AWS ALB or Cloudflare)                         |
+   317→   317→|                                                                       |
+   318→   318→| \- 5.2 Auto-scaling (CPU/queue-depth triggered)                       |
+   319→   319→|                                                                       |
+   320→   320→| \- 5.3 Rate limiting (token bucket at API gateway, 429 + Retry-After) |
+   321→   321→|                                                                       |
+   322→   322→| \- 5.4 Caching strategies (Redis cache-aside for hot-path data)       |
+   323→   323→|                                                                       |
+   324→   324→| \- 5.5 Circuit breaker (for Stripe, email, SMS calls)                 |
+   325→   325→|                                                                       |
+   326→   326→| \- Section 6: Concurrency Control:                                    |
+   327→   327→|                                                                       |
+   328→   328→| \- 6.1 Optimistic locking (version field on every concurrent entity)  |
+   329→   329→|                                                                       |
+   330→   330→| \- 6.2 Pessimistic locking (SELECT FOR UPDATE for schedule conflicts) |
+   331→   331→|                                                                       |
+   332→   332→| \- 6.3 Distributed locks with Redis (SET NX with TTL for appointment  |
+   333→   333→|                                                                       |
+   334→   334→| booking --- prevent double-booking)                                   |
+   335→   335→|                                                                       |
+   336→   336→| \- 6.4 Idempotency (the middleware pattern with the code block ---    |
+   337→   337→|                                                                       |
+   338→   338→| idempotency key on every write endpoint)                              |
+   339→   339→|                                                                       |
+   340→   340→| \- 6.5 Database connection pooling (PgBouncer)                        |
+   341→   341→|                                                                       |
+   342→   342→| \- Section 7: Data Consistency (Saga pattern for subscription         |
+   343→   343→| billing,                                                              |
+   344→   344→|                                                                       |
+   345→   345→| Outbox pattern for event publication)                                 |
+   346→   346→|                                                                       |
+   347→   347→| \- Section 8: Multi-Database Architecture (Table 1: polyglot          |
+   348→   348→| persistence                                                           |
+   349→   349→|                                                                       |
+   350→   350→| --- PostgreSQL for transactional, Redis for cache, S3 for documents,  |
+   351→   351→|                                                                       |
+   352→   352→| central data hub for patient data with RBAC)                          |
+   353→   353→|                                                                       |
+   354→   354→| FROM DOC 6 (Multi-Agent Collaboration, Fault Tolerance and            |
+   355→   355→| Continuity):                                                          |
+   356→   356→|                                                                       |
+   357→   357→| \- Section 4: Multi-Agent Collaboration Architecture:                 |
+   358→   358→|                                                                       |
+   359→   359→| \- 4.1 Orchestration patterns (Table 1: supervisor pattern            |
+   360→   360→| recommended)                                                          |
+   361→   361→|                                                                       |
+   362→   362→| \- 4.2 Shared task ledger (PostgreSQL, append-only, versioned)        |
+   363→   363→|                                                                       |
+   364→   364→| \- 4.3 State sharing (event bus, not direct agent-to-agent messages)  |
+   365→   365→|                                                                       |
+   366→   366→| \- 4.4 File-level coordination (version control branching)            |
+   367→   367→|                                                                       |
+   368→   368→| \- Section 5: Fault Tolerance --- Durable Execution:                  |
+   369→   369→|                                                                       |
+   370→   370→| \- 5.1 Why checkpointing is not enough (durable execution recovers    |
+   371→   371→|                                                                       |
+   372→   372→| at the failing step, not the boundary)                                |
+   373→   373→|                                                                       |
+   374→   374→| \- 5.2 Durable execution runtimes (Table 2: Inngest recommended)      |
+   375→   375→|                                                                       |
+   376→   376→| \- 5.3 Workflow and activity split (deterministic workflow,           |
+   377→   377→|                                                                       |
+   378→   378→| nondeterministic activities)                                          |
+   379→   379→|                                                                       |
+   380→   380→| \- 5.4 Idempotent recovery (activities identified by unique key)      |
+   381→   381→|                                                                       |
+   382→   382→| \- Section 6: Continuity and Graceful Degradation:                    |
+   383→   383→|                                                                       |
+   384→   384→| \- 6.1 Solo builder takeover (reads pending tasks from ledger)        |
+   385→   385→|                                                                       |
+   386→   386→| \- 6.2 Agent health monitoring (heartbeats every 30 seconds)          |
+   387→   387→|                                                                       |
+   388→   388→| \- 6.3 Resumption (agent synchronizes with ledger before resuming)    |
+   389→   389→|                                                                       |
+   390→   390→| \- 6.4 Graceful degradation layers (Table 3: 6 layers from retry to   |
+   391→   391→|                                                                       |
+   392→   392→| solo builder takeover)                                                |
+   393→   393→|                                                                       |
+   394→   394→| FROM DOC 7 (Prompt Template Library and Usage Guide):                 |
+   395→   395→|                                                                       |
+   396→   396→| \- Section 3.2: The CLAUDE.md or AGENTS.md file (the context file     |
+   397→   397→|                                                                       |
+   398→   398→| template)                                                             |
+   399→   399→|                                                                       |
+   400→   400→| \- Section 4: The Master Prompt Template (the fill-in-the-blank       |
+   401→
+   402→[showing lines 1-400 of 1104; use offset=401 with limit to continue reading]
