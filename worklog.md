@@ -438,3 +438,62 @@ Stage Summary:
 - Sign-to-lock prevents modification of completed clinical notes (HIPAA requirement — signed notes are legal documents).
 - Every access (list/get/create/update/sign) logs a PHI AuditEvent with phi=true (Constraint #12).
 - Next: TASK-025 (treatment plans), TASK-026 (outcome measures), TASK-027 (exercise library + prescription).
+
+---
+Task ID: TASK-025 / 026 / 027
+Agent: senior-full-stack-engineer (primary)
+Task: Complete the clinical documentation suite — treatment plans, outcome measures (DASH/Oswestry/KOOS scoring), and exercise library + prescription.
+
+Work Log:
+- TASK-025 (Treatment plans):
+  * Created src/server/schemas/treatment-plan.ts — Zod schemas for create/update/list with goals array.
+  * Created src/server/routers/treatment-plans.ts — 4 procedures: list, get, create (idempotent), update. Goals stored as JSON. PHI audit logged.
+  * Verified: created plan with diagnosis "Lumbar strain" + 1 goal + frequency "2x/week". Listed 1 plan.
+
+- TASK-026 (Outcome measures):
+  * Created src/server/schemas/outcome-measure.ts — Zod schemas for record/list/trend.
+  * Created src/server/routers/outcome-measures.ts — 3 procedures: list, trend, record (idempotent).
+  * Built-in scoring for 5 outcome measure types:
+    - DASH (30 items, 0-100, higher = more disability): score = ((sum - count) / (5 * count)) * 100
+    - QuickDASH (11 items, same formula)
+    - Oswestry (10 sections, 0-100): score = (sum / 50) * 100
+    - KOOS (42 items, 0-100, higher = better function): score = 100 - (sum / (4 * count)) * 100
+    - NRS (0-10 pain scale)
+  * Verified: recorded DASH with 30 responses → score=39/100 (39% disability). Trend returns data points.
+  * The trend endpoint supports chart visualization (recharts-ready data format).
+
+- TASK-027 (Exercise library + prescription):
+  * Created src/server/schemas/exercise.ts — Zod schemas for prescribe/list.
+  * Created src/server/routers/exercises.ts — 4 procedures:
+    - list — search the exercise library (6 seeded exercises: Quad Set, Straight Leg Raise, Hamstring Stretch, Clamshell, Wall Sit, Heel Slide)
+    - listPrescriptions — prescriptions for a patient/treatment plan (includes exercise details + patient name)
+    - prescribe (idempotent) — link exercise to treatment plan with patient-specific parameters (sets, reps, hold, frequency, notes)
+    - removePrescription — remove a prescription
+  * Verified: listed 6 exercises, prescribed "Quad Set" with sets=3, reps=10, holdSec=5, frequency="2x/day".
+
+- Added all 3 routers to appRouter (_app.ts): treatmentPlans, outcomeMeasures, exercises.
+
+Verification Gate (all PASS):
+- `bun run lint`: 0 errors, 0 warnings ✅
+- `bunx tsc --noEmit` (src/): 0 errors ✅
+- Treatment plan create: ✅ diagnosis + goals + frequency
+- Treatment plan list: ✅ 1 plan found
+- Outcome measure (DASH) record: ✅ score=39/100 (correct formula)
+- Outcome measure trend: ✅ 1 data point
+- Exercise list: ✅ 6 exercises
+- Exercise prescribe: ✅ sets=3, reps=10
+- All pages: HTTP 200 (Landing 539KB, Dashboard 79KB, Patients 52KB, Schedule 64KB, SOAP Notes 65KB) ✅
+
+Stage Summary:
+- The clinical documentation suite is complete:
+  * Patient management (TASK-019)
+  * Appointment scheduling with distributed lock (TASK-020/021)
+  * SOAP notes with autosave + sign-to-lock (TASK-024)
+  * Treatment plans with goals (TASK-025)
+  * Outcome measures with built-in DASH/Oswestry/KOOS scoring + trend (TASK-026)
+  * Exercise library + prescription (TASK-027)
+- The platform now supports the full PT clinical workflow: book appointment → write SOAP note → create treatment plan → prescribe exercises → track outcomes over time.
+- All PHI entities are audit-logged (Patient, SoapNote, TreatmentPlan, OutcomeMeasure, ExercisePrescription).
+- All mutations use idempotentProcedure (Constraint #3).
+- Concurrent entities use optimistic locking (Patient, Appointment, SoapNote, Claim — Constraint #4).
+- Next: TASK-029+ (Stripe billing), TASK-032+ (claims), TASK-038+ (patient portal), TASK-042 (reporting).
