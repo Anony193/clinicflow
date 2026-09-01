@@ -593,3 +593,43 @@ Stage Summary:
 - This is the most critical verification in the entire build — a tenant data leakage incident would be catastrophic (DOC1 §7.6: "a bug in the application code that omits a tenant filter in a WHERE clause cannot leak data across tenants, because the database enforces the filter regardless of the query").
 - The suite is re-runnable anytime via `bun run test:isolation`.
 - Next: TASK-042 (reporting & analytics), TASK-038 (patient portal).
+
+---
+Task ID: TASK-042
+Agent: senior-full-stack-engineer (primary)
+Task: Reporting & analytics — clinic performance, therapist productivity, patient outcomes, claim status. Charts via recharts.
+
+Work Log:
+- Created src/server/routers/reports.ts — 4 procedures:
+  * clinicPerformance — visits this month, completed, no-shows, no-show rate, total charges, collected, outstanding balance, claim count, payment count. Uses Prisma aggregate.
+  * therapistProductivity — per-therapist visit count, completed count, SOAP note count for the current month.
+  * claimStatus — groupBy status with count, total charges, paid, balance.
+  * patientOutcomes — groupBy type with avg/min/max score and percent.
+- Added reportsRouter to appRouter.
+- Created src/components/reports/reports-charts.tsx — client component with recharts:
+  * Bar chart: therapist productivity (visits, completed, SOAP notes)
+  * Pie chart: claim status breakdown (color-coded by status)
+  * Table: patient outcomes summary (measure, count, avg score, avg %, range, trend badge)
+- Created src/app/app/reports/page.tsx — server component that fetches all 4 reports via serverTRPC, renders stat cards (6 KPIs) + passes data to ReportsCharts client component.
+- Fixed: recharts can't be used in Server Components (uses canvas/SVG) — split into server (data fetch) + client (chart render).
+- Fixed: optional input parameters need empty object {} not null for tRPC queries.
+
+Verification Gate (all PASS):
+- `bun run lint`: 0 errors, 0 warnings ✅
+- `bunx tsc --noEmit` (src/): 0 errors ✅
+- Reports API (4 endpoints): all return data correctly ✅
+  * Clinic performance: 2 visits, $75 charges, $75 collected, 0% no-show
+  * Therapist productivity: 1 therapist (James Chen, 2 visits)
+  * Claim status: 1 PAID claim
+  * Patient outcomes: 1 DASH measure (avg=39/100, 39%)
+- Reports page: HTTP 200, 106KB (renders stat cards + charts + outcomes table) ✅
+- All 7 pages: HTTP 200 (Landing, Dashboard, Patients, Schedule, SOAP Notes, Reports) ✅
+- Isolation tests: 10/10 pass ✅
+
+Stage Summary:
+- Reporting & analytics is complete with 4 report types and 3 chart visualizations.
+- The reports page shows: 6 KPI stat cards (visits, completed, no-show rate, charges, collected, outstanding), therapist productivity bar chart, claim status pie chart, and patient outcomes summary table.
+- All report data is tenant-scoped (auto-filtered by the Prisma extension).
+- Every report access is audit-logged.
+- The platform now has the full Phase 2 (clinical) + Phase 3 (commercial) + Phase 4 (reporting) feature set.
+- Remaining: TASK-038 (patient portal) is optional for the sandbox demo.
