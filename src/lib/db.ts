@@ -21,7 +21,8 @@ const globalForPrisma = globalThis as unknown as {
 const baseClient =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === 'production' ? ['error', 'warn'] : ['query'],
+    // Disable query logging to prevent OOM in sandbox (each query logs ~200 bytes)
+    log: process.env.NODE_ENV === 'production' ? ['error', 'warn'] : ['error', 'warn'],
   });
 
 /** The extended Prisma client with automatic tenant isolation. */
