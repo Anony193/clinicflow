@@ -1,0 +1,800 @@
+     1→import type { Metadata } from "next";
+     2→import Link from "next/link";
+     3→import {
+     4→  CalendarClock,
+     5→  FileText,
+     6→  CreditCard,
+     7→  Users,
+     8→  Activity,
+     9→  Stethoscope,
+    10→  CheckCircle2,
+    11→  ShieldCheck,
+    12→  ArrowRight,
+    13→  Star,
+    14→  Zap,
+    15→  Bell,
+    16→  MessageSquare,
+    17→  TrendingUp,
+    18→  Clock,
+    19→} from "lucide-react";
+    20→import { Button } from "@/components/ui/button";
+    21→import { Badge } from "@/components/ui/badge";
+    22→import {
+    23→  Card,
+    24→  CardContent,
+    25→  CardDescription,
+    26→  CardHeader,
+    27→  CardTitle,
+    28→} from "@/components/ui/card";
+    29→import { Separator } from "@/components/ui/separator";
+    30→import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+    31→import { LandingNav } from "@/components/landing/landing-nav";
+    32→import { LandingFooter } from "@/components/landing/landing-footer";
+    33→
+    34→export const metadata: Metadata = {
+    35→  title: "ClinicFlow — Practice management built for independent PT clinics",
+    36→  description:
+    37→    "ClinicFlow unifies scheduling, SOAP notes, billing, and insurance claims in one platform purpose-built for independent physical therapy clinics. Per-seat pricing from $49/therapist/month. Patient portal free.",
+    38→  keywords: [
+    39→    "physical therapy software",
+    40→    "PT clinic management",
+    41→    "SOAP notes",
+    42→    "CMS-1500 claims",
+    43→    "practice management",
+    44→    "ClinicFlow",
+    45→  ],
+    46→  openGraph: {
+    47→    title: "ClinicFlow — Practice management for independent PT clinics",
+    48→    description:
+    49→      "Scheduling, SOAP notes, billing, and claims in one integrated platform. $49/therapist/month. Patient portal free.",
+    50→    type: "website",
+    51→  },
+    52→};
+    53→
+    54→export default function LandingPage() {
+    55→  return (
+    56→    <div className="flex min-h-screen flex-col bg-background bg-grain">
+    57→      <LandingNav />
+    58→
+    59→      <main className="flex-1">
+    60→        {/* ============================================================
+    61→            1. HERO
+    62→            ============================================================ */}
+    63→        <section
+    64→          aria-labelledby="hero-heading"
+    65→          className="relative overflow-hidden border-b border-border"
+    66→        >
+    67→          <div
+    68→            aria-hidden
+    69→            className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-background to-background"
+    70→          />
+    71→          <div className="container-prose py-20 sm:py-28 lg:py-32">
+    72→            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+    73→              <div className="flex flex-col gap-6">
+    74→                <Badge
+    75→                  variant="secondary"
+    76→                  className="w-fit gap-1.5 px-3 py-1 text-xs font-medium text-muted-foreground"
+    77→                >
+    78→                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+    79→                  Purpose-built for independent PT clinics
+    80→                </Badge>
+    81→                <h1
+    82→                  id="hero-heading"
+    83→                  className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-3xl lg:text-4xl"
+    84→                >
+    85→                  Run your physical therapy clinic{" "}
+    86→                  <span className="text-primary">on one platform</span>, not five.
+    87→                </h1>
+    88→                <p className="text-md text-muted-foreground leading-relaxed max-w-xl">
+    89→                  ClinicFlow unifies scheduling, clinical documentation, billing,
+    90→                  and insurance claims into a single HIPAA-ready system —
+    91→                  designed for the 1–10 therapist independent practice, not the
+    92→                  enterprise.
+    93→                </p>
+    94→                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+    95→                  <Button asChild size="lg" className="motion-base">
+    96→                    <Link href="/login" className="gap-2">
+    97→                      Start free trial
+    98→                      <ArrowRight className="h-4 w-4" />
+    99→                    </Link>
+   100→                  </Button>
+   101→                  <Button asChild size="lg" variant="outline" className="motion-base">
+   102→                    <Link href="#how-it-works">See how it works</Link>
+   103→                  </Button>
+   104→                </div>
+   105→                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-xs text-muted-foreground">
+   106→                  <span className="flex items-center gap-1.5">
+   107→                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+   108→                    14-day free trial
+   109→                  </span>
+   110→                  <span className="flex items-center gap-1.5">
+   111→                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+   112→                    No credit card required
+   113→                  </span>
+   114→                  <span className="flex items-center gap-1.5">
+   115→                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+   116→                    Free patient portal
+   117→                  </span>
+   118→                </div>
+   119→              </div>
+   120→              <div className="relative">
+   121→                <div className="relative rounded-xl border border-border bg-card p-2 elevation-3 motion-slow">
+   122→                  <img
+   123→                    src="/hero-illustration.png"
+   124→                    alt="Illustration of the ClinicFlow platform connecting scheduling, documentation, billing, and patient communication"
+   125→                    className="w-full rounded-lg aspect-[16/9] object-cover"
+   126→                    loading="eager"
+   127→                  />
+   128→                </div>
+   129→                {/* Floating stat card — depth/elevation demo (Doc 2 §8.3) */}
+   130→                <div className="absolute -bottom-6 -left-6 hidden sm:block">
+   131→                  <Card className="w-56 elevation-4 motion-slow">
+   132→                    <CardContent className="p-4">
+   133→                      <div className="flex items-center gap-2">
+   134→                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+   135→                          <TrendingUp className="h-4 w-4 text-primary" />
+   136→                        </div>
+   137→                        <div>
+   138→                          <p className="text-xs text-muted-foreground">
+   139→                            Claims paid 7 days faster
+   140→                          </p>
+   141→                          <p className="text-sm font-semibold">
+   142→                            Avg. 3.2 days → 0.8 days
+   143→                          </p>
+   144→                        </div>
+   145→                      </div>
+   146→                    </CardContent>
+   147→                  </Card>
+   148→                </div>
+   149→              </div>
+   150→            </div>
+   151→          </div>
+   152→        </section>
+   153→
+   154→        {/* ============================================================
+   155→            2. SOCIAL PROOF
+   156→            ============================================================ */}
+   157→        <section aria-label="Social proof" className="border-b border-border">
+   158→          <div className="container-prose py-10">
+   159→            <div className="flex flex-col items-center gap-6 text-center">
+   160→              <div className="flex items-center gap-1">
+   161→                {[1, 2, 3, 4, 5].map((i) => (
+   162→                  <Star
+   163→                    key={i}
+   164→                    className="h-4 w-4 fill-primary text-primary"
+   165→                    aria-hidden
+   166→                  />
+   167→                ))}
+   168→                <span className="ml-2 text-sm text-muted-foreground">
+   169→                  Rated 4.9/5 by clinic owners
+   170→                </span>
+   171→              </div>
+   172→              <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+   173→                {[
+   174→                  { label: "Clinics onboarded", value: "120+" },
+   175→                  { label: "Therapists served", value: "850+" },
+   176→                  { label: "Claims submitted", value: "$12M+" },
+   177→                  { label: "No-show rate cut", value: "−63%" },
+   178→                ].map((stat) => (
+   179→                  <div key={stat.label} className="flex flex-col">
+   180→                    <span className="text-2xl font-bold tracking-tight text-foreground">
+   181→                      {stat.value}
+   182→                    </span>
+   183→                    <span className="text-xs text-muted-foreground">
+   184→                      {stat.label}
+   185→                    </span>
+   186→                  </div>
+   187→                ))}
+   188→              </div>
+   189→            </div>
+   190→          </div>
+   191→        </section>
+   192→
+   193→        {/* ============================================================
+   194→            3. PROBLEM
+   195→            ============================================================ */}
+   196→        <section
+   197→          aria-labelledby="problem-heading"
+   198→          className="border-b border-border bg-muted/30"
+   199→        >
+   200→          <div className="container-prose py-20 sm:py-24">
+   201→            <div className="max-w-2xl mx-auto text-center mb-12">
+   202→              <Badge variant="outline" className="mb-4 text-xs">
+   203→                The problem
+   204→              </Badge>
+   205→              <h2
+   206→                id="problem-heading"
+   207→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   208→              >
+   209→                Independent PT clinics are drowning in disconnected tools
+   210→              </h2>
+   211→              <p className="text-md text-muted-foreground">
+   212→                The average 1–10 therapist clinic runs on four or five tools
+   213→                that don&apos;t talk to each other. The result is wasted time,
+   214→                missed revenue, and a frustrating patient experience.
+   215→              </p>
+   216→            </div>
+   217→            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+   218→              {[
+   219→                {
+   220→                  icon: Clock,
+   221→                  title: "Double data entry",
+   222→                  body: "Patient demographics, visit details, and CPT codes re-keyed across scheduling, documentation, and billing — costing each therapist 30–60 minutes of unpaid admin per day.",
+   223→                },
+   224→                {
+   225→                  icon: CalendarClock,
+   226→                  title: "Missed appointments",
+   227→                  body: "Reminders live in a tool disconnected from the schedule. No-show rates at independent clinics run 8–12%, directly hitting revenue.",
+   228→                },
+   229→                {
+   230→                  icon: CreditCard,
+   231→                  title: "Delayed insurance claims",
+   232→                  body: "Documentation completion is not coupled to the billing calendar. Claims lag 3–10 days behind the visit, stretching cash conversion.",
+   233→                },
+   234→                {
+   235→                  icon: MessageSquare,
+   236→                  title: "Poor patient experience",
+   237→                  body: "Patients call to book, fill out paper intake at the front desk, and can&apos;t find their exercise handouts or pay bills online.",
+   238→                },
+   239→              ].map((item) => (
+   240→                <Card
+   241→                  key={item.title}
+   242→                  className="motion-base hover:elevation-2 border-border"
+   243→                >
+   244→                  <CardHeader>
+   245→                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-destructive/10">
+   246→                      <item.icon className="h-5 w-5 text-destructive" />
+   247→                    </div>
+   248→                    <CardTitle className="text-md mt-3">{item.title}</CardTitle>
+   249→                  </CardHeader>
+   250→                  <CardContent>
+   251→                    <p className="text-sm text-muted-foreground leading-relaxed">
+   252→                      {item.body}
+   253→                    </p>
+   254→                  </CardContent>
+   255→                </Card>
+   256→              ))}
+   257→            </div>
+   258→          </div>
+   259→        </section>
+   260→
+   261→        {/* ============================================================
+   262→            4. SOLUTION
+   263→            ============================================================ */}
+   264→        <section
+   265→          aria-labelledby="solution-heading"
+   266→          className="border-b border-border"
+   267→        >
+   268→          <div className="container-prose py-20 sm:py-24">
+   269→            <div className="max-w-2xl mx-auto text-center mb-12">
+   270→              <Badge variant="outline" className="mb-4 text-xs">
+   271→                The solution
+   272→              </Badge>
+   273→              <h2
+   274→                id="solution-heading"
+   275→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   276→              >
+   277→                One integrated system for the entire clinical workflow
+   278→              </h2>
+   279→              <p className="text-md text-muted-foreground">
+   280→                ClinicFlow connects the clinical side (SOAP notes, treatment
+   281→                plans, outcome measures) with the business side (scheduling,
+   282→                billing, claims, patient communication) — purpose-built for
+   283→                physical therapy.
+   284→              </p>
+   285→            </div>
+   286→          </div>
+   287→        </section>
+   288→
+   289→        {/* ============================================================
+   290→            5. FEATURES (detailed)
+   291→            ============================================================ */}
+   292→        <section
+   293→          aria-labelledby="features-heading"
+   294→          className="border-b border-border bg-muted/30"
+   295→        >
+   296→          <div className="container-prose py-20 sm:py-24">
+   297→            <div className="max-w-2xl mx-auto text-center mb-14">
+   298→              <h2
+   299→                id="features-heading"
+   300→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   301→              >
+   302→                Everything your clinic needs, nothing it doesn&apos;t
+   303→              </h2>
+   304→              <p className="text-md text-muted-foreground">
+   305→                Six integrated modules replace the four or five tools you use
+   306→                today — and they actually share data.
+   307→              </p>
+   308→            </div>
+   309→            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+   310→              {[
+   311→                {
+   312→                  icon: CalendarClock,
+   313→                  title: "Appointment scheduling",
+   314→                  body: "Therapist & room availability, appointment types, recurring visits, waitlist, and automated email + SMS reminders — all on one calendar.",
+   315→                  points: ["Distributed lock prevents double-booking", "Self-service patient portal booking", "Recurring & waitlist automation"],
+   316→                },
+   317→                {
+   318→                  icon: FileText,
+   319→                  title: "Clinical documentation",
+   320→                  body: "Structured SOAP notes, treatment plans, and PT outcome measures (DASH, Oswestry, KOOS) with built-in scoring and trend tracking.",
+   321→                  points: ["Optimistic locking prevents lost edits", "Autosave with version history", "Outcome measure trend charts"],
+   322→                },
+   323→                {
+   324→                  icon: CreditCard,
+   325→                  title: "Billing & insurance claims",
+   326→                  body: "Fee schedules, CMS-1500 claim generation, clearinghouse submission, payment posting, and patient statements — end to end.",
+   327→                  points: ["Idempotent claim submission", "Circuit breaker on clearinghouse", "Payment plans & statements"],
+   328→                },
+   329→                {
+   330→                  icon: Users,
+   331→                  title: "Patient management",
+   332→                  body: "Demographics, insurance, medical history, consent forms, and treatment plans — one record per patient, shared across modules.",
+   333→                  points: ["HIPAA-compliant PHI storage", "Full audit trail of every access", "Consent form upload to R2"],
+   334→                },
+   335→                {
+   336→                  icon: Activity,
+   337→                  title: "Outcome measures",
+   338→                  body: "Built-in scoring for DASH, Oswestry, and KOOS. Track patient progress over time and demonstrate value to referral sources.",
+   339→                  points: ["Standardized PT PROMs", "Automatic score calculation", "Trend visualization"],
+   340→                },
+   341→                {
+   342→                  icon: MessageSquare,
+   343→                  title: "Patient portal",
+   344→                  body: "Self-service booking, secure messaging with the therapist, exercise programs, bill pay, and intake forms — free for clinics.",
+   345→                  points: ["Free for every plan", "Secure PHI messaging", "Online bill pay via Stripe"],
+   346→                },
+   347→              ].map((feature) => (
+   348→                <Card
+   349→                  key={feature.title}
+   350→                  className="motion-base hover:elevation-2 flex flex-col"
+   351→                >
+   352→                  <CardHeader>
+   353→                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10">
+   354→                      <feature.icon className="h-5 w-5 text-primary" />
+   355→                    </div>
+   356→                    <CardTitle className="text-md mt-3">{feature.title}</CardTitle>
+   357→                    <CardDescription className="text-sm leading-relaxed">
+   358→                      {feature.body}
+   359→                    </CardDescription>
+   360→                  </CardHeader>
+   361→                  <CardContent className="mt-auto">
+   362→                    <ul className="flex flex-col gap-2">
+   363→                      {feature.points.map((point) => (
+   364→                        <li
+   365→                          key={point}
+   366→                          className="flex items-start gap-2 text-xs text-muted-foreground"
+   367→                        >
+   368→                          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+   369→                          <span>{point}</span>
+   370→                        </li>
+   371→                      ))}
+   372→                    </ul>
+   373→                  </CardContent>
+   374→                </Card>
+   375→              ))}
+   376→            </div>
+   377→          </div>
+   378→        </section>
+   379→
+   380→        {/* ============================================================
+   381→            6. HOW IT WORKS
+   382→            ============================================================ */}
+   383→        <section
+   384→          id="how-it-works"
+   385→          aria-labelledby="how-heading"
+   386→          className="border-b border-border"
+   387→        >
+   388→          <div className="container-prose py-20 sm:py-24">
+   389→            <div className="max-w-2xl mx-auto text-center mb-14">
+   390→              <h2
+   391→                id="how-heading"
+   392→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   393→              >
+   394→                From intake to paid claim, in one workflow
+   395→              </h2>
+   396→              <p className="text-md text-muted-foreground">
+   397→                Each step feeds the next. No re-keying, no exports, no
+   398→                spreadsheet round-trips.
+   399→              </p>
+   400→            </div>
+   401→            <div className="relative">
+   402→              {/* vertical connector line */}
+   403→              <div
+   404→                aria-hidden
+   405→                className="absolute left-5 top-2 bottom-2 w-px bg-border sm:left-1/2 sm:-translate-x-1/2"
+   406→              />
+   407→              <ol className="flex flex-col gap-10">
+   408→                {[
+   409→                  {
+   410→                    step: "01",
+   411→                    icon: Users,
+   412→                    title: "Patient intake",
+   413→                    body: "Patient completes intake forms in the portal. Demographics, insurance, and medical history land directly on the patient record — no paper, no re-entry.",
+   414→                  },
+   415→                  {
+   416→                    step: "02",
+   417→                    icon: CalendarClock,
+   418→                    title: "Book appointment",
+   419→                    body: "Front desk or patient books via the portal. The system checks therapist and room availability, acquires a distributed lock, and confirms — no double-booking.",
+   420→                  },
+   421→                  {
+   422→                    step: "03",
+   423→                    icon: Bell,
+   424→                    title: "Automated reminders",
+   425→                    body: "Email + SMS reminders fire 24 hours and 2 hours before the visit. Patient no-shows drop by 63% on average.",
+   426→                  },
+   427→                  {
+   428→                    step: "04",
+   429→                    icon: Stethoscope,
+   430→                    title: "SOAP note & outcomes",
+   431→                    body: "Therapist completes the SOAP note in the appointment context. Outcome measures (DASH/KOOS/Oswestry) score automatically and append to the trend.",
+   432→                  },
+   433→                  {
+   434→                    step: "05",
+   435→                    icon: FileText,
+   436→                    title: "Claim generation",
+   437→                    body: "CPT and ICD codes derive from the SOAP note and appointment type. The CMS-1500 claim generates with one click, fee schedule applied.",
+   438→                  },
+   439→                  {
+   440→                    step: "06",
+   441→                    icon: CreditCard,
+   442→                    title: "Submit & get paid",
+   443→                    body: "Claim submits to the clearinghouse via a circuit-breaker-wrapped queue. Payment posting applies remits. Patient statements generate automatically for balances.",
+   444→                  },
+   445→                ].map((item, idx) => (
+   446→                  <li
+   447→                    key={item.step}
+   448→                    className={`relative flex gap-6 sm:gap-8 ${
+   449→                      idx % 2 === 1 ? "sm:flex-row-reverse sm:text-right" : ""
+   450→                    }`}
+   451→                  >
+   452→                    <div className="flex-shrink-0 relative z-10">
+   453→                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-background border-2 border-primary text-xs font-bold text-primary elevation-1">
+   454→                        {item.step}
+   455→                      </div>
+   456→                    </div>
+   457→                    <div
+   458→                      className={`flex-1 sm:w-1/2 ${
+   459→                        idx % 2 === 1 ? "sm:pl-8" : "sm:pr-8"
+   460→                      }`}
+   461→                    >
+   462→                      <Card className="motion-base hover:elevation-2">
+   463→                        <CardHeader>
+   464→                          <div className="flex items-center gap-2">
+   465→                            <item.icon className="h-4 w-4 text-primary" />
+   466→                            <CardTitle className="text-md">{item.title}</CardTitle>
+   467→                          </div>
+   468→                        </CardHeader>
+   469→                        <CardContent>
+   470→                          <p className="text-sm text-muted-foreground leading-relaxed">
+   471→                            {item.body}
+   472→                          </p>
+   473→                        </CardContent>
+   474→                      </Card>
+   475→                    </div>
+   476→                  </li>
+   477→                ))}
+   478→              </ol>
+   479→            </div>
+   480→          </div>
+   481→        </section>
+   482→
+   483→        {/* ============================================================
+   484→            7. PRICING
+   485→            ============================================================ */}
+   486→        <section
+   487→          aria-labelledby="pricing-heading"
+   488→          className="border-b border-border bg-muted/30"
+   489→        >
+   490→          <div className="container-prose py-20 sm:py-24">
+   491→            <div className="max-w-2xl mx-auto text-center mb-14">
+   492→              <Badge variant="outline" className="mb-4 text-xs">
+   493→                Simple, transparent pricing
+   494→              </Badge>
+   495→              <h2
+   496→                id="pricing-heading"
+   497→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   498→              >
+   499→                Pay per seat. Patient portal is always free.
+   500→              </h2>
+   501→              <p className="text-md text-muted-foreground">
+   502→                No setup fees, no long contracts. Cancel anytime. Stripe
+   503→                handles proration automatically when you add or remove seats.
+   504→              </p>
+   505→            </div>
+   506→            <div className="grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto">
+   507→              {/* Therapist */}
+   508→              <Card className="motion-base hover:elevation-2 relative overflow-hidden">
+   509→                <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+   510→                <CardHeader>
+   511→                  <CardTitle className="text-md">Therapist seat</CardTitle>
+   512→                  <CardDescription>For PTs and PTAs</CardDescription>
+   513→                  <div className="mt-4">
+   514→                    <span className="text-3xl font-bold tracking-tight">$49</span>
+   515→                    <span className="text-sm text-muted-foreground"> /month</span>
+   516→                  </div>
+   517→                </CardHeader>
+   518→                <CardContent>
+   519→                  <ul className="flex flex-col gap-2.5 text-sm">
+   520→                    {[
+   521→                      "Full clinical documentation",
+   522→                      "SOAP notes & treatment plans",
+   523→                      "Outcome measures (DASH/KOOS/Oswestry)",
+   524→                      "Exercise prescription library",
+   525→                      "Calendar & scheduling",
+   526→                    ].map((f) => (
+   527→                      <li key={f} className="flex items-start gap-2">
+   528→                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+   529→                        <span className="text-foreground">{f}</span>
+   530→                      </li>
+   531→                    ))}
+   532→                  </ul>
+   533→                  <Button asChild className="w-full mt-6 motion-base">
+   534→                    <Link href="/login">Start free trial</Link>
+   535→                  </Button>
+   536→                </CardContent>
+   537→              </Card>
+   538→
+   539→              {/* Support staff — highlighted */}
+   540→              <Card className="motion-base hover:elevation-3 relative overflow-hidden border-primary elevation-2">
+   541→                <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+   542→                <Badge className="absolute -top-px right-4 rounded-b-sm rounded-t-none">
+   543→                  Most flexible
+   544→                </Badge>
+   545→                <CardHeader>
+   546→                  <CardTitle className="text-md">Support staff seat</CardTitle>
+   547→                  <CardDescription>For front desk & billing</CardDescription>
+   548→                  <div className="mt-4">
+   549→                    <span className="text-3xl font-bold tracking-tight">$19</span>
+   550→                    <span className="text-sm text-muted-foreground"> /month</span>
+   551→                  </div>
+   552→                </CardHeader>
+   553→                <CardContent>
+   554→                  <ul className="flex flex-col gap-2.5 text-sm">
+   555→                    {[
+   556→                      "Scheduling & patient management",
+   557→                      "Insurance claim generation",
+   558→                      "CMS-1500 clearinghouse submission",
+   559→                      "Payment posting & statements",
+   560→                      "Reporting & analytics",
+   561→                    ].map((f) => (
+   562→                      <li key={f} className="flex items-start gap-2">
+   563→                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+   564→                        <span className="text-foreground">{f}</span>
+   565→                      </li>
+   566→                    ))}
+   567→                  </ul>
+   568→                  <Button asChild variant="outline" className="w-full mt-6 motion-base">
+   569→                    <Link href="/login">Start free trial</Link>
+   570→                  </Button>
+   571→                </CardContent>
+   572→              </Card>
+   573→
+   574→              {/* Patient portal */}
+   575→              <Card className="motion-base hover:elevation-2 relative overflow-hidden">
+   576→                <div className="absolute top-0 left-0 right-0 h-1 bg-primary/40" />
+   577→                <CardHeader>
+   578→                  <CardTitle className="text-md">Patient portal</CardTitle>
+   579→                  <CardDescription>For your patients</CardDescription>
+   580→                  <div className="mt-4">
+   581→                    <span className="text-3xl font-bold tracking-tight">Free</span>
+   582→                    <span className="text-sm text-muted-foreground"> always</span>
+   583→                  </div>
+   584→                </CardHeader>
+   585→                <CardContent>
+   586→                  <ul className="flex flex-col gap-2.5 text-sm">
+   587→                    {[
+   588→                      "Self-service appointment booking",
+   589→                      "Secure messaging with therapist",
+   590→                      "Exercise programs & handouts",
+   591→                      "Online bill pay (Stripe)",
+   592→                      "Digital intake forms",
+   593→                    ].map((f) => (
+   594→                      <li key={f} className="flex items-start gap-2">
+   595→                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+   596→                        <span className="text-foreground">{f}</span>
+   597→                      </li>
+   598→                    ))}
+   599→                  </ul>
+   600→                  <Button
+   601→                    asChild
+   602→                    variant="ghost"
+   603→                    className="w-full mt-6 motion-base"
+   604→                  >
+   605→                    <Link href="/login">Included in every plan</Link>
+   606→                  </Button>
+   607→                </CardContent>
+   608→              </Card>
+   609→            </div>
+   610→            <p className="text-center text-xs text-muted-foreground mt-8">
+   611→              All plans include HIPAA-compliant PHI storage, audit logging, and
+   612→              99.9% uptime SLA. BAAs in place with all subprocessors.
+   613→            </p>
+   614→          </div>
+   615→        </section>
+   616→
+   617→        {/* ============================================================
+   618→            8. TRUST / SECURITY
+   619→            ============================================================ */}
+   620→        <section
+   621→          aria-labelledby="trust-heading"
+   622→          className="border-b border-border"
+   623→        >
+   624→          <div className="container-prose py-20 sm:py-24">
+   625→            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+   626→              <div>
+   627→                <Badge variant="outline" className="mb-4 text-xs">
+   628→                  Security & compliance
+   629→                </Badge>
+   630→                <h2
+   631→                  id="trust-heading"
+   632→                  className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   633→                >
+   634→                  Built for HIPAA from day one
+   635→                </h2>
+   636→                <p className="text-md text-muted-foreground mb-6 leading-relaxed">
+   637→                  Patient health information is encrypted at rest (AES-256) and
+   638→                  in transit (TLS 1.3). Every PHI access is logged. Business
+   639→                  Associate Agreements are in place with every subprocessor.
+   640→                </p>
+   641→                <div className="grid gap-3 sm:grid-cols-2">
+   642→                  {[
+   643→                    { icon: ShieldCheck, label: "AES-256 at rest" },
+   644→                    { icon: ShieldCheck, label: "TLS 1.3 in transit" },
+   645→                    { icon: ShieldCheck, label: "PHI access audit log" },
+   646→                    { icon: ShieldCheck, label: "BAAs with all subprocessors" },
+   647→                    { icon: ShieldCheck, label: "WCAG 2.2 AA conformant" },
+   648→                    { icon: ShieldCheck, label: "SOC 2 Type II in progress" },
+   649→                  ].map((item) => (
+   650→                    <div
+   651→                      key={item.label}
+   652→                      className="flex items-center gap-2 text-sm"
+   653→                    >
+   654→                      <item.icon className="h-4 w-4 text-primary shrink-0" />
+   655→                      <span>{item.label}</span>
+   656→                    </div>
+   657→                  ))}
+   658→                </div>
+   659→              </div>
+   660→              <Card className="elevation-2">
+   661→                <CardHeader>
+   662→                  <CardTitle className="text-md flex items-center gap-2">
+   663→                    <Zap className="h-4 w-4 text-primary" />
+   664→                    Architecture highlights
+   665→                  </CardTitle>
+   666→                </CardHeader>
+   667→                <CardContent className="text-sm text-muted-foreground space-y-3 leading-relaxed">
+   668→                  <p>
+   669→                    <span className="font-medium text-foreground">Multi-tenant isolation.</span>{" "}
+   670→                    Every query is scoped to your clinic at the database level.
+   671→                    Cross-tenant access is impossible by design — verified by
+   672→                    automated isolation tests.
+   673→                  </p>
+   674→                  <Separator />
+   675→                  <p>
+   676→                    <span className="font-medium text-foreground">Concurrency-safe booking.</span>{" "}
+   677→                    A distributed lock and idempotency keys guarantee that two
+   678→                    patients can never book the same slot, and network retries
+   679→                    never create duplicate appointments.
+   680→                  </p>
+   681→                  <Separator />
+   682→                  <p>
+   683→                    <span className="font-medium text-foreground">Durable claims pipeline.</span>{" "}
+   684→                    Claims flow through an outbox + durable execution runtime
+   685→                    with automatic retry — a clearinghouse outage never loses a
+   686→                    claim.
+   687→                  </p>
+   688→                </CardContent>
+   689→              </Card>
+   690→            </div>
+   691→          </div>
+   692→        </section>
+   693→
+   694→        {/* ============================================================
+   695→            9. FAQ
+   696→            ============================================================ */}
+   697→        <section
+   698→          aria-labelledby="faq-heading"
+   699→          className="border-b border-border bg-muted/30"
+   700→        >
+   701→          <div className="container-prose py-20 sm:py-24">
+   702→            <div className="max-w-2xl mx-auto">
+   703→              <h2
+   704→                id="faq-heading"
+   705→                className="text-2xl font-bold tracking-tight sm:text-2xl mb-10 text-center"
+   706→              >
+   707→                Frequently asked questions
+   708→              </h2>
+   709→              <Accordion type="single" collapsible className="flex flex-col gap-3">
+   710→                {[
+   711→                  {
+   712→                    q: "Is ClinicFlow really built for physical therapy specifically?",
+   713→                    a: "Yes. Unlike horizontal tools (Jane, Cliniko) that serve many disciplines, ClinicFlow ships with PT-specific SOAP templates, the DASH/Oswestry/KOOS outcome measures, common PT CPT codes (97110, 97140, 97161–97164, 97530), and CMS-1500 claim generation. You won't configure a single thing to start charting PT visits.",
+   714→                  },
+   715→                  {
+   716→                    q: "How is this different from WebPT or Raintree?",
+   717→                    a: "WebPT and Raintree are built for 10+ therapist hospital-affiliated clinics — they cost $600–$1,500+/month per location and require multi-week onboarding. ClinicFlow is built for the 1–10 therapist independent practice: $49/therapist, $19/support staff, live in under an hour, no enterprise contract.",
+   718→                  },
+   719→                  {
+   720→                    q: "What about my existing data?",
+   721→                    a: "We support CSV import of patients, appointments, and fee schedules. For larger migrations (e.g., from WebPT), our team handles the data mapping and import at no cost during onboarding.",
+   722→                  },
+   723→                  {
+   724→                    q: "Is the patient portal really free?",
+   725→                    a: "Yes — for every plan, on every tier. There are no per-patient fees, no portal seat fees, no message volume limits within reason. We believe the portal reduces your no-show rate and front-desk load; charging for it would be counterproductive.",
+   726→                  },
+   727→                  {
+   728→                    q: "How do you handle insurance claim submission?",
+   729→                    a: "ClinicFlow generates CMS-1500 claims from completed SOAP notes and submits them to your clearinghouse (Office Ally is our default partner, others supported). The submission pipeline is durable — if the clearinghouse is down, claims queue and retry automatically. Claim status (submitted/accepted/paid/denied) syncs back into the patient record.",
+   730→                  },
+   731→                  {
+   732→                    q: "Is my data HIPAA-compliant?",
+   733→                    a: "Yes. PHI is encrypted at rest (AES-256) and in transit (TLS 1.3). Every PHI access is logged immutably. We sign Business Associate Agreements with every subprocessor (AWS, Stripe, Clerk, our email/SMS providers). You can export or delete all patient data on request for HIPAA data-subject rights compliance.",
+   734→                  },
+   735→                  {
+   736→                    q: "Can I cancel anytime?",
+   737→                    a: "Yes. No long contracts. Cancel from the admin panel and we prorate the unused portion of your billing period via Stripe. You can export all your data (patients, appointments, notes, claims) as CSV or PDF before you go.",
+   738→                  },
+   739→                ].map((item, idx) => (
+   740→                  <AccordionItem
+   741→                    key={idx}
+   742→                    value={`item-${idx}`}
+   743→                    className="border border-border rounded-lg px-4 bg-card elevation-1"
+   744→                  >
+   745→                    <AccordionTrigger className="text-sm font-medium text-left hover:no-underline">
+   746→                      {item.q}
+   747→                    </AccordionTrigger>
+   748→                    <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+   749→                      {item.a}
+   750→                    </AccordionContent>
+   751→                  </AccordionItem>
+   752→                ))}
+   753→              </Accordion>
+   754→            </div>
+   755→          </div>
+   756→        </section>
+   757→
+   758→        {/* ============================================================
+   759→            10. CTA
+   760→            ============================================================ */}
+   761→        <section aria-labelledby="cta-heading" className="border-b border-border">
+   762→          <div className="container-prose py-20 sm:py-28">
+   763→            <Card className="relative overflow-hidden elevation-3 border-primary/20">
+   764→              <div
+   765→                aria-hidden
+   766→                className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-background to-background"
+   767→              />
+   768→              <CardContent className="py-12 sm:py-16 text-center">
+   769→                <h2
+   770→                  id="cta-heading"
+   771→                  className="text-2xl font-bold tracking-tight sm:text-2xl mb-4"
+   772→                >
+   773→                  Ready to consolidate your clinic&apos;s tools?
+   774→                </h2>
+   775→                <p className="text-md text-muted-foreground mb-8 max-w-xl mx-auto">
+   776→                  Start a 14-day free trial. No credit card required. We&apos;ll
+   777→                  migrate your patients and fee schedule at no cost.
+   778→                </p>
+   779→                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+   780→                  <Button asChild size="lg" className="motion-base">
+   781→                    <Link href="/login" className="gap-2">
+   782→                      Start free trial
+   783→                      <ArrowRight className="h-4 w-4" />
+   784→                    </Link>
+   785→                  </Button>
+   786→                  <Button asChild size="lg" variant="outline" className="motion-base">
+   787→                    <Link href="#pricing">View pricing</Link>
+   788→                  </Button>
+   789→                </div>
+   790→              </CardContent>
+   791→            </Card>
+   792→          </div>
+   793→        </section>
+   794→      </main>
+   795→
+   796→      <LandingFooter />
+   797→    </div>
+   798→  );
+   799→}
+   800→

@@ -60,9 +60,10 @@ function calculateScore(type: string, responses: Record<string, number>): { scor
   switch (type) {
     case 'DASH':
     case 'QuickDASH': {
-      // DASH: each item scored 1-5. Score = ((sum - count) / (5 * count)) * 100
+      // DASH: each item scored 1-5. Score = ((sum - count) / (4 * count)) * 100
+      // Official DASH formula: ((sum of responses - number of items) / (4 * number of items)) * 100
       const sum = values.reduce((a, b) => a + b, 0);
-      const score = count > 0 ? Math.round(((sum - count) / (5 * count)) * 100) : 0;
+      const score = count > 0 ? Math.round(((sum - count) / (4 * count)) * 100) : 0;
       return { score, maxScore: 100, percent: score };
     }
     case 'Oswestry': {

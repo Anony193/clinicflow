@@ -13,7 +13,7 @@ function calculateScore(type: string, responses: Record<string, number>) {
     case 'DASH':
     case 'QuickDASH': {
       const sum = values.reduce((a, b) => a + b, 0);
-      return { score: count > 0 ? Math.round(((sum - count) / (5 * count)) * 100) : 0, maxScore: 100, percent: 0 };
+      return { score: count > 0 ? Math.round(((sum - count) / (4 * count)) * 100) : 0, maxScore: 100, percent: 0 };
     }
     case 'Oswestry': {
       const sum = values.reduce((a, b) => a + b, 0);
@@ -39,23 +39,23 @@ describe('Outcome Measure Scoring', () => {
       const responses: Record<string, number> = {};
       for (let i = 1; i <= 30; i++) responses[`q${i}`] = 1;
       const { score } = calculateScore('DASH', responses);
-      expect(score).toBe(0); // ((30 - 30) / (5*30)) * 100 = 0
+      expect(score).toBe(0); // ((30 - 30) / (4*30)) * 100 = 0
     });
 
-    it('scores all-maximum responses (5 each) → 80% disability', () => {
+    it('scores all-maximum responses (5 each) → 100% disability', () => {
       const responses: Record<string, number> = {};
       for (let i = 1; i <= 30; i++) responses[`q${i}`] = 5;
       const { score } = calculateScore('DASH', responses);
-      // ((150-30)/(5*30))*100 = (120/150)*100 = 80
-      expect(score).toBe(80);
+      // ((150-30)/(4*30))*100 = (120/120)*100 = 100
+      expect(score).toBe(100);
     });
 
-    it('scores mid-range responses (3 each) → 40% disability', () => {
+    it('scores mid-range responses (3 each) → 50% disability', () => {
       const responses: Record<string, number> = {};
       for (let i = 1; i <= 30; i++) responses[`q${i}`] = 3;
       const { score } = calculateScore('DASH', responses);
-      // ((90-30)/(5*30))*100 = (60/150)*100 = 40
-      expect(score).toBe(40);
+      // ((90-30)/(4*30))*100 = (60/120)*100 = 50
+      expect(score).toBe(50);
     });
   });
 

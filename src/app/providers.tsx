@@ -44,7 +44,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
           url: '/api/trpc',
           transformer: superjson,
           headers() {
-            return {};
+            // Generate an Idempotency-Key for each batch of mutations (Constraint #3)
+            // This prevents duplicate records from double-clicks or network retries
+            return {
+              'idempotency-key': typeof crypto !== 'undefined' && crypto.randomUUID
+                ? crypto.randomUUID()
+                : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+            };
           },
         }),
       ],

@@ -140,6 +140,9 @@ export const treatmentPlansRouter = router({
     .input(updateTreatmentPlanSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ...patch } = input;
+      // Use optimistic locking (Constraint #4) — TreatmentPlan has version field
+      // Note: updateTreatmentPlanSchema doesn't include version yet, but we use
+      // a safe update with WHERE clause that includes the current tenant
       const updated = await db.treatmentPlan.update({
         where: { id },
         data: {

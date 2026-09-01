@@ -1,0 +1,840 @@
+     1→// ClinicFlow — Multi-tenant Prisma schema (PostgreSQL / Neon)
+     2→// Governing ADR: ADR-0001 (tenant isolation — app-layer + DB RLS)
+     3→// Constraint #1: every tenant-scoped model has tenantId + @@index([tenantId])
+     4→// Constraint #4: concurrent entities (Patient, Appointment, SoapNote, Claim) have version (optimistic locking)
+     5→
+     6→generator client {
+     7→  provider = "prisma-client-js"
+     8→}
+     9→
+    10→datasource db {
+    11→  provider  = "postgresql"
+    12→  url       = env("DATABASE_URL")
+    13→  directUrl = env("DIRECT_URL")
+    14→}
+    15→
+    16→// ============================================================
+    17→// PLATFORM TABLES (Doc 1 §7.5 Table 2)
+    18→// ============================================================
+    19→
+    20→model Tenant {
+    21→  id            String         @id @default(cuid())
+    22→  name          String
+    23→  slug          String         @unique
+    24→  status        TenantStatus   @default(TRIALING)
+    25→  currentPeriod DateTime?
+    26→  canceledAt    DateTime?
+    27→  createdAt     DateTime       @default(now())
+    28→  updatedAt     DateTime       @updatedAt
+    29→
+    30→  users         User[]
+    31→  patients      Patient[]
+    32→  appointments  Appointment[]
+    33→  appointmentTypes AppointmentType[]
+    34→  soapNotes     SoapNote[]
+    35→  treatmentPlans TreatmentPlan[]
+    36→  exercises     Exercise[]
+    37→  exercisePrescriptions ExercisePrescription[]
+    38→  insurancePlans InsurancePlan[]
+    39→  claims        Claim[]
+    40→  payments      Payment[]
+    41→  encounters    Encounter[]
+    42→  outcomeMeasures OutcomeMeasure[]
+    43→  rooms         Room[]
+    44→  resources     Resource[]
+    45→  messages      Message[]
+    46→  notifications Notification[]
+    47→  reminders     Reminder[]
+    48→  reports       Report[]
+    49→  auditEvents   AuditEvent[]
+    50→  featureFlags  FeatureFlag[]
+    51→  integrations  Integration[]
+    52→  sessions      Session[]
+    53→  subscription  Subscription?
+    54→  invoices      Invoice[]
+    55→  outbox        Outbox[]
+    56→  locks         Lock[]
+    57→  idempotency   IdempotencyRecord[]
+    58→  feeSchedules  FeeSchedule[]
+    59→  statements    Statement[]
+    60→  paymentPlans  PaymentPlan[]
+    61→  intakeForms   IntakeForm[]
+    62→  availability  Availability[]
+    63→  waitlist      Waitlist[]
+    64→}
+    65→
+    66→enum TenantStatus {
+    67→  TRIALING
+    68→  ACTIVE
+    69→  PAST_DUE
+    70→  CANCELED
+    71→}
+    72→
+    73→model Plan {
+    74→  id              String   @id @default(cuid())
+    75→  key             String   @unique // "therapist" | "support" | "portal"
+    76→  name            String
+    77→  priceCents      Int
+    78→  interval        String   @default("month")
+    79→  stripePriceId   String?
+    80→  createdAt       DateTime @default(now())
+    81→
+    82→  subscriptions   Subscription[]
+    83→}
+    84→
+    85→model User {
+    86→  id             String       @id @default(cuid())
+    87→  tenantId       String
+    88→  email          String
+    89→  passwordHash   String? // null if SSO-only
+    90→  name           String
+    91→  role           UserRole
+    92→  stripeCustomerId String?
+    93→  status         UserStatus   @default(ACTIVE)
+    94→  failedLoginCount Int        @default(0)
+    95→  lockedUntil    DateTime?
+    96→  lastLoginAt    DateTime?
+    97→  createdAt      DateTime     @default(now())
+    98→  updatedAt      DateTime     @updatedAt
+    99→
+   100→  tenant         Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   101→  sessions       Session[]
+   102→  auditEvents    AuditEvent[]
+   103→  appointmentsAsTherapist Appointment[] @relation("TherapistAppointments")
+   104→  soapNotes      SoapNote[]
+   105→  messagesSent   Message[]    @relation("MessageSender")
+   106→  exercisePrescriptions ExercisePrescription[]
+   107→
+   108→  @@unique([tenantId, email])
+   109→  @@index([tenantId])
+   110→  @@index([tenantId, role])
+   111→}
+   112→
+   113→enum UserRole {
+   114→  OWNER
+   115→  THERAPIST
+   116→  FRONT_DESK
+   117→  BILLING_MANAGER
+   118→  PATIENT
+   119→}
+   120→
+   121→enum UserStatus {
+   122→  ACTIVE
+   123→  INVITED
+   124→  SUSPENDED
+   125→}
+   126→
+   127→model Session {
+   128→  id          String   @id @default(cuid())
+   129→  tenantId    String
+   130→  userId      String
+   131→  token       String   @unique // opaque session token (not JWT) — Constraint #7
+   132→  expiresAt   DateTime
+   133→  ip          String?
+   134→  userAgent   String?
+   135→  createdAt   DateTime @default(now())
+   136→  revokedAt   DateTime?
+   137→
+   138→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   139→  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+   140→
+   141→  @@index([tenantId])
+   142→  @@index([userId])
+   143→  @@index([expiresAt])
+   144→}
+   145→
+   146→model Subscription {
+   147→  id                  String   @id @default(cuid())
+   148→  tenantId            String   @unique
+   149→  planId              String
+   150→  stripeSubscriptionId String? @unique
+   151→  stripeCustomerId    String?
+   152→  therapistSeats      Int      @default(0)
+   153→  supportSeats        Int      @default(0)
+   154→  status              SubscriptionStatus @default(TRIALING)
+   155→  currentPeriodStart  DateTime?
+   156→  currentPeriodEnd    DateTime?
+   157→  cancelAtPeriodEnd   Boolean  @default(false)
+   158→  createdAt           DateTime @default(now())
+   159→  updatedAt           DateTime @updatedAt
+   160→
+   161→  tenant              Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   162→  plan                Plan     @relation(fields: [planId], references: [id])
+   163→
+   164→  @@index([tenantId])
+   165→}
+   166→
+   167→enum SubscriptionStatus {
+   168→  TRIALING
+   169→  ACTIVE
+   170→  PAST_DUE
+   171→  CANCELED
+   172→  UNPAID
+   173→}
+   174→
+   175→model Invoice {
+   176→  id                String   @id @default(cuid())
+   177→  tenantId          String
+   178→  stripeInvoiceId   String?  @unique
+   179→  amountCents       Int
+   180→  currency          String   @default("usd")
+   181→  status            String   // draft | open | paid | uncollectible | void
+   182→  periodStart       DateTime?
+   183→  periodEnd         DateTime?
+   184→  pdfUrl            String?
+   185→  paidAt            DateTime?
+   186→  createdAt         DateTime @default(now())
+   187→
+   188→  tenant            Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   189→
+   190→  @@index([tenantId])
+   191→}
+   192→
+   193→model AuditEvent {
+   194→  // Doc 1 §7.5 AuditEvent — append-only, immutable (no update/delete exposed)
+   195→  id          String   @id @default(cuid())
+   196→  tenantId    String
+   197→  actorId     String?
+   198→  action      String   // e.g. "patient.create", "soap_note.update"
+   199→  entity      String   // e.g. "Patient", "SoapNote"
+   200→  entityId    String?
+   201→  phi         Boolean  @default(false) // PHI access logging — Constraint #12
+   202→  metadata    String?  // JSON string (SQLite has no native JSON type)
+   203→  ip          String?
+   204→  userAgent   String?
+   205→  createdAt   DateTime @default(now())
+   206→
+   207→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   208→  actor       User?    @relation(fields: [actorId], references: [id])
+   209→
+   210→  @@index([tenantId])
+   211→  @@index([tenantId, entity, entityId])
+   212→  @@index([tenantId, phi])
+   213→  @@index([createdAt])
+   214→}
+   215→
+   216→model FeatureFlag {
+   217→  id        String   @id @default(cuid())
+   218→  tenantId  String
+   219→  key       String   // patient_portal | stripe_billing | claims_submission | ...
+   220→  enabled   Boolean  @default(false)
+   221→  updatedAt DateTime @updatedAt
+   222→
+   223→  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   224→
+   225→  @@unique([tenantId, key])
+   226→  @@index([tenantId])
+   227→}
+   228→
+   229→model Integration {
+   230→  id          String   @id @default(cuid())
+   231→  tenantId    String
+   232→  provider    String   // stripe | office_ally | resend | twilio | r2
+   233→  status      String   @default("pending") // pending | connected | error
+   234→  credentials String?  // encrypted JSON (production: secrets manager)
+   235→  metadata    String?  // JSON
+   236→  createdAt   DateTime @default(now())
+   237→  updatedAt   DateTime @updatedAt
+   238→
+   239→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   240→
+   241→  @@unique([tenantId, provider])
+   242→  @@index([tenantId])
+   243→}
+   244→
+   245→// ============================================================
+   246→// CLINICFLOW DOMAIN ENTITIES (each with tenantId + RLS policy target)
+   247→// ============================================================
+   248→
+   249→model Patient {
+   250→  // Constraint #4: optimistic locking
+   251→  id              String   @id @default(cuid())
+   252→  tenantId        String
+   253→  version         Int      @default(0)
+   254→  firstName       String
+   255→  lastName        String
+   256→  dateOfBirth     DateTime?
+   257→  email           String?
+   258→  phone           String?
+   259→  address         String?
+   260→  sex             String?
+   261→  mrn             String?  // medical record number
+   262→  status          String   @default("active") // active | inactive | archived
+   263→  medicalHistory  String?  // JSON string
+   264→  consentFormUrl  String?
+   265→  createdAt       DateTime @default(now())
+   266→  updatedAt       DateTime @updatedAt
+   267→
+   268→  tenant          Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   269→  insurancePlans  InsurancePlan[]
+   270→  appointments    Appointment[]
+   271→  soapNotes       SoapNote[]
+   272→  treatmentPlans  TreatmentPlan[]
+   273→  claims          Claim[]
+   274→  payments        Payment[]
+   275→  encounters      Encounter[]
+   276→  outcomeMeasures OutcomeMeasure[]
+   277→  messages        Message[]
+   278→  reminders       Reminder[]
+   279→  statements      Statement[]
+   280→  paymentPlans    PaymentPlan[]
+   281→  intakeForms     IntakeForm[]
+   282→  waitlist        Waitlist[]
+   283→  exercisePrescriptions ExercisePrescription[]
+   284→
+   285→  @@index([tenantId])
+   286→  @@index([tenantId, lastName, firstName])
+   287→  @@index([tenantId, email])
+   288→  @@index([tenantId, mrn])
+   289→}
+   290→
+   291→model AppointmentType {
+   292→  id           String   @id @default(cuid())
+   293→  tenantId     String
+   294→  key          String   // evaluation | treatment | re_evaluation
+   295→  name         String
+   296→  durationMin  Int
+   297→  color        String?
+   298→  createdAt    DateTime @default(now())
+   299→
+   300→  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   301→  appointments Appointment[]
+   302→
+   303→  @@unique([tenantId, key])
+   304→  @@index([tenantId])
+   305→}
+   306→
+   307→model Room {
+   308→  id        String   @id @default(cuid())
+   309→  tenantId  String
+   310→  name      String
+   311→  code      String?
+   312→  active    Boolean  @default(true)
+   313→  createdAt DateTime @default(now())
+   314→
+   315→  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   316→  appointments Appointment[]
+   317→
+   318→  @@unique([tenantId, name])
+   319→  @@index([tenantId])
+   320→}
+   321→
+   322→model Resource {
+   323→  id        String   @id @default(cuid())
+   324→  tenantId  String
+   325→  name      String
+   326→  type      String   // equipment | modality
+   327→  active    Boolean  @default(true)
+   328→  createdAt DateTime @default(now())
+   329→
+   330→  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   331→
+   332→  @@unique([tenantId, name])
+   333→  @@index([tenantId])
+   334→}
+   335→
+   336→model Availability {
+   337→  id            String   @id @default(cuid())
+   338→  tenantId      String
+   339→  userId        String   // the therapist
+   340→  weekday       Int      // 0=Sun ... 6=Sat
+   341→  startMin      Int      // minutes from 00:00
+   342→  endMin        Int
+   343→  validFrom     DateTime @default(now())
+   344→  validUntil    DateTime?
+   345→  createdAt     DateTime @default(now())
+   346→
+   347→  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   348→
+   349→  @@index([tenantId, userId])
+   350→  @@index([tenantId, weekday])
+   351→}
+   352→
+   353→model Appointment {
+   354→  // Constraint #4: optimistic locking
+   355→  id               String   @id @default(cuid())
+   356→  tenantId         String
+   357→  version          Int      @default(0)
+   358→  patientId        String
+   359→  therapistId      String
+   360→  appointmentTypeId String
+   361→  roomId           String?
+   362→  startAt          DateTime
+   363→  endAt            DateTime
+   364→  status           AppointmentStatus @default(SCHEDULED)
+   365→  reason           String?
+   366→  notes            String?
+   367→  recurring        Boolean  @default(false)
+   368→  recurrenceRule   String?  // RRULE-style
+   369→  parentAppointmentId String?
+   370→  createdAt        DateTime @default(now())
+   371→  updatedAt        DateTime @updatedAt
+   372→
+   373→  tenant           Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   374→  patient          Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   375→  therapist        User     @relation("TherapistAppointments", fields: [therapistId], references: [id])
+   376→  appointmentType  AppointmentType @relation(fields: [appointmentTypeId], references: [id])
+   377→  room             Room?    @relation(fields: [roomId], references: [id])
+   378→  soapNote         SoapNote?
+   379→  claim            Claim?
+   380→  reminders        Reminder[]
+   381→
+   382→  @@index([tenantId])
+   383→  @@index([tenantId, patientId])
+   384→  @@index([tenantId, therapistId, startAt])
+   385→  @@index([tenantId, status])
+   386→  @@index([tenantId, startAt])
+   387→}
+   388→
+   389→enum AppointmentStatus {
+   390→  SCHEDULED
+   391→  CONFIRMED
+   392→  ARRIVED
+   393→  IN_SESSION
+   394→  COMPLETED
+   395→  CANCELLED
+   396→  NO_SHOW
+   397→  RESCHEDULED
+   398→}
+   399→
+   400→model Waitlist {
+   401→  id           String   @id @default(cuid())
+   402→  tenantId     String
+   403→  patientId    String
+   404→  therapistId  String
+   405→  appointmentTypeId String
+   406→  earliestStart DateTime
+   407→  latestStart  DateTime
+   408→  status       String   @default("waiting") // waiting | promoted | expired
+   409→  createdAt    DateTime @default(now())
+   410→
+   411→  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   412→  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   413→
+   414→  @@index([tenantId])
+   415→  @@index([tenantId, status])
+   416→}
+   417→
+   418→model SoapNote {
+   419→  // Constraint #4: optimistic locking
+   420→  id           String   @id @default(cuid())
+   421→  tenantId     String
+   422→  version      Int      @default(0)
+   423→  patientId    String
+   424→  therapistId  String
+   425→  appointmentId String? @unique
+   426→  subjective   String?
+   427→  objective    String?
+   428→  assessment   String?
+   429→  plan         String?
+   430→  status       String   @default("draft") // draft | signed | amended
+   431→  signedAt     DateTime?
+   432→  createdAt    DateTime @default(now())
+   433→  updatedAt    DateTime @updatedAt
+   434→
+   435→  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   436→  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   437→  therapist    User     @relation(fields: [therapistId], references: [id])
+   438→  appointment  Appointment? @relation(fields: [appointmentId], references: [id])
+   439→
+   440→  @@index([tenantId])
+   441→  @@index([tenantId, patientId])
+   442→  @@index([tenantId, therapistId])
+   443→}
+   444→
+   445→model TreatmentPlan {
+   446→  id           String   @id @default(cuid())
+   447→  tenantId     String
+   448→  patientId    String
+   449→  diagnosis    String?
+   450→  goals        String?  // JSON
+   451→  frequency    String?  // "2x/week"
+   452→  duration     String?  // "6 weeks"
+   453→  startDate    DateTime?
+   454→  endDate      DateTime?
+   455→  status       String   @default("active")
+   456→  createdAt    DateTime @default(now())
+   457→  updatedAt    DateTime @updatedAt
+   458→
+   459→  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   460→  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   461→  prescriptions ExercisePrescription[]
+   462→
+   463→  @@index([tenantId])
+   464→  @@index([tenantId, patientId])
+   465→}
+   466→
+   467→model Exercise {
+   468→  id           String   @id @default(cuid())
+   469→  tenantId     String
+   470→  name         String
+   471→  description  String?
+   472→  sets         Int?
+   473→  reps         Int?
+   474→  holdSec      Int?
+   475→  equipment    String?
+   476→  imageUrl     String?
+   477→  active       Boolean  @default(true)
+   478→  createdAt    DateTime @default(now())
+   479→
+   480→  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   481→  prescriptions ExercisePrescription[]
+   482→
+   483→  @@unique([tenantId, name])
+   484→  @@index([tenantId])
+   485→}
+   486→
+   487→model ExercisePrescription {
+   488→  id              String   @id @default(cuid())
+   489→  tenantId        String
+   490→  treatmentPlanId String
+   491→  exerciseId      String
+   492→  patientId       String
+   493→  prescribedById  String
+   494→  sets            Int?
+   495→  reps            Int?
+   496→  holdSec         Int?
+   497→  frequency       String?
+   498→  notes           String?
+   499→  createdAt       DateTime @default(now())
+   500→
+   501→  tenant          Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   502→  treatmentPlan   TreatmentPlan @relation(fields: [treatmentPlanId], references: [id], onDelete: Cascade)
+   503→  exercise        Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+   504→  patient         Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   505→  prescribedBy    User     @relation(fields: [prescribedById], references: [id])
+   506→
+   507→  @@index([tenantId])
+   508→  @@index([tenantId, patientId])
+   509→}
+   510→
+   511→model InsurancePlan {
+   512→  id            String   @id @default(cuid())
+   513→  tenantId      String
+   514→  patientId     String
+   515→  payerName     String
+   516→  memberId      String
+   517→  groupNumber   String?
+   518→  payerId       String?  // clearinghouse payer id
+   519→  isPrimary     Boolean  @default(true)
+   520→  effectiveDate DateTime?
+   521→  terminationDate DateTime?
+   522→  createdAt     DateTime @default(now())
+   523→
+   524→  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   525→  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   526→
+   527→  @@index([tenantId])
+   528→  @@index([tenantId, patientId])
+   529→}
+   530→
+   531→model FeeSchedule {
+   532→  id          String   @id @default(cuid())
+   533→  tenantId    String
+   534→  payerName   String
+   535→  cptCode     String
+   536→  rateCents   Int
+   537→  effectiveFrom DateTime @default(now())
+   538→  effectiveUntil DateTime?
+   539→  createdAt   DateTime @default(now())
+   540→
+   541→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   542→
+   543→  @@unique([tenantId, payerName, cptCode])
+   544→  @@index([tenantId])
+   545→}
+   546→
+   547→model Claim {
+   548→  // Constraint #4: optimistic locking
+   549→  id             String   @id @default(cuid())
+   550→  tenantId       String
+   551→  version        Int      @default(0)
+   552→  patientId      String
+   553→  appointmentId  String?  @unique
+   554→  soapNoteId     String?
+   555→  payerName      String
+   556→  cptCodes       String   // JSON array: ["97110","97140"]
+   557→  icdCodes       String   // JSON array: ["M54.5"]
+   558→  chargeAmountCents Int
+   559→  adjustmentCents Int    @default(0)
+   560→  paidAmountCents Int    @default(0)
+   561→  balanceCents   Int
+   562→  status         ClaimStatus @default(DRAFT)
+   563→  submissionId   String?  // clearinghouse id
+   564→  submittedAt    DateTime?
+   565→  acceptedAt     DateTime?
+   566→  rejectedReason String?
+   567→  createdAt      DateTime @default(now())
+   568→  updatedAt      DateTime @updatedAt
+   569→
+   570→  tenant         Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   571→  patient        Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   572→  appointment    Appointment? @relation(fields: [appointmentId], references: [id])
+   573→  payments       Payment[]
+   574→
+   575→  @@index([tenantId])
+   576→  @@index([tenantId, status])
+   577→  @@index([tenantId, patientId])
+   578→}
+   579→
+   580→enum ClaimStatus {
+   581→  DRAFT
+   582→  READY
+   583→  SUBMITTED
+   584→  ACCEPTED
+   585→  REJECTED
+   586→  PAID
+   587→  DENIED
+   588→}
+   589→
+   590→model Payment {
+   591→  id              String   @id @default(cuid())
+   592→  tenantId        String
+   593→  claimId         String?
+   594→  patientId       String
+   595→  amountCents     Int
+   596→  method          String   // cash | check | card | insurance
+   597→  payer           String?
+   598→  reference       String?
+   599→  postedAt        DateTime @default(now())
+   600→  createdAt       DateTime @default(now())
+   601→
+   602→  tenant          Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   603→  claim           Claim?   @relation(fields: [claimId], references: [id])
+   604→  patient         Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   605→
+   606→  @@index([tenantId])
+   607→  @@index([tenantId, claimId])
+   608→  @@index([tenantId, patientId])
+   609→}
+   610→
+   611→model Statement {
+   612→  id            String   @id @default(cuid())
+   613→  tenantId      String
+   614→  patientId     String
+   615→  periodStart   DateTime
+   616→  periodEnd     DateTime
+   617→  chargesCents  Int
+   618→  paymentsCents Int
+   619→  balanceCents  Int
+   620→  pdfUrl        String?
+   621→  sentAt        DateTime?
+   622→  createdAt     DateTime @default(now())
+   623→
+   624→  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   625→  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   626→
+   627→  @@index([tenantId])
+   628→  @@index([tenantId, patientId])
+   629→}
+   630→
+   631→model PaymentPlan {
+   632→  id              String   @id @default(cuid())
+   633→  tenantId        String
+   634→  patientId       String
+   635→  totalCents      Int
+   636→  installmentCents Int
+   637→  frequency       String   // weekly | biweekly | monthly
+   638→  status          String   @default("active")
+   639→  createdAt       DateTime @default(now())
+   640→
+   641→  tenant          Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   642→  patient         Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   643→
+   644→  @@index([tenantId])
+   645→  @@index([tenantId, patientId])
+   646→}
+   647→
+   648→model Encounter {
+   649→  id          String   @id @default(cuid())
+   650→  tenantId    String
+   651→  patientId   String
+   652→  therapistId String
+   653→  startAt     DateTime
+   654→  endAt       DateTime?
+   655→  type        String   // initial_eval | follow_up | discharge
+   656→  createdAt   DateTime @default(now())
+   657→
+   658→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   659→  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   660→
+   661→  @@index([tenantId])
+   662→  @@index([tenantId, patientId])
+   663→}
+   664→
+   665→model OutcomeMeasure {
+   666→  id          String   @id @default(cuid())
+   667→  tenantId    String
+   668→  patientId   String
+   669→  type        String   // DASH | Oswestry | KOOS | ...
+   670→  score       Int
+   671→  maxScore    Int
+   672→  percent     Int
+   673→  responses   String   // JSON
+   674→  takenAt     DateTime
+   675→  createdAt   DateTime @default(now())
+   676→
+   677→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   678→  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   679→
+   680→  @@index([tenantId])
+   681→  @@index([tenantId, patientId, type])
+   682→  @@index([tenantId, patientId, takenAt])
+   683→}
+   684→
+   685→model Message {
+   686→  id          String   @id @default(cuid())
+   687→  tenantId    String
+   688→  patientId   String
+   689→  senderId    String
+   690→  senderRole  String   // patient | therapist | staff
+   691→  body        String
+   692→  readAt      DateTime?
+   693→  createdAt   DateTime @default(now())
+   694→
+   695→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   696→  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   697→  sender      User     @relation("MessageSender", fields: [senderId], references: [id])
+   698→
+   699→  @@index([tenantId])
+   700→  @@index([tenantId, patientId, createdAt])
+   701→}
+   702→
+   703→model Notification {
+   704→  id          String   @id @default(cuid())
+   705→  tenantId    String
+   706→  userId      String?
+   707→  channel     String   // in_app | email | sms
+   708→  template    String
+   709→  payload     String   // JSON
+   710→  status      String   @default("pending") // pending | sent | failed
+   711→  sentAt      DateTime?
+   712→  createdAt   DateTime @default(now())
+   713→
+   714→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   715→
+   716→  @@index([tenantId])
+   717→  @@index([tenantId, userId])
+   718→}
+   719→
+   720→model Reminder {
+   721→  id            String   @id @default(cuid())
+   722→  tenantId      String
+   723→  appointmentId String
+   724→  patientId     String
+   725→  channel       String   // email | sms
+   726→  scheduledAt   DateTime
+   727→  sentAt        DateTime?
+   728→  status        String   @default("pending")
+   729→  createdAt     DateTime @default(now())
+   730→
+   731→  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   732→  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+   733→  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   734→
+   735→  @@index([tenantId])
+   736→  @@index([tenantId, status, scheduledAt])
+   737→}
+   738→
+   739→model Report {
+   740→  id          String   @id @default(cuid())
+   741→  tenantId    String
+   742→  type        String   // clinic_performance | therapist_productivity | outcomes | no_show | claim_aging
+   743→  params      String   // JSON
+   744→  status      String   @default("pending") // pending | running | complete | failed
+   745→  resultUrl   String?
+   746→  startedAt   DateTime?
+   747→  completedAt DateTime?
+   748→  createdAt   DateTime @default(now())
+   749→
+   750→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   751→
+   752→  @@index([tenantId])
+   753→  @@index([tenantId, type])
+   754→}
+   755→
+   756→model IntakeForm {
+   757→  id          String   @id @default(cuid())
+   758→  tenantId    String
+   759→  patientId   String
+   760→  template    String   // form template key
+   761→  data        String   // JSON responses
+   762→  completedAt DateTime?
+   763→  createdAt   DateTime @default(now())
+   764→
+   765→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   766→  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+   767→
+   768→  @@index([tenantId])
+   769→  @@index([tenantId, patientId])
+   770→}
+   771→
+   772→// ============================================================
+   773→// INFRASTRUCTURE TABLES (ADR-0001, ADR-0002)
+   774→// ============================================================
+   775→
+   776→model Outbox {
+   777→  // Doc 5 §7 Outbox pattern — DB commit + event atomic
+   778→  id          String   @id @default(cuid())
+   779→  tenantId    String
+   780→  eventType   String   // e.g. "appointment.booked"
+   781→  payload     String   // JSON
+   782→  status      String   @default("pending") // pending | processing | done | failed
+   783→  attempts    Int      @default(0)
+   784→  lastError   String?
+   785→  processedAt DateTime?
+   786→  createdAt   DateTime @default(now())
+   787→
+   788→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   789→
+   790→  @@index([status, createdAt])
+   791→  @@index([tenantId])
+   792→}
+   793→
+   794→model Lock {
+   795→  // Distributed lock adapter (SQLite) — ADR-0002
+   796→  id          String   @id @default(cuid())
+   797→  tenantId    String
+   798→  key         String   @unique
+   799→  holder      String   // unique holder id (uuid)
+   800→  expiresAt   DateTime
+   801→  createdAt   DateTime @default(now())
+   802→
+   803→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   804→
+   805→  @@index([expiresAt])
+   806→}
+   807→
+   808→model IdempotencyRecord {
+   809→  // Doc 5 §6.4 idempotency middleware
+   810→  id          String   @id @default(cuid())
+   811→  tenantId    String
+   812→  keyHash     String   // sha256(idempotency-key + tenantId + path)
+   813→  path        String
+   814→  requestHash String
+   815→  response    String   // JSON-serialized response
+   816→  status      Int      // HTTP-like status
+   817→  expiresAt   DateTime
+   818→  createdAt   DateTime @default(now())
+   819→
+   820→  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   821→
+   822→  @@unique([keyHash])
+   823→  @@index([expiresAt])
+   824→}
+   825→
+   826→model TaskLedger {
+   827→  // Doc 6 §4.2 — shared task ledger, append-only, versioned
+   828→  id          String   @id @default(cuid())
+   829→  taskId      String   // references TASK-### in worklog
+   830→  agentId     String
+   831→  status      String   // assigned | in_progress | completed | blocked
+   832→  payload     String   // JSON
+   833→  version     Int      @default(0)
+   834→  createdAt   DateTime @default(now())
+   835→  updatedAt   DateTime @updatedAt
+   836→
+   837→  @@index([taskId])
+   838→  @@index([status])
+   839→}
+   840→

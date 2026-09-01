@@ -20,6 +20,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'patientId is required' }, { status: 400 });
   }
 
+  // SECURITY: Verify the patient belongs to the requesting user's tenant
+  // (prevents cross-tenant PHI leak via DSAR)
+  const patientCheck = await baseDb.patient.findUnique({
+    where: { id: patientId },
+    select: { tenantId: true },
+  });
+  if (!patientCheck || patientCheck.tenantId !== session.tenantId) {
+    return NextResponse.json({ error: 'Patient not found in your clinic' }, { status: 404 });
+  }
+
   const isOwner = session.role === 'OWNER';
   const patient = await baseDb.patient.findUnique({
     where: { id: patientId },

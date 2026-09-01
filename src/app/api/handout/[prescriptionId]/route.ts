@@ -17,6 +17,16 @@ export async function GET(
   }
 
   const { prescriptionId } = await params;
+
+  // SECURITY: Verify the prescription belongs to the requesting user's tenant
+  const rxCheck = await baseDb.exercisePrescription.findUnique({
+    where: { id: prescriptionId },
+    select: { tenantId: true },
+  });
+  if (!rxCheck || rxCheck.tenantId !== session.tenantId) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   const prescription = await baseDb.exercisePrescription.findUnique({
     where: { id: prescriptionId },
     include: {
