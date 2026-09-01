@@ -13,6 +13,8 @@ import { soapNotesRouter } from '@/server/routers/soap-notes';
 import { treatmentPlansRouter } from '@/server/routers/treatment-plans';
 import { outcomeMeasuresRouter } from '@/server/routers/outcome-measures';
 import { exercisesRouter } from '@/server/routers/exercises';
+import { billingRouter } from '@/server/routers/billing';
+import { claimsRouter } from '@/server/routers/claims';
 
 export const appRouter = router({
   health: healthRouter,
@@ -23,6 +25,8 @@ export const appRouter = router({
   treatmentPlans: treatmentPlansRouter,
   outcomeMeasures: outcomeMeasuresRouter,
   exercises: exercisesRouter,
+  billing: billingRouter,
+  claims: claimsRouter,
 });
 
 /** The AppRouter type — imported by the frontend for type inference */
