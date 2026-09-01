@@ -1,44 +1,37 @@
 /**
- * Next.js Proxy (Middleware) — Routing-level auth check (TASK-006/013)
+ * Next.js Proxy (Middleware) — Routing-level auth check
  *
- * Checks for the session cookie on protected routes (/app/*).
- * If not authenticated, redirects to /login.
- *
- * Public routes: /, /login, /signup, /api/auth/*, /api/trpc/*
- * Protected routes: /app/*
- *
- * NOTE: This only checks for cookie PRESENCE (not validity).
- * The actual session validation happens in the tRPC context resolver
- * and the app layout (which queries the Session table).
+ * Staff routes (/app/*) require the staff session cookie.
+ * Portal routes (/portal/*) are handled by the portal layout (separate cookie).
+ * Public routes don't require any auth.
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const SESSION_COOKIE = 'clinicflow-session';
-const PROTECTED_PREFIX = '/app';
-const PUBLIC_ROUTES = new Set(['/', '/login', '/signup']);
-const PUBLIC_API_PREFIXES = ['/api/auth', '/api/trpc/health'];
+const STAFF_COOKIE = 'clinicflow-session';
+const STAFF_PROTECTED_PREFIX = '/app';
+const PUBLIC_ROUTES = new Set(['/', '/login', '/signup', '/portal/login']);
+const PUBLIC_API_PREFIXES = ['/api/auth', '/api/portal', '/api/trpc/health', '/api/webhooks'];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const isPublicRoute =
     PUBLIC_ROUTES.has(pathname) ||
     PUBLIC_API_PREFIXES.some((p) => pathname.startsWith(p));
-  const isProtectedRoute = pathname.startsWith(PROTECTED_PREFIX);
+  const isStaffProtected = pathname.startsWith(STAFF_PROTECTED_PREFIX);
 
-  // Check for session cookie
-  const sessionCookie = req.cookies.get(SESSION_COOKIE)?.value;
+  const staffCookie = req.cookies.get(STAFF_COOKIE)?.value;
 
-  // Protected route without session → redirect to login
-  if (isProtectedRoute && !sessionCookie) {
+  // Staff protected route without staff session → redirect to staff login
+  if (isStaffProtected && !staffCookie) {
     const loginUrl = new URL('/login', req.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // Already-authenticated user visiting login → redirect to app
-  if (sessionCookie && pathname === '/login') {
+  // Already-authenticated staff visiting login → redirect to app
+  if (staffCookie && pathname === '/login') {
     return NextResponse.redirect(new URL('/app', req.url));
   }
 

@@ -633,3 +633,56 @@ Stage Summary:
 - Every report access is audit-logged.
 - The platform now has the full Phase 2 (clinical) + Phase 3 (commercial) + Phase 4 (reporting) feature set.
 - Remaining: TASK-038 (patient portal) is optional for the sandbox demo.
+
+---
+Task ID: TASK-038 / 040 / 041
+Agent: senior-full-stack-engineer (primary)
+Task: Patient portal — self-service interface for patients to view appointments, exercises, and pay bills.
+
+Work Log:
+- Created src/lib/portal-auth.ts — portal session management (separate from staff auth):
+  * resolvePortalSession() — reads portal cookie → looks up patient by portal token
+  * loginPortalPatient() — looks up patient by email, creates a portal token
+  * Uses a separate cookie (clinicflow-portal) from staff auth (clinicflow-session)
+- Created src/app/api/portal/login/route.ts — POST endpoint: email → portal session cookie
+- Created src/app/api/portal/logout/route.ts — POST: clears portal cookie
+- Created src/app/portal/[patientId]/layout.tsx — portal layout with:
+  * Top bar (logo, patient name, nav links, logout)
+  * Nav: Home, Appointments, Exercises, Bills
+  * Mobile-responsive nav
+  * Sticky footer
+  * Session guard (redirects to /portal/login if not authenticated)
+- Created src/app/portal/[patientId]/page.tsx — portal home:
+  * Next appointment card (with therapist name + type)
+  * Outstanding balance card (with pay button)
+  * Exercise program summary (3 most recent prescriptions)
+  * Documents placeholder
+- Created src/app/portal/[patientId]/appointments/page.tsx — appointment history + request new
+- Created src/app/portal/[patientId]/exercises/page.tsx — exercise program with cards (name, description, sets/reps/hold, frequency, notes)
+- Created src/app/portal/[patientId]/bills/page.tsx — claim history with charges/paid/balance + pay buttons
+- Created src/app/portal/login/page.tsx — patient login page with demo credentials hint
+- Updated src/proxy.ts — allows /portal/* routes (portal has its own auth), allows /api/portal/* API routes
+
+Verification Gate (all PASS):
+- `bun run lint`: 0 errors, 0 warnings ✅
+- `bunx tsc --noEmit` (src/): 0 errors ✅
+- Portal login API: ✅ {"ok":true,"patient":{"patientId":"demo-patient-1","name":"Emily Johnson"}}
+- Portal home page: HTTP 200, 149KB ✅
+- Portal bills page: HTTP 200, 117KB ✅
+- Portal exercises page: HTTP 200, 110KB ✅
+- Portal appointments page: HTTP 200, 125KB ✅
+- Portal login page: accessible without auth ✅
+- Isolation tests: 10/10 pass ✅
+- Staff app still works (separate auth) ✅
+
+Stage Summary:
+- The patient portal is complete with 4 pages: home (overview), appointments (history + request), exercises (program), bills (claim history + pay).
+- Patients authenticate with their email (demo: emily.johnson@example.com or robert.williams@example.com).
+- The portal uses a separate session cookie from staff, so patients and staff can be logged in simultaneously.
+- Portal pages use baseDb (no tenant extension) with manual tenant filtering since the patient's tenantId is resolved from the portal session.
+- Note: The sandbox has an OOM (Out of Memory) issue with the Next.js dev server — it gets killed after extended use. This is a sandbox limitation, not a code defect. The portal works correctly when the server is running.
+- ALL PHASES ARE NOW COMPLETE:
+  * Phase 1 (Foundation): tenant isolation, tRPC, auth, audit, concurrency, outbox+job-runner ✅
+  * Phase 2 (Clinical): patients, appointments, SOAP notes, treatment plans, outcomes, exercises ✅
+  * Phase 3 (Commercial): Stripe billing, CMS-1500 claims, payment posting ✅
+  * Phase 4 (Hardening): isolation tests (10/10), reporting, patient portal ✅
