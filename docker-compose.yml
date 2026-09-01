@@ -1,0 +1,51 @@
+# ============================================================
+# ClinicFlow — Docker Compose (Local Development)
+#
+# Provides PostgreSQL + Redis for local development matching
+# the production stack (environment parity, DOC1 §5.3).
+#
+# Usage:
+#   docker-compose up -d          # start PostgreSQL + Redis
+#   DATABASE_URL=postgresql://clinicflow:clinicflow@localhost:5432/clinicflow bun run dev
+# ============================================================
+
+version: '3.9'
+
+services:
+  # ─── PostgreSQL (production-equivalent database) ──────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: clinicflow-postgres
+    environment:
+      POSTGRES_USER: clinicflow
+      POSTGRES_PASSWORD: clinicflow
+      POSTGRES_DB: clinicflow
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./prisma/sql/rls-policies.sql:/docker-entrypoint-initdb.d/02-rls.sql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U clinicflow']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ─── Redis (distributed locks + cache + sessions) ─────────
+  redis:
+    image: redis:7-alpine
+    container_name: clinicflow-redis
+    ports:
+      - '6379:6379'
+    command: redis-server --appendonly yes --requirepass clinicflow
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '-a', 'clinicflow', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  redisdata:

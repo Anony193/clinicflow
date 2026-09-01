@@ -1,14 +1,7 @@
 /**
  * Lock Port Selector (ADR-0002)
- *
- * Selects the distributed lock adapter based on LOCK_ADAPTER env var.
- * Defaults to SQLite in the sandbox; Redis in production.
- *
- * Usage:
- *   import { lock } from '@/lib/ports/lock-index';
- *   const handle = await lock.acquire('appt:slot:therapist-123:2026-09-01T10:00:00Z', 30000);
- *   if (!handle) throw new Error('Slot is being booked by another user');
- *   try { ... book the appointment ... } finally { await lock.release(handle); }
+ * - sqlite (default): sandbox
+ * - redis: production
  */
 
 import type { DistributedLock } from '@/lib/ports/lock';
@@ -18,29 +11,42 @@ const adapterName = process.env.LOCK_ADAPTER ?? 'sqlite';
 
 let adapter: DistributedLock | null = null;
 
-function getAdapter(): DistributedLock {
+// For sandbox, eagerly create the sqlite adapter
+if (adapterName === 'sqlite') {
+  adapter = new SqliteLockAdapter();
+}
+
+// For production, the redis adapter is lazily loaded
+async function getRedisAdapter(): Promise<DistributedLock> {
   if (adapter) return adapter;
-  switch (adapterName) {
-    case 'sqlite':
-      adapter = new SqliteLockAdapter();
-      break;
-    case 'redis':
-      // Lazy-load to avoid importing the stub in the sandbox
-      // In production with ioredis installed, this would work
-      throw new Error(
-        'Redis lock adapter not yet implemented. ' +
-        'Use LOCK_ADAPTER=sqlite for the sandbox, or implement lock.redis.ts with ioredis.',
-      );
-    default:
-      throw new Error(`Unknown LOCK_ADAPTER: ${adapterName}`);
-  }
+  const { RedisLockAdapter } = await import('@/lib/ports/lock.redis');
+  adapter = new RedisLockAdapter();
   return adapter;
 }
 
-/** The distributed lock instance (SQLite in sandbox, Redis in production). */
+function getAdapter(): DistributedLock {
+  if (adapter) return adapter;
+  // Redis requires async init; throw with guidance
+  throw new Error('Redis lock adapter not initialized. Call initLock() at startup.');
+}
+
+export async function initLock(): Promise<void> {
+  if (adapterName === 'redis' && !adapter) {
+    await getRedisAdapter();
+  }
+}
+
 export const lock: DistributedLock = {
-  acquire: (key: string, ttlMs: number) => getAdapter().acquire(key, ttlMs),
-  release: (handle: Parameters<DistributedLock['release']>[0]) =>
-    getAdapter().release(handle),
-  forceRelease: (key: string) => getAdapter().forceRelease(key),
+  async acquire(key, ttlMs) {
+    if (adapterName === 'redis' && !adapter) await initLock();
+    return getAdapter().acquire(key, ttlMs);
+  },
+  async release(handle) {
+    if (adapterName === 'redis' && !adapter) await initLock();
+    return getAdapter().release(handle);
+  },
+  async forceRelease(key) {
+    if (adapterName === 'redis' && !adapter) await initLock();
+    return getAdapter().forceRelease(key);
+  },
 };

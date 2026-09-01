@@ -1,0 +1,865 @@
+// ClinicFlow — PRODUCTION Prisma schema (PostgreSQL / Neon)
+//
+// This is the production schema. The sandbox uses schema.prisma (SQLite).
+// To deploy to production (Neon):
+//   1. Set DATABASE_URL=postgresql://...neon.tech/clinicflow
+//   2. Copy this file to schema.prisma: cp prisma/schema.production.prisma prisma/schema.prisma
+//   3. Run: bun run db:migrate
+//   4. Apply RLS policies: psql $DATABASE_URL -f prisma/sql/rls-policies.sql
+//
+// Neon is a serverless PostgreSQL with:
+//   - Connection pooling (PgBouncer built-in)
+//   - Branching (dev/staging/prod branches)
+//   - Scale-to-zero (free tier)
+//   - pgvector support (for future AI features)
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL") // Neon pooled + direct connection
+  extensions = [pgvector, pg_trgm]
+}
+
+// ============================================================
+// PLATFORM TABLES (DOC1 §7.5 Table 2)
+// ============================================================
+
+model Tenant {
+  id            String         @id @default(uuid()) @db.Uuid
+  name          String
+  slug          String         @unique
+  status        TenantStatus   @default(TRIALING)
+  currentPeriod DateTime?
+  canceledAt    DateTime?
+  createdAt     DateTime       @default(now()) @db.Timestamptz
+  updatedAt     DateTime       @updatedAt @db.Timestamptz
+
+  users              User[]
+  patients           Patient[]
+  appointments       Appointment[]
+  appointmentTypes   AppointmentType[]
+  soapNotes          SoapNote[]
+  treatmentPlans     TreatmentPlan[]
+  exercises          Exercise[]
+  exercisePrescriptions ExercisePrescription[]
+  insurancePlans     InsurancePlan[]
+  claims             Claim[]
+  payments           Payment[]
+  encounters         Encounter[]
+  outcomeMeasures    OutcomeMeasure[]
+  rooms              Room[]
+  resources          Resource[]
+  messages           Message[]
+  notifications      Notification[]
+  reminders          Reminder[]
+  reports            Report[]
+  auditEvents        AuditEvent[]
+  featureFlags       FeatureFlag[]
+  integrations       Integration[]
+  sessions           Session[]
+  subscription       Subscription?
+  invoices           Invoice[]
+  outbox             Outbox[]
+  locks              Lock[]
+  idempotency        IdempotencyRecord[]
+  feeSchedules       FeeSchedule[]
+  statements         Statement[]
+  paymentPlans       PaymentPlan[]
+  intakeForms        IntakeForm[]
+  availability       Availability[]
+  waitlist           Waitlist[]
+}
+
+enum TenantStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
+model Plan {
+  id            String   @id @default(uuid()) @db.Uuid
+  key           String   @unique
+  name          String
+  priceCents    Int
+  interval      String   @default("month")
+  stripePriceId String?
+  createdAt     DateTime @default(now()) @db.Timestamptz
+
+  subscriptions Subscription[]
+}
+
+model User {
+  id               String     @id @default(uuid()) @db.Uuid
+  tenantId         String     @db.Uuid
+  email            String
+  passwordHash     String?
+  name             String
+  role             UserRole
+  stripeCustomerId String?
+  status           UserStatus @default(ACTIVE)
+  failedLoginCount Int        @default(0)
+  lockedUntil      DateTime?  @db.Timestamptz
+  lastLoginAt      DateTime?  @db.Timestamptz
+  createdAt        DateTime   @default(now()) @db.Timestamptz
+  updatedAt        DateTime   @updatedAt @db.Timestamptz
+
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  sessions    Session[]
+  auditEvents AuditEvent[]
+  appointmentsAsTherapist Appointment[] @relation("TherapistAppointments")
+  soapNotes   SoapNote[]
+  messagesSent Message[]  @relation("MessageSender")
+  exercisePrescriptions ExercisePrescription[]
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@index([tenantId, role])
+}
+
+enum UserRole {
+  OWNER
+  THERAPIST
+  FRONT_DESK
+  BILLING_MANAGER
+  PATIENT
+}
+
+enum UserStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+}
+
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  tenantId  String    @db.Uuid
+  userId    String    @db.Uuid
+  token     String    @unique
+  expiresAt DateTime  @db.Timestamptz
+  ip        String?
+  userAgent String?
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  revokedAt DateTime? @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Subscription {
+  id                  String              @id @default(uuid()) @db.Uuid
+  tenantId            String              @unique @db.Uuid
+  planId              String              @db.Uuid
+  stripeSubscriptionId String?            @unique
+  stripeCustomerId    String?
+  therapistSeats      Int                 @default(0)
+  supportSeats        Int                 @default(0)
+  status              SubscriptionStatus  @default(TRIALING)
+  currentPeriodStart  DateTime?           @db.Timestamptz
+  currentPeriodEnd    DateTime?           @db.Timestamptz
+  cancelAtPeriodEnd   Boolean             @default(false)
+  createdAt           DateTime            @default(now()) @db.Timestamptz
+  updatedAt           DateTime            @updatedAt @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  plan   Plan   @relation(fields: [planId], references: [id])
+
+  @@index([tenantId])
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+model Invoice {
+  id              String    @id @default(uuid()) @db.Uuid
+  tenantId        String    @db.Uuid
+  stripeInvoiceId String?   @unique
+  amountCents     Int
+  currency        String    @default("usd")
+  status          String
+  periodStart     DateTime? @db.Timestamptz
+  periodEnd       DateTime? @db.Timestamptz
+  pdfUrl          String?
+  paidAt          DateTime? @db.Timestamptz
+  createdAt       DateTime  @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+}
+
+model AuditEvent {
+  // Append-only, immutable — DOC1 §7.5
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  actorId   String?  @db.Uuid
+  action    String
+  entity    String
+  entityId  String?
+  phi       Boolean  @default(false)
+  metadata  Json?
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  actor  User?  @relation(fields: [actorId], references: [id])
+
+  @@index([tenantId])
+  @@index([tenantId, entity, entityId])
+  @@index([tenantId, phi])
+  @@index([createdAt])
+}
+
+model FeatureFlag {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  key       String
+  enabled   Boolean  @default(false)
+  updatedAt DateTime @updatedAt @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, key])
+  @@index([tenantId])
+}
+
+model Integration {
+  id          String   @id @default(uuid()) @db.Uuid
+  tenantId    String   @db.Uuid
+  provider    String
+  status      String   @default("pending")
+  credentials String?  // encrypted JSON — production: use KMS/secrets manager
+  metadata    Json?
+  createdAt   DateTime @default(now()) @db.Timestamptz
+  updatedAt   DateTime @updatedAt @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, provider])
+  @@index([tenantId])
+}
+
+// ============================================================
+// CLINICFLOW DOMAIN ENTITIES
+// ============================================================
+
+model Patient {
+  // Constraint #4: optimistic locking
+  id              String    @id @default(uuid()) @db.Uuid
+  tenantId        String    @db.Uuid
+  version         Int       @default(0)
+  firstName       String
+  lastName        String
+  dateOfBirth     DateTime? @db.Timestamptz
+  email           String?
+  phone           String?
+  address         String?
+  sex             String?
+  mrn             String?
+  status          String    @default("active")
+  medicalHistory  Json?
+  consentFormUrl  String?
+  createdAt       DateTime  @default(now()) @db.Timestamptz
+  updatedAt       DateTime  @updatedAt @db.Timestamptz
+
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  insurancePlans InsurancePlan[]
+  appointments Appointment[]
+  soapNotes    SoapNote[]
+  treatmentPlans TreatmentPlan[]
+  claims       Claim[]
+  payments     Payment[]
+  encounters   Encounter[]
+  outcomeMeasures OutcomeMeasure[]
+  messages     Message[]
+  reminders    Reminder[]
+  statements   Statement[]
+  paymentPlans PaymentPlan[]
+  intakeForms  IntakeForm[]
+  waitlist     Waitlist[]
+  exercisePrescriptions ExercisePrescription[]
+
+  @@index([tenantId])
+  @@index([tenantId, lastName, firstName])
+  @@index([tenantId, email])
+  @@index([tenantId, mrn])
+  // Full-text search support (PostgreSQL)
+  @@index([lastName, firstName], type: Gin)
+}
+
+model AppointmentType {
+  id           String   @id @default(uuid()) @db.Uuid
+  tenantId     String   @db.Uuid
+  key          String
+  name         String
+  durationMin  Int
+  color        String?
+  createdAt    DateTime @default(now()) @db.Timestamptz
+
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+
+  @@unique([tenantId, key])
+  @@index([tenantId])
+}
+
+model Room {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  name      String
+  code      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model Resource {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  name      String
+  type      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model Availability {
+  id         String    @id @default(uuid()) @db.Uuid
+  tenantId   String    @db.Uuid
+  userId     String    @db.Uuid
+  weekday    Int
+  startMin   Int
+  endMin     Int
+  validFrom  DateTime  @default(now()) @db.Timestamptz
+  validUntil DateTime? @db.Timestamptz
+  createdAt  DateTime  @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, userId])
+  @@index([tenantId, weekday])
+}
+
+model Appointment {
+  // Constraint #4: optimistic locking
+  id                String             @id @default(uuid()) @db.Uuid
+  tenantId          String             @db.Uuid
+  version           Int                @default(0)
+  patientId         String             @db.Uuid
+  therapistId       String             @db.Uuid
+  appointmentTypeId String             @db.Uuid
+  roomId            String?            @db.Uuid
+  startAt           DateTime           @db.Timestamptz
+  endAt             DateTime           @db.Timestamptz
+  status            AppointmentStatus  @default(SCHEDULED)
+  reason            String?
+  notes             String?
+  recurring         Boolean            @default(false)
+  recurrenceRule    String?
+  parentAppointmentId String?
+  createdAt         DateTime           @default(now()) @db.Timestamptz
+  updatedAt         DateTime           @updatedAt @db.Timestamptz
+
+  tenant          Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient         Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  therapist       User            @relation("TherapistAppointments", fields: [therapistId], references: [id])
+  appointmentType AppointmentType @relation(fields: [appointmentTypeId], references: [id])
+  room            Room?           @relation(fields: [roomId], references: [id])
+  soapNote        SoapNote?
+  claim           Claim?
+  reminders       Reminder[]
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+  @@index([tenantId, therapistId, startAt])
+  @@index([tenantId, status])
+  @@index([tenantId, startAt])
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  ARRIVED
+  IN_SESSION
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+  RESCHEDULED
+}
+
+model Waitlist {
+  id                String   @id @default(uuid()) @db.Uuid
+  tenantId          String   @db.Uuid
+  patientId         String   @db.Uuid
+  therapistId       String   @db.Uuid
+  appointmentTypeId String   @db.Uuid
+  earliestStart     DateTime @db.Timestamptz
+  latestStart       DateTime @db.Timestamptz
+  status            String   @default("waiting")
+  createdAt         DateTime @default(now()) @db.Timestamptz
+
+  tenant Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, status])
+}
+
+model SoapNote {
+  // Constraint #4: optimistic locking
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @db.Uuid
+  version       Int      @default(0)
+  patientId     String   @db.Uuid
+  therapistId   String   @db.Uuid
+  appointmentId String?  @unique @db.Uuid
+  subjective    String?
+  objective     String?
+  assessment    String?
+  plan          String?
+  status        String   @default("draft")
+  signedAt      DateTime? @db.Timestamptz
+  createdAt     DateTime @default(now()) @db.Timestamptz
+  updatedAt     DateTime @updatedAt @db.Timestamptz
+
+  tenant      Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient     Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  therapist   User         @relation(fields: [therapistId], references: [id])
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+  @@index([tenantId, therapistId])
+}
+
+model TreatmentPlan {
+  id           String    @id @default(uuid()) @db.Uuid
+  tenantId     String    @db.Uuid
+  patientId    String    @db.Uuid
+  diagnosis    String?
+  goals        Json?
+  frequency    String?
+  duration     String?
+  startDate    DateTime? @db.Timestamptz
+  endDate      DateTime? @db.Timestamptz
+  status       String    @default("active")
+  createdAt    DateTime  @default(now()) @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @db.Timestamptz
+
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  prescriptions ExercisePrescription[]
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model Exercise {
+  id          String   @id @default(uuid()) @db.Uuid
+  tenantId    String   @db.Uuid
+  name        String
+  description String?
+  sets        Int?
+  reps        Int?
+  holdSec     Int?
+  equipment   String?
+  imageUrl    String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @db.Timestamptz
+
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  prescriptions ExercisePrescription[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model ExercisePrescription {
+  id              String   @id @default(uuid()) @db.Uuid
+  tenantId        String   @db.Uuid
+  treatmentPlanId String   @db.Uuid
+  exerciseId      String   @db.Uuid
+  patientId       String   @db.Uuid
+  prescribedById  String   @db.Uuid
+  sets            Int?
+  reps            Int?
+  holdSec         Int?
+  frequency       String?
+  notes           String?
+  createdAt       DateTime @default(now()) @db.Timestamptz
+
+  tenant        Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  treatmentPlan TreatmentPlan @relation(fields: [treatmentPlanId], references: [id], onDelete: Cascade)
+  exercise      Exercise      @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  patient       Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  prescribedBy  User          @relation(fields: [prescribedById], references: [id])
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model InsurancePlan {
+  id              String    @id @default(uuid()) @db.Uuid
+  tenantId        String    @db.Uuid
+  patientId       String    @db.Uuid
+  payerName       String
+  memberId        String
+  groupNumber     String?
+  payerId         String?
+  isPrimary       Boolean   @default(true)
+  effectiveDate   DateTime? @db.Timestamptz
+  terminationDate DateTime? @db.Timestamptz
+  createdAt       DateTime  @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model FeeSchedule {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @db.Uuid
+  payerName     String
+  cptCode       String
+  rateCents     Int
+  effectiveFrom DateTime  @default(now()) @db.Timestamptz
+  effectiveUntil DateTime? @db.Timestamptz
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, payerName, cptCode])
+  @@index([tenantId])
+}
+
+model Claim {
+  // Constraint #4: optimistic locking
+  id              String      @id @default(uuid()) @db.Uuid
+  tenantId        String      @db.Uuid
+  version         Int         @default(0)
+  patientId       String      @db.Uuid
+  appointmentId   String?     @unique @db.Uuid
+  soapNoteId      String?     @db.Uuid
+  payerName       String
+  cptCodes        String[]
+  icdCodes        String[]
+  chargeAmountCents Int
+  adjustmentCents Int         @default(0)
+  paidAmountCents Int         @default(0)
+  balanceCents    Int
+  status          ClaimStatus @default(DRAFT)
+  submissionId    String?
+  submittedAt     DateTime?   @db.Timestamptz
+  acceptedAt      DateTime?   @db.Timestamptz
+  rejectedReason  String?
+  createdAt       DateTime    @default(now()) @db.Timestamptz
+  updatedAt       DateTime    @updatedAt @db.Timestamptz
+
+  tenant      Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient     Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
+  payments    Payment[]
+
+  @@index([tenantId])
+  @@index([tenantId, status])
+  @@index([tenantId, patientId])
+}
+
+enum ClaimStatus {
+  DRAFT
+  READY
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+  PAID
+  DENIED
+}
+
+model Payment {
+  id           String   @id @default(uuid()) @db.Uuid
+  tenantId     String   @db.Uuid
+  claimId      String?  @db.Uuid
+  patientId    String   @db.Uuid
+  amountCents  Int
+  method       String
+  payer        String?
+  reference    String?
+  postedAt     DateTime @default(now()) @db.Timestamptz
+  createdAt    DateTime @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  claim   Claim?  @relation(fields: [claimId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, claimId])
+  @@index([tenantId, patientId])
+}
+
+model Statement {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @db.Uuid
+  patientId     String    @db.Uuid
+  periodStart   DateTime  @db.Timestamptz
+  periodEnd     DateTime  @db.Timestamptz
+  chargesCents  Int
+  paymentsCents Int
+  balanceCents  Int
+  pdfUrl        String?
+  sentAt        DateTime? @db.Timestamptz
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model PaymentPlan {
+  id               String   @id @default(uuid()) @db.Uuid
+  tenantId         String   @db.Uuid
+  patientId        String   @db.Uuid
+  totalCents       Int
+  installmentCents Int
+  frequency        String
+  status           String   @default("active")
+  createdAt        DateTime @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model Encounter {
+  id          String    @id @default(uuid()) @db.Uuid
+  tenantId    String    @db.Uuid
+  patientId   String    @db.Uuid
+  therapistId String    @db.Uuid
+  startAt     DateTime  @db.Timestamptz
+  endAt       DateTime? @db.Timestamptz
+  type        String
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+model OutcomeMeasure {
+  id         String   @id @default(uuid()) @db.Uuid
+  tenantId   String   @db.Uuid
+  patientId  String   @db.Uuid
+  type       String
+  score      Int
+  maxScore   Int
+  percent    Int
+  responses  Json
+  takenAt    DateTime @db.Timestamptz
+  createdAt  DateTime @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId, type])
+  @@index([tenantId, patientId, takenAt])
+}
+
+model Message {
+  id         String    @id @default(uuid()) @db.Uuid
+  tenantId   String    @db.Uuid
+  patientId  String    @db.Uuid
+  senderId   String    @db.Uuid
+  senderRole String
+  body       String
+  readAt     DateTime? @db.Timestamptz
+  createdAt  DateTime  @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  sender  User    @relation("MessageSender", fields: [senderId], references: [id])
+
+  @@index([tenantId])
+  @@index([tenantId, patientId, createdAt])
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  userId    String?  @db.Uuid
+  channel   String
+  template  String
+  payload   Json
+  status    String   @default("pending")
+  sentAt    DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, userId])
+}
+
+model Reminder {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @db.Uuid
+  appointmentId String    @db.Uuid
+  patientId     String    @db.Uuid
+  channel       String
+  scheduledAt   DateTime  @db.Timestamptz
+  sentAt        DateTime? @db.Timestamptz
+  status        String    @default("pending")
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+
+  tenant      Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  patient     Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, status, scheduledAt])
+}
+
+model Report {
+  id           String    @id @default(uuid()) @db.Uuid
+  tenantId     String    @db.Uuid
+  type         String
+  params       Json
+  status       String    @default("pending")
+  resultUrl    String?
+  startedAt    DateTime? @db.Timestamptz
+  completedAt  DateTime? @db.Timestamptz
+  createdAt    DateTime  @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, type])
+}
+
+model IntakeForm {
+  id          String    @id @default(uuid()) @db.Uuid
+  tenantId    String    @db.Uuid
+  patientId   String    @db.Uuid
+  template    String
+  data        Json
+  completedAt DateTime? @db.Timestamptz
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+
+  tenant  Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, patientId])
+}
+
+// ============================================================
+// INFRASTRUCTURE TABLES
+// ============================================================
+
+model Outbox {
+  id          String    @id @default(uuid()) @db.Uuid
+  tenantId    String    @db.Uuid
+  eventType   String
+  payload     Json
+  status      String    @default("pending")
+  attempts    Int       @default(0)
+  lastError   String?
+  processedAt DateTime? @db.Timestamptz
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([tenantId])
+}
+
+model Lock {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid
+  key       String   @unique
+  holder    String
+  expiresAt DateTime @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+}
+
+model IdempotencyRecord {
+  id          String   @id @default(uuid()) @db.Uuid
+  tenantId    String   @db.Uuid
+  keyHash     String   @unique
+  path        String
+  requestHash String
+  response    String
+  status      Int
+  expiresAt   DateTime @db.Timestamptz
+  createdAt   DateTime @default(now()) @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+}
+
+model TaskLedger {
+  // Doc 6 §4.2 — shared task ledger, append-only, versioned
+  id        String   @id @default(uuid()) @db.Uuid
+  taskId    String
+  agentId   String
+  status    String
+  payload   Json
+  version   Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @updatedAt @db.Timestamptz
+
+  @@index([taskId])
+  @@index([status])
+}
+
+// ============================================================
+// DATA RETENTION (HIPAA — 7 year retention)
+// ============================================================
+
+model DataRetentionPolicy {
+  id              String    @id @default(uuid()) @db.Uuid
+  tableName       String
+  retentionDays   Int       @default(2555) // 7 years
+  purgeAction     String    @default("archive") // archive | delete
+  lastPurgedAt    DateTime? @db.Timestamptz
+  createdAt       DateTime  @default(now()) @db.Timestamptz
+  updatedAt       DateTime  @updatedAt @db.Timestamptz
+
+  @@unique([tableName])
+}

@@ -1,8 +1,7 @@
 /**
  * Billing Port Selector (ADR-0002)
- *
- * Selects the billing adapter based on BILLING_ADAPTER env var.
- * Defaults to mock in the sandbox; stripe in production.
+ * - mock (default): sandbox
+ * - stripe: production
  */
 
 import type { BillingPort } from '@/lib/ports/billing';
@@ -12,29 +11,43 @@ const adapterName = process.env.BILLING_ADAPTER ?? 'mock';
 
 let adapter: BillingPort | null = null;
 
-function getAdapter(): BillingPort {
+// For sandbox, eagerly create the mock adapter
+if (adapterName === 'mock') {
+  adapter = new MockBillingAdapter();
+}
+
+// For production, the stripe adapter is lazily loaded on first use
+// (avoids importing the stripe SDK in sandbox)
+async function getStripeAdapter(): Promise<BillingPort> {
   if (adapter) return adapter;
-  switch (adapterName) {
-    case 'mock':
-      adapter = new MockBillingAdapter();
-      break;
-    case 'stripe':
-      throw new Error(
-        'Stripe billing adapter not yet implemented. ' +
-          'Use BILLING_ADAPTER=mock for the sandbox, or implement billing.stripe.ts with the stripe SDK.',
-      );
-    default:
-      throw new Error(`Unknown BILLING_ADAPTER: ${adapterName}`);
-  }
+  const { StripeBillingAdapter } = await import('@/lib/ports/billing.stripe');
+  adapter = new StripeBillingAdapter();
   return adapter;
 }
 
-/** The billing port instance (mock in sandbox, Stripe in production). */
 export const billing: BillingPort = {
-  createCustomer: (p) => getAdapter().createCustomer(p),
-  createSubscription: (p) => getAdapter().createSubscription(p),
-  updateSeats: (p) => getAdapter().updateSeats(p),
-  cancelSubscription: (p) => getAdapter().cancelSubscription(p),
-  createPaymentIntent: (p) => getAdapter().createPaymentIntent(p),
-  parseWebhook: (p, s) => getAdapter().parseWebhook(p, s),
+  async createCustomer(p) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).createCustomer(p);
+    return adapter!.createCustomer(p);
+  },
+  async createSubscription(p) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).createSubscription(p);
+    return adapter!.createSubscription(p);
+  },
+  async updateSeats(p) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).updateSeats(p);
+    return adapter!.updateSeats(p);
+  },
+  async cancelSubscription(p) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).cancelSubscription(p);
+    return adapter!.cancelSubscription(p);
+  },
+  async createPaymentIntent(p) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).createPaymentIntent(p);
+    return adapter!.createPaymentIntent(p);
+  },
+  async parseWebhook(p, s) {
+    if (adapterName === 'stripe') return (await getStripeAdapter()).parseWebhook(p, s);
+    return adapter!.parseWebhook(p, s);
+  },
 };
