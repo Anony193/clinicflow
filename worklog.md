@@ -893,3 +893,39 @@ Stage Summary:
 - The system is verified end-to-end: database → schema → seed → tests → build.
 - The only limitation is the sandbox's 4GB RAM, which causes OOM when the dev server compiles many pages. In production, this is not an issue.
 - NEXT: Option B (focus on critical missing pieces — but all tasks from Option A are already done).
+
+---
+Task ID: SERVICE-SETUP-GUIDES
+Agent: senior-full-stack-engineer (primary)
+Task: Create setup guides and automated scripts for all external services (Stripe, R2, Resend, Twilio) + Stripe webhook configuration.
+
+Work Log:
+- Created scripts/setup-stripe.ts — automated Stripe setup script that:
+  * Creates 3 products (Therapist $49, Support $19, Portal Free)
+  * Creates 3 recurring monthly prices
+  * Creates a webhook endpoint with correct events (invoice.paid, subscription.updated/deleted, checkout.session.completed, payment_intent.payment_failed)
+  * Outputs all env vars to copy to .env
+  * Includes instructions for both test mode (sk_test_) and live mode (sk_live_)
+- Created docs/ops/service-setup-guide.md — comprehensive setup guide for all 4 services:
+  * Stripe: account creation → API keys → automated setup script → webhook configuration (local + production)
+  * Cloudflare R2: bucket creation → API token → env vars → verification command
+  * Resend: domain verification → API key → test email command
+  * Twilio: phone number purchase → credentials → test SMS command
+  * Complete .env.production template with all variables
+  * Recommended setup order
+  * Stripe webhook local testing (stripe listen --forward-to)
+  * Stripe webhook production configuration (manual or automated)
+
+Verification Gate:
+- `bun run lint`: 0 errors ✅
+- `bunx tsc --noEmit`: 0 errors ✅
+
+Stage Summary:
+- All service setup guides and scripts are ready.
+- The Stripe setup script automates product/price/webhook creation.
+- The service setup guide provides step-by-step instructions for each service with verification commands.
+- The user can now:
+  1. Run `STRIPE_SECRET_KEY=sk_test_xxx bun scripts/setup-stripe.ts` to set up Stripe
+  2. Follow the guide for R2, Resend, and Twilio
+  3. Copy all env vars to .env.production
+  4. Deploy
