@@ -1,5 +1,5 @@
-// ClinicFlow — Multi-tenant Prisma schema
-// Governing ADR: ADR-0001 (tenant isolation under SQLite)
+// ClinicFlow — Multi-tenant Prisma schema (PostgreSQL / Neon)
+// Governing ADR: ADR-0001 (tenant isolation — app-layer + DB RLS)
 // Constraint #1: every tenant-scoped model has tenantId + @@index([tenantId])
 // Constraint #4: concurrent entities (Patient, Appointment, SoapNote, Claim) have version (optimistic locking)
 
@@ -8,8 +8,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ============================================================
