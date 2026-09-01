@@ -126,26 +126,6 @@ export default function LandingPage() {
                     loading="eager"
                   />
                 </div>
-                {/* Floating stat card — depth/elevation demo (Doc 2 §8.3) */}
-                <div className="absolute -bottom-6 -left-6 hidden sm:block">
-                  <Card className="w-56 elevation-4 motion-slow">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-                          <TrendingUp className="h-4 w-4 text-primary" />
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground">
-                            Claims paid 7 days faster
-                          </p>
-                          <p className="text-sm font-semibold">
-                            Avg. 3.2 days → 0.8 days
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
               </div>
             </div>
           </div>
@@ -166,15 +146,15 @@ export default function LandingPage() {
                   />
                 ))}
                 <span className="ml-2 text-sm text-muted-foreground">
-                  Rated 4.9/5 by clinic owners
+                  Built for independent PT clinics
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
                 {[
-                  { label: "Clinics onboarded", value: "120+" },
-                  { label: "Therapists served", value: "850+" },
-                  { label: "Claims submitted", value: "$12M+" },
-                  { label: "No-show rate cut", value: "−63%" },
+                  { label: "Per therapist", value: "$49/mo" },
+                  { label: "Per support staff", value: "$19/mo" },
+                  { label: "Patient portal", value: "Free" },
+                  { label: "Free trial", value: "14 days" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col">
                     <span className="text-2xl font-bold tracking-tight text-foreground">

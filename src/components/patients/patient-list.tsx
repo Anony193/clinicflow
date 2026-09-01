@@ -59,8 +59,18 @@ export function PatientList() {
 
       {/* Results */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        <div className="flex flex-col gap-2">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="opacity-50">
+              <CardContent className="flex items-center gap-3 py-3">
+                <div className="h-10 w-10 rounded-full bg-muted animate-pulse" />
+                <div className="flex-1 space-y-1.5">
+                  <div className="h-3 w-32 rounded bg-muted animate-pulse" />
+                  <div className="h-2.5 w-48 rounded bg-muted animate-pulse" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : error ? (
         <Card>

@@ -50,5 +50,16 @@ test
 prompt
 
 server.log
+
 # Skills directory
 /skills/
+
+# Upload directory (patient documents)
+/upload/
+
+# Tool results
+tool-results/
+
+# SQLite (production uses PostgreSQL)
+db/custom.db
+db/custom.db-journal
