@@ -5,9 +5,6 @@
  *
  * DOC2 §8: Professional UI/UX — no AI-flag work.
  * Major Third type scale, motion principles, elevation system.
- *
- * Authenticates against the seeded users via /api/auth/login.
- * Demo credentials: owner@riversidept.example / clinicflow-demo-2024
  */
 
 import { useState } from 'react';
@@ -131,12 +128,7 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            {/* Demo credentials hint */}
-            <div className="mt-6 rounded-md bg-muted p-3 text-xs text-muted-foreground">
-              <p className="font-medium text-foreground mb-1">Demo credentials:</p>
-              <p>Email: <code className="text-primary">owner@riversidept.example</code></p>
-              <p>Password: <code className="text-primary">clinicflow-demo-2024</code></p>
-            </div>
+            {/* No demo credentials in production — users use their own */}
           </CardContent>
         </Card>
 

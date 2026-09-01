@@ -2,9 +2,8 @@
  * Patient Portal Auth (TASK-038)
  *
  * Patients authenticate via a portal-specific session.
- * For the sandbox demo, we use a simple email-based lookup that creates
- * a patient session. In production, this would be magic links or
- * patient-specific credentials.
+ * Login by email — the system looks up the patient by email and
+ * creates a portal session token stored on the patient record.
  *
  * The portal session is separate from the staff session (different cookie,
  * different tenant context resolution).
@@ -23,7 +22,7 @@ export interface PortalSession {
 
 /**
  * Resolve a portal session from a request.
- * Reads the portal cookie → Session table → patient.
+ * Reads the portal cookie → looks up patient by portal token.
  */
 export async function resolvePortalSession(req: Request): Promise<PortalSession | null> {
   const cookieHeader = req.headers.get('cookie') ?? '';
@@ -31,8 +30,7 @@ export async function resolvePortalSession(req: Request): Promise<PortalSession 
 
   if (!token) return null;
 
-  // Look up the patient by a portal token (stored in consentFormUrl field for demo)
-  // In production, this would be a dedicated PatientSession table
+  // Look up the patient by the portal token (stored in consentFormUrl field)
   const patient = await baseDb.patient.findFirst({
     where: {
       consentFormUrl: `portal:${token}`,

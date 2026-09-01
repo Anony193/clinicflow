@@ -36,12 +36,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true, duplicate: true });
     }
 
-    // Store a placeholder (use the demo tenant ID for the FK constraint)
+    // Store a placeholder — use the first tenant for the FK constraint
+    // In production with PostgreSQL, this would use SET LOCAL app.current_tenant_id
     if (!existing) {
-      const demoTenant = await baseDb.tenant.findFirst({ where: { slug: 'riverside-pt' } });
+      const firstTenant = await baseDb.tenant.findFirst();
+      if (!firstTenant) {
+        return NextResponse.json({ error: 'No tenant configured' }, { status: 500 });
+      }
       await baseDb.idempotencyRecord.create({
         data: {
-          tenantId: demoTenant?.id ?? 'system',
+          tenantId: firstTenant.id,
           keyHash: eventIdHash,
           path: 'stripe-webhook',
           requestHash: event.eventId,

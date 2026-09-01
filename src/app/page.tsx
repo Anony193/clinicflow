@@ -402,7 +402,7 @@ export default function LandingPage() {
                     step: "03",
                     icon: Bell,
                     title: "Automated reminders",
-                    body: "Email + SMS reminders fire 24 hours and 2 hours before the visit. Patient no-shows drop by 63% on average.",
+                    body: "Email + SMS reminders fire 24 hours and 2 hours before the visit, reducing missed appointments.",
                   },
                   {
                     step: "04",

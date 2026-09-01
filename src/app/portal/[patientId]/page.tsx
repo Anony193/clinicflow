@@ -192,12 +192,18 @@ export default async function PortalHomePage({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Your clinical notes and intake forms will appear here.
-            </p>
-            <Badge variant="outline" className="mt-2 text-xs">
-              Coming soon
-            </Badge>
+            <Link href={`/portal/${patientId}/intake`}>
+              <div className="flex items-center gap-3 rounded-md border border-border p-3 motion-base hover:elevation-2 cursor-pointer">
+                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                  <FileText className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium">Patient Intake Form</div>
+                  <div className="text-xs text-muted-foreground">Complete or update your medical history</div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+              </div>
+            </Link>
           </CardContent>
         </Card>
       </div>

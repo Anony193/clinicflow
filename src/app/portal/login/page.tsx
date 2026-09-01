@@ -99,12 +99,6 @@ export default function PortalLoginPage() {
                 )}
               </Button>
             </form>
-
-            <div className="mt-6 rounded-md bg-muted p-3 text-xs text-muted-foreground">
-              <p className="font-medium text-foreground mb-1">Demo:</p>
-              <p>Use: <code className="text-primary">emily.johnson@example.com</code></p>
-              <p>or: <code className="text-primary">robert.williams@example.com</code></p>
-            </div>
           </CardContent>
         </Card>
 
