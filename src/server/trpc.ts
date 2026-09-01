@@ -22,6 +22,7 @@ import {
   acquireIdempotencyLock,
   storeIdempotentResult,
 } from '@/server/middleware/idempotency';
+import { checkRateLimit } from '@/server/middleware/rate-limit';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -57,6 +58,8 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
       message: 'Authentication required. Please sign in.',
     });
   }
+  // Rate limiting (DOC5 §5.3, Constraint #7)
+  checkRateLimit(ctx.user.userId, ctx.tenantId);
   return next({
     ctx: {
       ...ctx,

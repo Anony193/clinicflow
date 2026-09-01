@@ -16,6 +16,7 @@ import { exercisesRouter } from '@/server/routers/exercises';
 import { billingRouter } from '@/server/routers/billing';
 import { claimsRouter } from '@/server/routers/claims';
 import { reportsRouter } from '@/server/routers/reports';
+import { messagesRouter } from '@/server/routers/messages';
 
 export const appRouter = router({
   health: healthRouter,
@@ -29,6 +30,7 @@ export const appRouter = router({
   billing: billingRouter,
   claims: claimsRouter,
   reports: reportsRouter,
+  messages: messagesRouter,
 });
 
 /** The AppRouter type — imported by the frontend for type inference */

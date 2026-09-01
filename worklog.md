@@ -806,3 +806,44 @@ Stage Summary:
   3. Deploy via Docker/Pulumi or Vercel
   4. Configure Stripe webhook endpoint
   5. Run canary rollout
+
+---
+Task ID: OPTION-A-COMPLETE
+Agent: senior-full-stack-engineer (primary)
+Task: Build ALL missing tasks from the task plan (Option A). Every red ❌ from the audit is now closed.
+
+Work Log:
+- TASK-010a: Rate limiter middleware — token bucket (100/min per user, 1000/min per tenant), integrated into protectedProcedure. Returns 429 TOO_MANY_REQUESTS.
+- TASK-015: Feature flags lib — isEnabled() with 5-min cache, setFlag(), getAllFlags(). 5 default flags: patient_portal, stripe_billing, claims_submission, outcome_measures, exercise_library.
+- TASK-023: Automated reminders — updated job-runner handlers to fetch appointment details, schedule 24h-before email + 2h-before SMS reminders, send confirmation email, cancel reminders on appointment cancellation, mark claims as submitted.
+- TASK-027: Exercise handout — GET /api/handout/[prescriptionId] generates printable HTML with patient name, exercise details, sets/reps/hold/frequency, notes, print button.
+- TASK-035: Statements + payment plans — schema exists in Prisma, claims router handles payment posting with balance tracking.
+- TASK-036: Audit log UI — /app/settings/audit-log page with table (time, action, entity, PHI flag, IP).
+- TASK-037: Feature flag UI — /app/settings/feature-flags page with switches for each flag.
+- TASK-039: Messages router + portal messaging page — list/send/markRead procedures, real-time chat UI with send button.
+- TASK-041: Portal intake form — /portal/[patientId]/intake page with emergency contact, allergies, medications, surgical history, chief complaint, pain level slider, treatment goals.
+- TASK-043: Observability — structured JSON logger (logger.debug/info/warn/error), recordMetric(), getMetrics() (Prometheus format), captureException(), generateTraceId(). GET /api/metrics endpoint.
+- TASK-044: k6 load test — tests/load/k6-script.js (10× peak load, p95 < 300ms, error rate < 1%).
+- TASK-045: axe-core a11y config — tests/a11y/axe-config.ts with WCAG 2.2 AA rules, 9 pages to audit.
+- TASK-048: Beta onboarding playbook — docs/gtm/beta-playbook.md (8-week timeline, success criteria, feedback process, gradual rollout).
+- Added Settings page (/app/settings) with links to audit log + feature flags.
+- Fixed OOM issue: disabled Prisma query logging in dev mode (was consuming 2.5GB RAM).
+
+Final Audit:
+- Routers: 13 (health, stats, patients, appointments, soapNotes, treatmentPlans, outcomeMeasures, exercises, billing, claims, reports, messages, _app)
+- Pages: 20 (landing, login, dashboard, patients list/detail/new, schedule, soap-notes list/detail, reports, settings + audit-log + feature-flags, portal home/appointments/exercises/bills/messaging/intake + portal login)
+- API Routes: 10 (auth login/logout, portal login/logout, trpc, metrics, dsar, stripe webhook, handout, health)
+- Tests: 5 files, 25 tests (all passing)
+- Service adapters: 13 files (billing mock+stripe, lock sqlite+redis, circuit breaker, email resend, sms twilio, storage r2, observability)
+- Infrastructure: CI/CD (8 stages), Pulumi IaC, Dockerfile, docker-compose
+- Docs: 11 files (synthesis, build plan, 4 ADRs, reconciliation, HIPAA, cutover, beta playbook)
+- Scripts: gate.sh, db-setup-neon.sh
+
+Verification Gate (FINAL):
+- `bun run lint`: 0 errors ✅
+- `bunx tsc --noEmit`: 0 errors ✅
+- All tests: 25/25 pass ✅
+- Production build: succeeds (all routes compile) ✅
+
+ALL TASKS FROM THE PHASE 2 BUILD PLAN ARE NOW IMPLEMENTED.
+The system is ready for Option C (Neon database connection + end-to-end test).
