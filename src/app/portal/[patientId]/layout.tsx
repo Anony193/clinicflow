@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation';
 import { resolvePortalSession } from '@/lib/portal-auth';
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { Activity, LogOut, CalendarClock, FileText, CreditCard, Dumbbell } from 'lucide-react';
+import { Activity, LogOut, CalendarClock, FileText, CreditCard, Dumbbell, MessageSquare, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default async function PortalLayout({
@@ -29,7 +29,9 @@ export default async function PortalLayout({
     { href: `/portal/${session.patientId}`, label: 'Home', icon: Activity },
     { href: `/portal/${session.patientId}/appointments`, label: 'Appointments', icon: CalendarClock },
     { href: `/portal/${session.patientId}/exercises`, label: 'Exercises', icon: Dumbbell },
+    { href: `/portal/${session.patientId}/messaging`, label: 'Messages', icon: MessageSquare },
     { href: `/portal/${session.patientId}/bills`, label: 'Bills', icon: CreditCard },
+    { href: `/portal/${session.patientId}/intake`, label: 'Intake', icon: ClipboardList },
   ];
 
   return (
