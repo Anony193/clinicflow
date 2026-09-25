@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   keywords: ["physical therapy software", "PT clinic management", "SOAP notes", "CMS-1500 claims", "ClinicFlow"],
   authors: [{ name: "ClinicFlow" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/favicon.svg",
   },
   openGraph: {
     title: "ClinicFlow — Practice management for independent PT clinics",
